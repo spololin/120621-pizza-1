@@ -6,9 +6,9 @@ export const getPizzaValues = (pizza) => ({
     value: PIZZA_VALUES.dough[dough.name],
     checked: !--dough.id,
   })),
-  ingredients: (pizza.ingredients || []).map((ingridient) => ({
-    ...ingridient,
-    value: PIZZA_VALUES.ingredients[ingridient.name],
+  fillings: (pizza.ingredients || []).map((ingredient) => ({
+    ...ingredient,
+    value: PIZZA_VALUES.ingredients[ingredient.name],
   })),
   sauces: (pizza.sauces || []).map((sauce) => ({
     ...sauce,

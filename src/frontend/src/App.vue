@@ -2,20 +2,20 @@
   <div id="app">
     <AppLayout />
     <main class="content">
-      <ConstructorPizza />
+      <IndexView />
     </main>
   </div>
 </template>
 
 <script>
 import AppLayout from "@/layouts/AppLayout";
-import ConstructorPizza from "@/views/ConstructorPizza";
+import IndexView from "@/views/Index";
 
 export default {
   name: "App",
   components: {
     AppLayout,
-    ConstructorPizza,
+    IndexView,
   },
 };
 </script>

@@ -2,25 +2,22 @@
   <div class="ingredients__sauce" v-if="sauces.length">
     <p>Основной соус:</p>
 
-    <label
+    <BuilderSelectorItem
       class="radio ingredients__input"
       v-for="sauce in sauces"
       :key="sauce.id"
-    >
-      <input
-        type="radio"
-        name="sauce"
-        :value="sauce.value"
-        :checked="sauce.checked"
-      />
-      <span>{{ sauce.name }}</span>
-    </label>
+      :selector="{ ...sauce, type: 'sauce' }"
+      @clickSelectorItem="$emit('clickSauceSelector', $event)"
+    />
   </div>
 </template>
 
 <script>
+import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
+
 export default {
   name: "BuilderSauceSelector",
+  components: { BuilderSelectorItem },
   props: {
     sauces: {
       type: Array,

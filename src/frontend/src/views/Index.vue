@@ -3,14 +3,21 @@
     <div class="content__wrapper">
       <h1 class="title title--big">Конструктор пиццы</h1>
 
-      <BuilderDoughSelector :doughs="pizza.doughs" />
-      <BuilderSizeSelector :sizes="pizza.sizes" />
+      <BuilderDoughSelector
+        :doughs="pizza.doughs"
+        @clickDoughSelector="pizzaSelectors.dough = $event"
+      />
+      <BuilderSizeSelector
+        :sizes="pizza.sizes"
+        @clickSizeSelector="pizzaSelectors.size = $event"
+      />
       <BuilderIngredientsSelector
         :fillings="pizza.fillings"
         :sauces="pizza.sauces"
+        @clickSauceSelector="pizzaSelectors.sauce = $event"
       />
 
-      <BuilderPizzaContent />
+      <BuilderPizzaContent :pizzaParams="pizzaParams" />
     </div>
   </form>
 </template>
@@ -34,6 +41,18 @@ export default {
   data() {
     return {
       pizza: getPizzaValues(pizzaData),
+      pizzaSelectors: {
+        dough: null,
+        size: null,
+        sauce: null,
+        fillings: null,
+      },
+      pizzaParams: {
+        name: "",
+        price: 0,
+        validate: false,
+        type: "",
+      },
     };
   },
 };

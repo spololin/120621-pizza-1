@@ -6,11 +6,12 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
+        v-model="pizzaParams.name"
       />
     </label>
 
     <BuilderPizzaView />
-    <BuilderPriceCounter />
+    <BuilderPriceCounter :pizzaParams="pizzaParams" />
   </div>
 </template>
 
@@ -23,6 +24,12 @@ export default {
   components: {
     BuilderPizzaView,
     BuilderPriceCounter,
+  },
+  props: {
+    pizzaParams: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>

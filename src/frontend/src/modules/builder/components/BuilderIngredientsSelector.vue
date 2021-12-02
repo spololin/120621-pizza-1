@@ -4,7 +4,10 @@
       <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
 
       <div class="sheet__content ingredients">
-        <BuilderSauceSelector :sauces="sauces" />
+        <BuilderSauceSelector
+          :sauces="sauces"
+          @clickSauceSelector="$emit('clickSauceSelector', $event)"
+        />
         <BuilderFillingSelector :fillings="fillings" />
       </div>
     </div>

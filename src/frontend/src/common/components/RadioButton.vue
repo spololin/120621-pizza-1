@@ -3,8 +3,8 @@
     type="radio"
     :name="params.type"
     :value="params.value"
-    :checked="params.checked"
-    class="visually-hidden"
+    v-bind="$attrs"
+    @click="$emit('clickRadioButton', params)"
   />
 </template>
 

@@ -10,6 +10,7 @@
           :key="dough.id"
           :selector="{ ...dough, type: 'dough' }"
           :class="`dough__input--${dough.value}`"
+          @clickSelectorItem="$emit('clickDoughSelector', $event)"
         />
       </div>
     </div>

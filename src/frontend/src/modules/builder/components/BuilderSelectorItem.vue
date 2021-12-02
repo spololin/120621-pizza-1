@@ -1,6 +1,10 @@
 <template>
   <label v-bind="$attrs">
-    <RadioButton :params="selector" />
+    <RadioButton
+      class="visually-hidden"
+      :params="selector"
+      @clickRadioButton="$emit('clickSelectorItem', $event)"
+    />
     <b v-if="selector.type === 'dough'">{{ selector.name }}</b>
     <span>{{
       selector.type === "dough" ? selector.description : selector.name
@@ -12,7 +16,7 @@
 import RadioButton from "@/common/components/RadioButton";
 
 export default {
-  name: "SelectorItem",
+  name: "BuilderSelectorItem",
   components: { RadioButton },
   props: {
     selector: {

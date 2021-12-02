@@ -4,29 +4,23 @@
       <h2 class="title title--small sheet__title">Выберите размер</h2>
 
       <div class="sheet__content diameter">
-        <label
+        <BuilderSelectorItem
           class="diameter__input"
           v-for="size in sizes"
           :key="size.id"
           :class="`diameter__input--${size.value}`"
-        >
-          <input
-            type="radio"
-            name="diameter"
-            :value="size.value"
-            class="visually-hidden"
-            :checked="size.checked"
-          />
-          <span>{{ size.name }}</span>
-        </label>
+          :selector="{ ...size, type: 'diameter' }"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
 export default {
   name: "BuilderSizeSelector",
+  components: { BuilderSelectorItem },
   props: {
     sizes: {
       type: Array,

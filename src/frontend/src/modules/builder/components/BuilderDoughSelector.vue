@@ -4,30 +4,23 @@
       <h2 class="title title--small sheet__title">Выберите тесто</h2>
 
       <div class="sheet__content dough" v-if="doughs.length">
-        <label
+        <BuilderSelectorItem
           class="dough__input"
           v-for="dough in doughs"
           :key="dough.id"
+          :selector="{ ...dough, type: 'dough' }"
           :class="`dough__input--${dough.value}`"
-        >
-          <input
-            type="radio"
-            name="dough"
-            :value="dough.value"
-            class="visually-hidden"
-            :checked="dough.checked"
-          />
-          <b>{{ dough.name }}</b>
-          <span>{{ dough.description }}</span>
-        </label>
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
 export default {
   name: "BuilderDoughSelector",
+  components: { BuilderSelectorItem },
   props: {
     doughs: {
       type: Array,

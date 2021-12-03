@@ -8,9 +8,9 @@
           class="dough__input"
           v-for="dough in doughs"
           :key="dough.id"
-          :selector="{ ...dough, type: 'dough' }"
+          :selector="dough"
           :class="`dough__input--${dough.value}`"
-          @clickSelectorItem="$emit('clickDoughSelector', $event)"
+          @clickSelectorItem="$emit('clickSelectorItem', $event)"
         />
       </div>
     </div>

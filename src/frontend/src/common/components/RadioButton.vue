@@ -3,6 +3,7 @@
     type="radio"
     :name="params.type"
     :value="params.value"
+    :checked="params.checked"
     v-bind="$attrs"
     @click="$emit('clickRadioButton', params)"
   />
@@ -16,7 +17,7 @@ export default {
       type: Object,
       required: true,
       validator: (v) =>
-        v.type.length && ["sauce", "dough", "diameter"].includes(v.type),
+        v.type.length && ["sauces", "doughs", "sizes"].includes(v.type),
     },
   },
 };

@@ -3,7 +3,11 @@
     <span class="filling" :class="`filling--${filling.value}`">{{
       filling.name
     }}</span>
-    <ItemCounter />
+    <ItemCounter
+      :count="filling.count"
+      :permissions="filling.permissions"
+      @clickButtonItemCounter="clickButtonItemCounter"
+    />
   </li>
 </template>
 
@@ -18,5 +22,10 @@ export default {
     },
   },
   components: { ItemCounter },
+  methods: {
+    clickButtonItemCounter: function (typeClick) {
+      this.$emit("clickButtonItemCounter", { ...this.filling, typeClick });
+    },
+  },
 };
 </script>

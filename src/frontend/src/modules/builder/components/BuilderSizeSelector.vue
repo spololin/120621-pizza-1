@@ -9,8 +9,8 @@
           v-for="size in sizes"
           :key="size.id"
           :class="`diameter__input--${size.value}`"
-          :selector="{ ...size, type: 'diameter' }"
-          @clickSelectorItem="$emit('clickSizeSelector', $event)"
+          :selector="size"
+          @clickSelectorItem="$emit('clickSelectorItem')"
         />
       </div>
     </div>

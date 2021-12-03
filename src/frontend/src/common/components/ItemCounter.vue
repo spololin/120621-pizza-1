@@ -3,12 +3,18 @@
     <button
       type="button"
       class="counter__button counter__button--minus"
-      disabled
+      :disabled="!permissions.increase"
+      @click="$emit('clickButtonItemCounter', 'increase')"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
-    <input type="text" name="counter" class="counter__input" value="0" />
-    <button type="button" class="counter__button counter__button--plus">
+    <input type="text" name="counter" class="counter__input" :value="count" />
+    <button
+      type="button"
+      class="counter__button counter__button--plus"
+      :disabled="!permissions.decrease"
+      @click="$emit('clickButtonItemCounter', 'decrease')"
+    >
       <span class="visually-hidden">Больше</span>
     </button>
   </div>
@@ -17,5 +23,18 @@
 <script>
 export default {
   name: "ItemCounter",
+  props: {
+    count: {
+      type: Number,
+      default: 0,
+    },
+    permissions: {
+      type: Object,
+      default: () => ({
+        increase: false,
+        decrease: true,
+      }),
+    },
+  },
 };
 </script>

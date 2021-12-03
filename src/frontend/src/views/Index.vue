@@ -5,16 +5,17 @@
 
       <BuilderDoughSelector
         :doughs="pizza.doughs"
-        @clickDoughSelector="pizzaSelectors.dough = $event"
+        @clickSelectorItem="clickSelectorItem"
       />
       <BuilderSizeSelector
         :sizes="pizza.sizes"
-        @clickSizeSelector="pizzaSelectors.size = $event"
+        @clickSelectorItem="clickSelectorItem"
       />
       <BuilderIngredientsSelector
         :fillings="pizza.fillings"
         :sauces="pizza.sauces"
-        @clickSauceSelector="pizzaSelectors.sauce = $event"
+        @clickSelectorItem="clickSelectorItem"
+        @clickButtonItemCounter="clickButtonItemCounter"
       />
 
       <BuilderPizzaContent :pizzaParams="pizzaParams" />
@@ -25,6 +26,7 @@
 <script>
 import pizzaData from "@/static/pizza.json";
 import { getPizzaValues } from "@/common/helpers";
+import { PIZZA_VALUES } from "@/common/constants";
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
@@ -41,12 +43,6 @@ export default {
   data() {
     return {
       pizza: getPizzaValues(pizzaData),
-      pizzaSelectors: {
-        dough: null,
-        size: null,
-        sauce: null,
-        fillings: null,
-      },
       pizzaParams: {
         name: "",
         price: 0,
@@ -54,6 +50,57 @@ export default {
         type: "",
       },
     };
+  },
+  methods: {
+    clickSelectorItem: function (selector) {
+      this.pizza[selector.type] = this.pizza[selector.type].map((elem) => ({
+        ...elem,
+        checked: selector.id === elem.id,
+      }));
+    },
+    clickButtonItemCounter: function (filling) {
+      switch (filling.typeClick) {
+        case "decrease":
+          if (
+            this.getCountSelectedIngredients() <
+            PIZZA_VALUES.MAX_COUNT_INGREDIENTS
+          ) {
+            this.clickButtonItemCounterAction(filling);
+          }
+          break;
+        case "increase":
+          this.clickButtonItemCounterAction(filling);
+          break;
+      }
+    },
+    getCountSelectedIngredients: function () {
+      return this.pizza.fillings.reduce((acc, item) => {
+        return (acc += item.count);
+      }, 0);
+    },
+    clickButtonItemCounterAction: function (filling) {
+      this.pizza.fillings = this.pizza.fillings.map((elem) => {
+        if (
+          elem.id !== filling.id ||
+          (filling.typeClick === "increase" && filling.count === 0)
+        )
+          return elem;
+
+        const newCount =
+          filling.typeClick === "decrease" ? ++filling.count : --filling.count;
+
+        return {
+          ...elem,
+          count: newCount,
+          permissions: {
+            increase: newCount !== 0,
+            decrease:
+              this.getCountSelectedIngredients() <
+              PIZZA_VALUES.MAX_COUNT_INGREDIENTS,
+          },
+        };
+      });
+    },
   },
 };
 </script>

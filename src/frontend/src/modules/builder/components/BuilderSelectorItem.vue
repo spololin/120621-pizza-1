@@ -5,9 +5,9 @@
       :params="selector"
       @clickRadioButton="$emit('clickSelectorItem', $event)"
     />
-    <b v-if="selector.type === 'dough'">{{ selector.name }}</b>
+    <b v-if="selector.type === 'doughs'">{{ selector.name }}</b>
     <span>{{
-      selector.type === "dough" ? selector.description : selector.name
+      selector.type === "doughs" ? selector.description : selector.name
     }}</span>
   </label>
 </template>

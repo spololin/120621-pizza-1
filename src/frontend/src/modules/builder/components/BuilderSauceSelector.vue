@@ -6,8 +6,8 @@
       class="radio ingredients__input"
       v-for="sauce in sauces"
       :key="sauce.id"
-      :selector="{ ...sauce, type: 'sauce' }"
-      @clickSelectorItem="$emit('clickSauceSelector', $event)"
+      :selector="sauce"
+      @clickSelectorItem="$emit('clickSelectorItem', $event)"
     />
   </div>
 </template>

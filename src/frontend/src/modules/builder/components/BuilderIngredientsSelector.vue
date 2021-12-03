@@ -6,9 +6,12 @@
       <div class="sheet__content ingredients">
         <BuilderSauceSelector
           :sauces="sauces"
-          @clickSauceSelector="$emit('clickSauceSelector', $event)"
+          @clickSelectorItem="$emit('clickSelectorItem', $event)"
         />
-        <BuilderFillingSelector :fillings="fillings" />
+        <BuilderFillingSelector
+          :fillings="fillings"
+          @clickButtonItemCounter="clickButtonItemCounter"
+        />
       </div>
     </div>
   </div>
@@ -33,6 +36,11 @@ export default {
   components: {
     BuilderFillingSelector,
     BuilderSauceSelector,
+  },
+  methods: {
+    clickButtonItemCounter: function (filling) {
+      this.$emit("clickButtonItemCounter", filling);
+    },
   },
 };
 </script>

@@ -7,6 +7,7 @@
         v-for="filling in fillings"
         :key="filling.id"
         :filling="filling"
+        @clickButtonItemCounter="clickButtonItemCounter"
       />
     </ul>
   </div>
@@ -21,6 +22,11 @@ export default {
     fillings: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    clickButtonItemCounter: function (filling) {
+      this.$emit("clickButtonItemCounter", filling);
     },
   },
 };

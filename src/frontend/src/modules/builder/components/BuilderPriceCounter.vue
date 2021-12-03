@@ -1,7 +1,7 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ pizzaParams.price }} ₽</p>
-    <Button :disabled="!pizzaParams.validate"> Готовьте! </Button>
+    <p>Итого: {{ price }} ₽</p>
+    <Button> Готовьте! </Button>
   </div>
 </template>
 
@@ -11,8 +11,8 @@ export default {
   name: "BuilderPriceCounter",
   components: { Button },
   props: {
-    pizzaParams: {
-      type: Object,
+    price: {
+      type: Number,
       required: true,
     },
   },

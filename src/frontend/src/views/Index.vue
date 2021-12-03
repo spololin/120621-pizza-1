@@ -18,7 +18,7 @@
         @clickButtonItemCounter="clickButtonItemCounter"
       />
 
-      <BuilderPizzaContent :pizzaParams="pizzaParams" />
+      <BuilderPizzaContent :price="getTotalPizzaPrice" />
     </div>
   </form>
 </template>
@@ -74,6 +74,38 @@ export default {
           },
         };
       });
+    },
+  },
+  computed: {
+    getTotalPizzaPrice() {
+      const selectedSize = this.pizza.sizes.find((elem) => {
+        return elem.checked === true;
+      });
+
+      const selectedSauce = this.pizza.sauces.find((elem) => {
+        return elem.checked === true;
+      });
+
+      const selectedDough = this.pizza.doughs.find((elem) => {
+        return elem.checked === true;
+      });
+
+      const selectedFillings = this.pizza.fillings.filter((elem) => {
+        return elem.count > 0;
+      });
+
+      console.log(selectedFillings);
+
+      const fillingsPrice = selectedFillings.reduce((acc, curr) => {
+        const { count, price } = curr;
+        return acc + count * price;
+      }, 0);
+
+      console.log(selectedDough, selectedSauce, fillingsPrice, selectedSize);
+      return (
+        (selectedDough.price + selectedSauce.price + fillingsPrice) *
+        selectedSize.multiplier
+      );
     },
   },
 };

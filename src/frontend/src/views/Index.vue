@@ -90,18 +90,15 @@ export default {
         return elem.checked === true;
       });
 
-      const selectedFillings = this.pizza.fillings.filter((elem) => {
-        return elem.count > 0;
-      });
+      const fillingsPrice = this.pizza.fillings
+        .filter((elem) => {
+          return elem.count > 0;
+        })
+        .reduce((acc, curr) => {
+          const { count, price } = curr;
+          return acc + count * price;
+        }, 0);
 
-      console.log(selectedFillings);
-
-      const fillingsPrice = selectedFillings.reduce((acc, curr) => {
-        const { count, price } = curr;
-        return acc + count * price;
-      }, 0);
-
-      console.log(selectedDough, selectedSauce, fillingsPrice, selectedSize);
       return (
         (selectedDough.price + selectedSauce.price + fillingsPrice) *
         selectedSize.multiplier

@@ -29,5 +29,5 @@
     "32 см": "normal",
     "45 см": "large",
   },
-  MAX_COUNT_INGREDIENTS: 3,
+  MAX_COUNT_TYPE_INGREDIENT: 3,
 };

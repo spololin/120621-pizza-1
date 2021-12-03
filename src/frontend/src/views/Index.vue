@@ -59,44 +59,18 @@ export default {
       }));
     },
     clickButtonItemCounter: function (filling) {
-      switch (filling.typeClick) {
-        case "decrease":
-          if (
-            this.getCountSelectedIngredients() <
-            PIZZA_VALUES.MAX_COUNT_INGREDIENTS
-          ) {
-            this.clickButtonItemCounterAction(filling);
-          }
-          break;
-        case "increase":
-          this.clickButtonItemCounterAction(filling);
-          break;
-      }
-    },
-    getCountSelectedIngredients: function () {
-      return this.pizza.fillings.reduce((acc, item) => {
-        return (acc += item.count);
-      }, 0);
-    },
-    clickButtonItemCounterAction: function (filling) {
       this.pizza.fillings = this.pizza.fillings.map((elem) => {
-        if (
-          elem.id !== filling.id ||
-          (filling.typeClick === "increase" && filling.count === 0)
-        )
-          return elem;
+        if (elem.id !== filling.id) return elem;
 
-        const newCount =
+        const count =
           filling.typeClick === "decrease" ? ++filling.count : --filling.count;
 
         return {
           ...elem,
-          count: newCount,
+          count,
           permissions: {
-            increase: newCount !== 0,
-            decrease:
-              this.getCountSelectedIngredients() <
-              PIZZA_VALUES.MAX_COUNT_INGREDIENTS,
+            increase: count > 0,
+            decrease: count < PIZZA_VALUES.MAX_COUNT_TYPE_INGREDIENT,
           },
         };
       });

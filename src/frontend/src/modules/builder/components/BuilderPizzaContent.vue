@@ -9,7 +9,7 @@
       />
     </label>
 
-    <BuilderPizzaView />
+    <BuilderPizzaView :pizzaClass="pizzaClass" />
     <BuilderPriceCounter :price="price" />
   </div>
 </template>
@@ -27,6 +27,10 @@ export default {
   props: {
     price: {
       type: Number,
+      required: true,
+    },
+    pizzaClass: {
+      type: String,
       required: true,
     },
   },

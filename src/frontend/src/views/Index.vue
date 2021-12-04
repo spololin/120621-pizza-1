@@ -18,7 +18,7 @@
         @clickButtonItemCounter="clickButtonItemCounter"
       />
 
-      <BuilderPizzaContent :price="getTotalPizzaPrice" />
+      <BuilderPizzaContent :price="totalPizzaPrice" :pizzaClass="pizzaClass" />
     </div>
   </form>
 </template>
@@ -75,21 +75,14 @@ export default {
         };
       });
     },
+    getSelectedPizzaItems(type) {
+      return this.pizza[type].find((elem) => {
+        return elem.checked === true;
+      });
+    },
   },
   computed: {
-    getTotalPizzaPrice() {
-      const selectedSize = this.pizza.sizes.find((elem) => {
-        return elem.checked === true;
-      });
-
-      const selectedSauce = this.pizza.sauces.find((elem) => {
-        return elem.checked === true;
-      });
-
-      const selectedDough = this.pizza.doughs.find((elem) => {
-        return elem.checked === true;
-      });
-
+    totalPizzaPrice() {
       const fillingsPrice = this.pizza.fillings
         .filter((elem) => {
           return elem.count > 0;
@@ -100,9 +93,21 @@ export default {
         }, 0);
 
       return (
-        (selectedDough.price + selectedSauce.price + fillingsPrice) *
-        selectedSize.multiplier
+        (this.getSelectedPizzaItems("doughs").price +
+          this.getSelectedPizzaItems("sauces").price +
+          fillingsPrice) *
+        this.getSelectedPizzaItems("sizes").multiplier
       );
+    },
+    pizzaClass() {
+      const dough = this.getSelectedPizzaItems("doughs");
+      const sauce = this.getSelectedPizzaItems("sauces");
+
+      const basePartClass = "pizza--foundation--";
+      const doughPartClass = dough.value === "light" ? "small" : "big";
+      const saucePartClass = sauce.value;
+
+      return basePartClass + doughPartClass + "-" + saucePartClass;
     },
   },
 };

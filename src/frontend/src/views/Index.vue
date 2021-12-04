@@ -22,6 +22,8 @@
         :price="totalPizzaPrice"
         :pizzaClass="pizzaClass"
         :fillings="selectedPizzaFillings"
+        :name="pizza.name"
+        @changeNamePizza="changeNamePizza"
       />
     </div>
   </form>
@@ -77,6 +79,9 @@ export default {
       return this.pizza[type].find((elem) => {
         return elem.checked === true;
       });
+    },
+    changeNamePizza(event) {
+      this.pizza.name = event.target.value;
     },
   },
   computed: {

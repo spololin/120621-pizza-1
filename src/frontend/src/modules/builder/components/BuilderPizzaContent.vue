@@ -6,11 +6,13 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
+        :value="name"
+        @input="$emit('changeNamePizza', $event)"
       />
     </label>
 
     <BuilderPizzaView :pizzaClass="pizzaClass" :fillings="fillings" />
-    <BuilderPriceCounter :price="price" />
+    <BuilderPriceCounter :price="price" :fillings="fillings" :name="name" />
   </div>
 </template>
 
@@ -36,6 +38,10 @@ export default {
     fillings: {
       type: Array,
       default: () => [],
+    },
+    name: {
+      type: String,
+      required: true,
     },
   },
 };

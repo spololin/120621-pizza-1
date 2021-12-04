@@ -29,4 +29,5 @@ export const getPizzaValues = (pizza) => ({
     checked: !--size.id,
     type: "sizes",
   })),
+  name: "",
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="content__result">
     <p>Итого: {{ price }} ₽</p>
-    <Button> Готовьте! </Button>
+    <Button :disabled="!(fillings.length && name.length)"> Готовьте! </Button>
   </div>
 </template>
 
@@ -13,6 +13,14 @@ export default {
   props: {
     price: {
       type: Number,
+      required: true,
+    },
+    fillings: {
+      type: Array,
+      default: () => [],
+    },
+    name: {
+      type: String,
       required: true,
     },
   },

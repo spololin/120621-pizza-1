@@ -21,7 +21,7 @@
       <BuilderPizzaContent
         :price="totalPizzaPrice"
         :pizzaClass="pizzaClass"
-        :fillings="selectedPizzaFillings"
+        :fillings="selectedItems.fillings"
         :name="pizza.name"
         @changeNamePizza="changeNamePizza"
       />
@@ -85,35 +85,34 @@ export default {
     },
   },
   computed: {
+    selectedItems() {
+      return {
+        dough: this.getSelectedPizzaItems("doughs"),
+        size: this.getSelectedPizzaItems("sizes"),
+        sauce: this.getSelectedPizzaItems("sauces"),
+        fillings: this.pizza.fillings.filter((item) => item.count),
+      };
+    },
     totalPizzaPrice() {
-      const fillingsPrice = this.pizza.fillings
-        .filter((elem) => {
-          return elem.count > 0;
-        })
-        .reduce((acc, curr) => {
-          const { count, price } = curr;
-          return acc + count * price;
-        }, 0);
+      const fillingsPrice = this.selectedItems.fillings.reduce((acc, elem) => {
+        const { count, price } = elem;
+        return acc + count * price;
+      }, 0);
 
       return (
-        (this.getSelectedPizzaItems("doughs").price +
-          this.getSelectedPizzaItems("sauces").price +
+        (this.selectedItems.dough.price +
+          this.selectedItems.sauce.price +
           fillingsPrice) *
-        this.getSelectedPizzaItems("sizes").multiplier
+        this.selectedItems.size.multiplier
       );
     },
     pizzaClass() {
-      const dough = this.getSelectedPizzaItems("doughs");
-      const sauce = this.getSelectedPizzaItems("sauces");
-
       const basePartClass = "pizza--foundation--";
-      const doughPartClass = dough.value === "light" ? "small" : "big";
-      const saucePartClass = sauce.value;
+      const doughPartClass =
+        this.selectedItems.dough.value === "light" ? "small" : "big";
+      const saucePartClass = this.selectedItems.sauce.value;
 
       return basePartClass + doughPartClass + "-" + saucePartClass;
-    },
-    selectedPizzaFillings() {
-      return this.pizza.fillings.filter((elem) => elem.count > 0);
     },
   },
 };

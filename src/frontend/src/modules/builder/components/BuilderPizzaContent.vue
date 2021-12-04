@@ -9,7 +9,7 @@
       />
     </label>
 
-    <BuilderPizzaView :pizzaClass="pizzaClass" />
+    <BuilderPizzaView :pizzaClass="pizzaClass" :fillings="fillings" />
     <BuilderPriceCounter :price="price" />
   </div>
 </template>
@@ -32,6 +32,10 @@ export default {
     pizzaClass: {
       type: String,
       required: true,
+    },
+    fillings: {
+      type: Array,
+      default: () => [],
     },
   },
 };

@@ -18,7 +18,11 @@
         @clickButtonItemCounter="clickButtonItemCounter"
       />
 
-      <BuilderPizzaContent :price="totalPizzaPrice" :pizzaClass="pizzaClass" />
+      <BuilderPizzaContent
+        :price="totalPizzaPrice"
+        :pizzaClass="pizzaClass"
+        :fillings="selectedPizzaFillings"
+      />
     </div>
   </form>
 </template>
@@ -43,12 +47,6 @@ export default {
   data() {
     return {
       pizza: getPizzaValues(pizzaData),
-      pizzaParams: {
-        name: "",
-        price: 0,
-        validate: false,
-        type: "",
-      },
     };
   },
   methods: {
@@ -108,6 +106,9 @@ export default {
       const saucePartClass = sauce.value;
 
       return basePartClass + doughPartClass + "-" + saucePartClass;
+    },
+    selectedPizzaFillings() {
+      return this.pizza.fillings.filter((elem) => elem.count > 0);
     },
   },
 };

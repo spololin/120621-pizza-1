@@ -11,7 +11,11 @@
       />
     </label>
 
-    <BuilderPizzaView :pizzaClass="pizzaClass" :fillings="fillings" />
+    <BuilderPizzaView
+      :pizzaClass="pizzaClass"
+      :fillings="fillings"
+      @dropFilling="dropFilling"
+    />
     <BuilderPriceCounter :price="price" :fillings="fillings" :name="name" />
   </div>
 </template>
@@ -42,6 +46,11 @@ export default {
     name: {
       type: String,
       required: true,
+    },
+  },
+  methods: {
+    dropFilling(filling) {
+      this.$emit("dropFilling", filling);
     },
   },
 };

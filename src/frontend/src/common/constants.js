@@ -29,5 +29,8 @@
     "32 см": "normal",
     "45 см": "large",
   },
-  MAX_COUNT_TYPE_INGREDIENT: 3,
 };
+
+export const MAX_COUNT_TYPE_INGREDIENT = 3;
+export const EFFECT_MOVE = "move";
+export const DATA_TRANSFER_PAYLOAD = "payload";

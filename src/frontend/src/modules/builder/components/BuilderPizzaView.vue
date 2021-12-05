@@ -1,23 +1,27 @@
 <template>
-  <div class="content__constructor">
-    <div class="pizza" :class="pizzaClass">
-      <div class="pizza__wrapper">
-        <div
-          class="pizza__filling"
-          v-for="filling in fillings"
-          :key="filling.id"
-          :class="classFilling(filling)"
-        ></div>
-        <div class="pizza__filling pizza__filling--bacon"></div>
-        <div class="pizza__filling pizza__filling--cheddar"></div>
+  <AppDrop @drop="dropFilling">
+    <div class="content__constructor">
+      <div class="pizza" :class="pizzaClass">
+        <div class="pizza__wrapper">
+          <div
+            class="pizza__filling"
+            v-for="filling in fillings"
+            :key="filling.id"
+            :class="classFilling(filling)"
+          ></div>
+          <div class="pizza__filling pizza__filling--bacon"></div>
+          <div class="pizza__filling pizza__filling--cheddar"></div>
+        </div>
       </div>
     </div>
-  </div>
+  </AppDrop>
 </template>
 
 <script>
+import AppDrop from "@/common/components/AppDrop";
 export default {
   name: "BuilderPizzaView",
+  components: { AppDrop },
   props: {
     pizzaClass: {
       type: String,
@@ -44,6 +48,9 @@ export default {
       }
 
       return customClass;
+    },
+    dropFilling(filling) {
+      this.$emit("dropFilling", filling);
     },
   },
 };

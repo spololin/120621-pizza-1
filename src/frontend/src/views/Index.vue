@@ -24,6 +24,7 @@
         :fillings="selectedItems.fillings"
         :name="pizza.name"
         @changeNamePizza="changeNamePizza"
+        @dropFilling="dropFilling"
       />
     </div>
   </form>
@@ -32,7 +33,7 @@
 <script>
 import pizzaData from "@/static/pizza.json";
 import { getPizzaValues } from "@/common/helpers";
-import { PIZZA_VALUES } from "@/common/constants";
+import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 import BuilderDoughSelector from "@/modules/builder/components/BuilderDoughSelector";
 import BuilderSizeSelector from "@/modules/builder/components/BuilderSizeSelector";
 import BuilderIngredientsSelector from "@/modules/builder/components/BuilderIngredientsSelector";
@@ -70,7 +71,7 @@ export default {
           count,
           permissions: {
             increase: count > 0,
-            decrease: count < PIZZA_VALUES.MAX_COUNT_TYPE_INGREDIENT,
+            decrease: count < MAX_COUNT_TYPE_INGREDIENT,
           },
         };
       });
@@ -82,6 +83,9 @@ export default {
     },
     changeNamePizza(event) {
       this.pizza.name = event.target.value;
+    },
+    dropFilling(filling) {
+      this.clickButtonItemCounter({ ...filling, typeClick: "decrease" });
     },
   },
   computed: {

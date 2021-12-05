@@ -103,12 +103,15 @@ export default {
         return acc + count * price;
       }, 0);
 
-      return (
+      const price =
         (this.selectedItems.dough.price +
           this.selectedItems.sauce.price +
           fillingsPrice) *
-        this.selectedItems.size.multiplier
-      );
+        this.selectedItems.size.multiplier;
+
+      this.$emit("price", price);
+
+      return price;
     },
     pizzaClass() {
       const basePartClass = "pizza--foundation--";

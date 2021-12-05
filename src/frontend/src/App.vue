@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <AppLayout />
+    <AppLayout :total-price="totalPrice" />
     <main class="content">
-      <IndexView />
+      <IndexView @price="price" />
     </main>
   </div>
 </template>
@@ -13,9 +13,19 @@ import IndexView from "@/views/Index";
 
 export default {
   name: "App",
+  data() {
+    return {
+      totalPrice: 0,
+    };
+  },
   components: {
     AppLayout,
     IndexView,
+  },
+  methods: {
+    price(total) {
+      this.totalPrice = total;
+    },
   },
 };
 </script>

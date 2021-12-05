@@ -11,7 +11,7 @@
       </a>
     </div>
     <div class="header__cart">
-      <a href="cart.html">0 ₽</a>
+      <a href="cart.html">{{ totalPrice }} ₽</a>
     </div>
     <div class="header__user">
       <a href="#" class="header__login"><span>Войти</span></a>
@@ -22,6 +22,12 @@
 <script>
 export default {
   name: "AppLayoutHeader",
+  props: {
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+  },
 };
 </script>
 

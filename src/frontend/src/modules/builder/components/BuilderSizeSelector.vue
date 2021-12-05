@@ -10,7 +10,7 @@
           :key="size.id"
           :class="`diameter__input--${size.value}`"
           :selector="size"
-          @clickSelectorItem="$emit('clickSelectorItem', $event)"
+          @clickSelectorItem="$emit('selectSize', $event)"
         />
       </div>
     </div>

@@ -5,23 +5,23 @@
 
       <BuilderDoughSelector
         :doughs="pizza.doughs"
-        @clickSelectorItem="clickSelectorItem"
+        @selectDough="clickSelectorItem"
       />
       <BuilderSizeSelector
         :sizes="pizza.sizes"
-        @clickSelectorItem="clickSelectorItem"
+        @selectSize="clickSelectorItem"
       />
       <BuilderIngredientsSelector
         :fillings="pizza.fillings"
         :sauces="pizza.sauces"
-        @clickSelectorItem="clickSelectorItem"
+        @selectSauce="clickSelectorItem"
         @clickButtonItemCounter="clickButtonItemCounter"
       />
 
       <BuilderPizzaContent
         :price="totalPizzaPrice"
-        :pizzaClass="pizzaClass"
-        :fillings="selectedItems.fillings"
+        :selected-items="selectedItems"
+        :fillings="selectedFillings"
         :name="pizza.name"
         @changeNamePizza="changeNamePizza"
         @dropFilling="dropFilling"
@@ -64,38 +64,51 @@ export default {
         if (elem.id !== filling.id) return elem;
 
         const count =
-          filling.typeClick === "decrease" ? ++filling.count : --filling.count;
+          filling.typeClick === "increase" ? ++filling.count : --filling.count;
 
         return {
           ...elem,
           count,
           permissions: {
-            increase: count > 0,
-            decrease: count < MAX_COUNT_TYPE_INGREDIENT,
+            decrease: count > 0,
+            increase: count < MAX_COUNT_TYPE_INGREDIENT,
           },
         };
-      });
-    },
-    getSelectedPizzaItems(type) {
-      return this.pizza[type].find((elem) => {
-        return elem.checked === true;
       });
     },
     changeNamePizza(event) {
       this.pizza.name = event.target.value;
     },
     dropFilling(filling) {
-      this.clickButtonItemCounter({ ...filling, typeClick: "decrease" });
+      this.clickButtonItemCounter({ ...filling, typeClick: "increase" });
     },
   },
   computed: {
     selectedItems() {
       return {
-        dough: this.getSelectedPizzaItems("doughs"),
-        size: this.getSelectedPizzaItems("sizes"),
-        sauce: this.getSelectedPizzaItems("sauces"),
-        fillings: this.pizza.fillings.filter((item) => item.count),
+        dough: this.selectedDough,
+        size: this.selectedSize,
+        sauce: this.selectedSauce,
+        fillings: this.selectedFillings,
       };
+    },
+    selectedDough() {
+      return this.pizza.doughs.find((elem) => {
+        return elem.checked === true;
+      });
+    },
+    selectedSize() {
+      return this.pizza.sizes.find((elem) => {
+        return elem.checked === true;
+      });
+    },
+    selectedSauce() {
+      return this.pizza.sauces.find((elem) => {
+        return elem.checked === true;
+      });
+    },
+    selectedFillings() {
+      return this.pizza.fillings.filter((item) => item.count);
     },
     totalPizzaPrice() {
       const fillingsPrice = this.selectedItems.fillings.reduce((acc, elem) => {
@@ -103,23 +116,20 @@ export default {
         return acc + count * price;
       }, 0);
 
-      const price =
+      return (
         (this.selectedItems.dough.price +
           this.selectedItems.sauce.price +
           fillingsPrice) *
-        this.selectedItems.size.multiplier;
-
-      this.$emit("price", price);
-
-      return price;
+        this.selectedItems.size.multiplier
+      );
     },
-    pizzaClass() {
-      const basePartClass = "pizza--foundation--";
-      const doughPartClass =
-        this.selectedItems.dough.value === "light" ? "small" : "big";
-      const saucePartClass = this.selectedItems.sauce.value;
-
-      return basePartClass + doughPartClass + "-" + saucePartClass;
+  },
+  watch: {
+    totalPizzaPrice: {
+      immediate: true,
+      handler(totalPrice) {
+        this.$emit("price", totalPrice);
+      },
     },
   },
 };

@@ -6,7 +6,7 @@
       <div class="sheet__content ingredients">
         <BuilderSauceSelector
           :sauces="sauces"
-          @clickSelectorItem="$emit('clickSelectorItem', $event)"
+          @selectSauce="$emit('selectSauce', $event)"
         />
         <BuilderFillingSelector
           :fillings="fillings"

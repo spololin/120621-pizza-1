@@ -3,8 +3,8 @@
     <button
       type="button"
       class="counter__button counter__button--minus"
-      :disabled="!permissions.increase"
-      @click="$emit('clickButtonItemCounter', 'increase')"
+      :disabled="!permissions.decrease"
+      @click="$emit('clickButtonItemCounter', 'decrease')"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -12,8 +12,8 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
-      :disabled="!permissions.decrease"
-      @click="$emit('clickButtonItemCounter', 'decrease')"
+      :disabled="!permissions.increase"
+      @click="$emit('clickButtonItemCounter', 'increase')"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -31,8 +31,8 @@ export default {
     permissions: {
       type: Object,
       default: () => ({
-        increase: false,
-        decrease: true,
+        decrease: false,
+        increase: true,
       }),
     },
   },

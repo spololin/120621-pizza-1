@@ -9,8 +9,6 @@
             :key="filling.id"
             :class="classFilling(filling)"
           ></div>
-          <div class="pizza__filling pizza__filling--bacon"></div>
-          <div class="pizza__filling pizza__filling--cheddar"></div>
         </div>
       </div>
     </div>

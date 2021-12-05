@@ -1,6 +1,9 @@
 <template>
   <li class="ingredients__item">
-    <AppDrag :transfer-data="filling">
+    <AppDrag
+      :transfer-data="filling"
+      :allow-drag="filling.count < MAX_COUNT_TYPE_INGREDIENT"
+    >
       <span class="filling" :class="`filling--${filling.value}`">{{
         filling.name
       }}</span>
@@ -16,6 +19,7 @@
 <script>
 import ItemCounter from "@/common/components/ItemCounter";
 import AppDrag from "@/common/components/AppDrag";
+import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 export default {
   name: "BuilderIngredientsItem",
   props: {
@@ -23,6 +27,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  data() {
+    return {
+      MAX_COUNT_TYPE_INGREDIENT,
+    };
   },
   components: { AppDrag, ItemCounter },
   methods: {

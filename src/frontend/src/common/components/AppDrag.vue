@@ -1,6 +1,6 @@
 <template>
   <div
-    :draggable="transferData.count < MAX_COUNT_TYPE_INGREDIENT"
+    :draggable="allowDrag"
     @dragstart.self="onDrag"
     @dragover.prevent
     @dragenter.prevent
@@ -26,6 +26,10 @@ export default {
   props: {
     transferData: {
       type: Object,
+      required: true,
+    },
+    allowDrag: {
+      type: Boolean,
       required: true,
     },
   },

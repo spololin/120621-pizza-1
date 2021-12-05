@@ -35,8 +35,8 @@ export default {
       type: Number,
       required: true,
     },
-    pizzaClass: {
-      type: String,
+    selectedItems: {
+      type: Object,
       required: true,
     },
     fillings: {
@@ -51,6 +51,16 @@ export default {
   methods: {
     dropFilling(filling) {
       this.$emit("dropFilling", filling);
+    },
+  },
+  computed: {
+    pizzaClass() {
+      const basePartClass = "pizza--foundation--";
+      const doughPartClass =
+        this.selectedItems.dough.value === "light" ? "small" : "big";
+      const saucePartClass = this.selectedItems.sauce.value;
+
+      return basePartClass + doughPartClass + "-" + saucePartClass;
     },
   },
 };

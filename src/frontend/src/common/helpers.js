@@ -13,8 +13,8 @@ export const getPizzaValues = (pizza) => ({
     type: "ingredient",
     count: 0,
     permissions: {
-      increase: false,
-      decrease: true,
+      decrease: false,
+      increase: true,
     },
   })),
   sauces: (pizza.sauces || []).map((sauce) => ({

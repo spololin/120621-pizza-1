@@ -7,7 +7,7 @@
       v-for="sauce in sauces"
       :key="sauce.id"
       :selector="sauce"
-      @clickSelectorItem="$emit('clickSelectorItem', $event)"
+      @clickSelectorItem="$emit('selectSauce', $event)"
     />
   </div>
 </template>

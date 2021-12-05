@@ -1,21 +1,31 @@
 <template>
   <div id="app">
-    <AppLayout />
+    <AppLayout :total-price="totalPrice" />
     <main class="content">
-      <ConstructorPizza />
+      <IndexView @price="price" />
     </main>
   </div>
 </template>
 
 <script>
 import AppLayout from "@/layouts/AppLayout";
-import ConstructorPizza from "@/views/ConstructorPizza";
+import IndexView from "@/views/Index";
 
 export default {
   name: "App",
+  data() {
+    return {
+      totalPrice: 0,
+    };
+  },
   components: {
     AppLayout,
-    ConstructorPizza,
+    IndexView,
+  },
+  methods: {
+    price(total) {
+      this.totalPrice = total;
+    },
   },
 };
 </script>

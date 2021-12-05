@@ -30,3 +30,7 @@
     "45 см": "large",
   },
 };
+
+export const MAX_COUNT_TYPE_INGREDIENT = 3;
+export const EFFECT_MOVE = "move";
+export const DATA_TRANSFER_PAYLOAD = "payload";

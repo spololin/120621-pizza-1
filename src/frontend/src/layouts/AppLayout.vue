@@ -1,5 +1,5 @@
 ﻿<template>
-  <AppLayoutHeader />
+  <AppLayoutHeader :total-price="totalPrice" />
 </template>
 
 <script>
@@ -9,6 +9,12 @@ export default {
   name: "AppLayout",
   components: {
     AppLayoutHeader,
+  },
+  props: {
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
   },
 };
 </script>

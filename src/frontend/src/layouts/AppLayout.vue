@@ -14,7 +14,6 @@ export default {
     totalPrice: {
       type: Number,
       required: true,
-      validator: (v) => v > 0,
     },
   },
 };

@@ -1,33 +1,35 @@
 ﻿<template>
-  <form action="#" method="post">
-    <div class="content__wrapper">
-      <h1 class="title title--big">Конструктор пиццы</h1>
+  <main class="content">
+    <form action="#" method="post">
+      <div class="content__wrapper">
+        <h1 class="title title--big">Конструктор пиццы</h1>
 
-      <BuilderDoughSelector
-        :doughs="pizza.doughs"
-        @selectDough="clickSelectorItem"
-      />
-      <BuilderSizeSelector
-        :sizes="pizza.sizes"
-        @selectSize="clickSelectorItem"
-      />
-      <BuilderIngredientsSelector
-        :fillings="pizza.fillings"
-        :sauces="pizza.sauces"
-        @selectSauce="clickSelectorItem"
-        @clickButtonItemCounter="clickButtonItemCounter"
-      />
+        <BuilderDoughSelector
+          :doughs="pizza.doughs"
+          @selectDough="clickSelectorItem"
+        />
+        <BuilderSizeSelector
+          :sizes="pizza.sizes"
+          @selectSize="clickSelectorItem"
+        />
+        <BuilderIngredientsSelector
+          :fillings="pizza.fillings"
+          :sauces="pizza.sauces"
+          @selectSauce="clickSelectorItem"
+          @clickButtonItemCounter="clickButtonItemCounter"
+        />
 
-      <BuilderPizzaContent
-        :price="totalPizzaPrice"
-        :selected-items="selectedItems"
-        :fillings="selectedFillings"
-        :name="pizza.name"
-        @changeNamePizza="changeNamePizza"
-        @dropFilling="dropFilling"
-      />
-    </div>
-  </form>
+        <BuilderPizzaContent
+          :price="totalPizzaPrice"
+          :selected-items="selectedItems"
+          :fillings="selectedFillings"
+          :name="pizza.name"
+          @changeNamePizza="changeNamePizza"
+          @dropFilling="dropFilling"
+        />
+      </div>
+    </form>
+  </main>
 </template>
 
 <script>

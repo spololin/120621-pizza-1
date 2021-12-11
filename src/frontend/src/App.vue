@@ -1,15 +1,13 @@
 <template>
   <div id="app">
-    <AppLayout :total-price="totalPrice" />
-    <main class="content">
-      <IndexView @price="price" />
-    </main>
+    <AppLayout :total-price="totalPrice">
+      <router-view />
+    </AppLayout>
   </div>
 </template>
 
 <script>
 import AppLayout from "@/layouts/AppLayout";
-import IndexView from "@/views/Index";
 
 export default {
   name: "App",
@@ -18,14 +16,13 @@ export default {
       totalPrice: 0,
     };
   },
-  components: {
-    AppLayout,
-    IndexView,
-  },
   methods: {
     price(total) {
       this.totalPrice = total;
     },
+  },
+  components: {
+    AppLayout,
   },
 };
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div class="sign-form">
-    <a href="#" class="close close--white">
+    <router-link to="/" class="close close--white">
       <span class="visually-hidden">Закрыть форму авторизации</span>
-    </a>
+    </router-link>
     <div class="sign-form__title">
       <h1 class="title title--small">Авторизуйтесь на сайте</h1>
     </div>
-    <form action="test.html" method="post">
+    <form action="" method="post">
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>

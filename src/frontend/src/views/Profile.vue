@@ -1,19 +1,5 @@
 <template>
   <main class="layout">
-    <div class="layout__sidebar sidebar">
-      <a href="index.html" class="logo layout__logo">
-        <img
-          src="img/logo.svg"
-          alt="V!U!E! Pizza logo"
-          width="90"
-          height="40"
-        />
-      </a>
-
-      <a class="layout__link" href="#">История заказов</a>
-      <a class="layout__link layout__link--active" href="#">Мои данные</a>
-    </div>
-
     <div class="layout__content">
       <div class="layout__title">
         <h1 class="title title--big">Мои данные</h1>
@@ -23,11 +9,14 @@
         <picture>
           <source
             type="image/webp"
-            srcset="img/users/user5@2x.webp 1x, img/users/user5@4x.webp 2x"
+            srcset="
+              @/assets/img/users/user5@2x.webp 1x,
+              @/assets/img/users/user5@4x.webp 2x
+            "
           />
           <img
-            src="img/users/user5@2x.jpg"
-            srcset="img/users/user5@4x.jpg"
+            src="@/assets/img/users/user5@2x.jpg"
+            srcset="@/assets/img/users/user5@4x.jpg"
             alt="Василий Ложкин"
             width="72"
             height="72"

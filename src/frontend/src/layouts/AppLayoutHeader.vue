@@ -14,7 +14,7 @@
       <router-link to="/cart">{{ totalPrice }} ₽</router-link>
     </div>
     <div class="header__user">
-      <router-link v-if="!authorization" to="/login" class="header__login"
+      <router-link v-if="!user.authorization" to="/login" class="header__login"
         ><span>Войти</span></router-link
       >
       <router-link v-else to="/profile">
@@ -34,9 +34,9 @@
             height="32"
           />
         </picture>
-        <span>Василий Ложкин</span>
+        <span>{{ user.name }}</span>
       </router-link>
-      <router-link v-if="authorization" to="/" class="header__logout"
+      <router-link v-if="user.authorization" to="/" class="header__logout"
         ><span>Выйти</span></router-link
       >
     </div>
@@ -51,9 +51,9 @@ export default {
       type: Number,
       default: () => 0,
     },
-    authorization: {
-      type: Boolean,
-      default: false,
+    user: {
+      type: Object,
+      required: true,
     },
   },
 };

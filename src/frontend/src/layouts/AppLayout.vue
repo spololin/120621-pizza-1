@@ -1,22 +1,30 @@
-﻿<template>
-  <AppLayoutHeader :total-price="totalPrice" />
+<template>
+  <component :is="layout" :total-price="totalPrice" :user="user">
+    <slot />
+  </component>
 </template>
 
 <script>
-import AppLayoutHeader from "@/layouts/AppLayoutHeader";
+const defaultLayout = "AppLayoutDefault";
 
 export default {
   name: "AppLayout",
-  components: {
-    AppLayoutHeader,
-  },
   props: {
     totalPrice: {
       type: Number,
+      default: 0,
+    },
+    user: {
+      type: Object,
       required: true,
+    },
+  },
+  computed: {
+    layout() {
+      const layout = this.$route.meta.layout || defaultLayout;
+      return () => import(`@/layouts/${layout}.vue`);
     },
   },
 };
 </script>
-
-<style></style>
+;

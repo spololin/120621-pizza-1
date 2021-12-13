@@ -49,7 +49,7 @@ export default {
   props: {
     totalPrice: {
       type: Number,
-      default: () => 0,
+      default: 0,
     },
     user: {
       type: Object,

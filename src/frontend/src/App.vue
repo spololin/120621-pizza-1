@@ -45,22 +45,16 @@ export default {
       };
     },
     selectedDough() {
-      return this.pizza.doughs.find((elem) => {
-        return elem.checked === true;
-      });
+      return this.pizza.doughs.find(({ checked }) => checked);
     },
     selectedSize() {
-      return this.pizza.sizes.find((elem) => {
-        return elem.checked === true;
-      });
+      return this.pizza.sizes.find(({ checked }) => checked);
     },
     selectedSauce() {
-      return this.pizza.sauces.find((elem) => {
-        return elem.checked === true;
-      });
+      return this.pizza.sauces.find(({ checked }) => checked);
     },
     selectedFillings() {
-      return this.pizza.fillings.filter((item) => item.count);
+      return this.pizza.fillings.filter(({ count }) => count);
     },
     totalPizzaPrice() {
       const fillingsPrice = this.selectedItems.fillings.reduce((acc, elem) => {

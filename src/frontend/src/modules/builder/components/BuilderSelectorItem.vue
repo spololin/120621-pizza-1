@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import RadioButton from "@/common/components/RadioButton";
+import RadioButton from "@/common/components/AppRadioButton";
 
 export default {
   name: "BuilderSelectorItem",

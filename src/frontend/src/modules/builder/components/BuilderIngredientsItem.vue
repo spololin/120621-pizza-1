@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import ItemCounter from "@/common/components/ItemCounter";
+import ItemCounter from "@/common/components/AppItemCounter";
 import AppDrag from "@/common/components/AppDrag";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 export default {

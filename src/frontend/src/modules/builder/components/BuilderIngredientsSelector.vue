@@ -1,7 +1,9 @@
 <template>
   <div class="content__ingredients">
     <div class="sheet">
-      <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
+      <h2 class="title title--small sheet__title">
+        Выберите ингредиенты
+      </h2>
 
       <div class="sheet__content ingredients">
         <BuilderSauceSelector
@@ -23,6 +25,10 @@ import BuilderSauceSelector from "@/modules/builder/components/BuilderSauceSelec
 
 export default {
   name: "BuilderIngredientsSelector",
+  components: {
+    BuilderFillingSelector,
+    BuilderSauceSelector,
+  },
   props: {
     fillings: {
       type: Array,
@@ -32,10 +38,6 @@ export default {
       type: Array,
       default: () => [],
     },
-  },
-  components: {
-    BuilderFillingSelector,
-    BuilderSauceSelector,
   },
   methods: {
     clickButtonItemCounter: function (filling) {

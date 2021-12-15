@@ -1,5 +1,8 @@
 <template>
-  <div class="ingredients__filling" v-if="fillings.length">
+  <div
+    v-if="fillings.length"
+    class="ingredients__filling"
+  >
     <p>Начинка:</p>
 
     <ul class="ingredients__list">

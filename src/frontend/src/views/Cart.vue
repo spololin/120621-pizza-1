@@ -1,9 +1,15 @@
 <template>
-  <form action="test.html" method="post" class="layout-form">
+  <form
+    action="test.html"
+    method="post"
+    class="layout-form"
+  >
     <main class="content cart">
       <div class="container">
         <div class="cart__title">
-          <h1 class="title title--big">Корзина</h1>
+          <h1 class="title title--big">
+            Корзина
+          </h1>
         </div>
 
         <!-- <div class="sheet cart__empty">
@@ -19,7 +25,7 @@
                 width="56"
                 height="56"
                 alt="Капричоза"
-              />
+              >
               <div class="product__text">
                 <h2>Капричоза</h2>
                 <ul>
@@ -42,7 +48,7 @@
                 name="counter"
                 class="counter__input"
                 value="1"
-              />
+              >
               <button
                 type="button"
                 class="
@@ -58,7 +64,12 @@
             </div>
 
             <div class="cart-list__button">
-              <button type="button" class="cart-list__edit">Изменить</button>
+              <button
+                type="button"
+                class="cart-list__edit"
+              >
+                Изменить
+              </button>
             </div>
           </li>
           <li class="cart-list__item">
@@ -69,7 +80,7 @@
                 width="56"
                 height="56"
                 alt="Любимая пицца"
-              />
+              >
               <div class="product__text">
                 <h2>Любимая пицца</h2>
                 <ul>
@@ -95,7 +106,7 @@
                 name="counter"
                 class="counter__input"
                 value="2"
-              />
+              >
               <button
                 type="button"
                 class="
@@ -111,7 +122,12 @@
             </div>
 
             <div class="cart-list__button">
-              <button type="button" class="cart-list__edit">Изменить</button>
+              <button
+                type="button"
+                class="cart-list__edit"
+              >
+                Изменить
+              </button>
             </div>
           </li>
         </ul>
@@ -125,7 +141,7 @@
                   width="39"
                   height="60"
                   alt="Coca-Cola 0,5 литра"
-                />
+                >
                 <span>Coca-Cola 0,5 литра</span>
               </p>
 
@@ -142,7 +158,7 @@
                     name="counter"
                     class="counter__input"
                     value="2"
-                  />
+                  >
                   <button
                     type="button"
                     class="
@@ -167,7 +183,7 @@
                   width="39"
                   height="60"
                   alt="Острый соус"
-                />
+                >
                 <span>Острый соус</span>
               </p>
 
@@ -184,7 +200,7 @@
                     name="counter"
                     class="counter__input"
                     value="2"
-                  />
+                  >
                   <button
                     type="button"
                     class="
@@ -209,7 +225,7 @@
                   width="39"
                   height="60"
                   alt="Картошка из печи"
-                />
+                >
                 <span>Картошка из печи</span>
               </p>
 
@@ -226,7 +242,7 @@
                     name="counter"
                     class="counter__input"
                     value="2"
-                  />
+                  >
                   <button
                     type="button"
                     class="
@@ -252,7 +268,10 @@
             <label class="cart-form__select">
               <span class="cart-form__label">Получение заказа:</span>
 
-              <select name="test" class="select">
+              <select
+                name="test"
+                class="select"
+              >
                 <option value="1">Заберу сам</option>
                 <option value="2">Новый адрес</option>
                 <option value="3">Дом</option>
@@ -261,7 +280,11 @@
 
             <label class="input input--big-label">
               <span>Контактный телефон:</span>
-              <input type="text" name="tel" placeholder="+7 999-999-99-99" />
+              <input
+                type="text"
+                name="tel"
+                placeholder="+7 999-999-99-99"
+              >
             </label>
 
             <div class="cart-form__address">
@@ -270,21 +293,30 @@
               <div class="cart-form__input">
                 <label class="input">
                   <span>Улица*</span>
-                  <input type="text" name="street" />
+                  <input
+                    type="text"
+                    name="street"
+                  >
                 </label>
               </div>
 
               <div class="cart-form__input cart-form__input--small">
                 <label class="input">
                   <span>Дом*</span>
-                  <input type="text" name="house" />
+                  <input
+                    type="text"
+                    name="house"
+                  >
                 </label>
               </div>
 
               <div class="cart-form__input cart-form__input--small">
                 <label class="input">
                   <span>Квартира</span>
-                  <input type="text" name="apartment" />
+                  <input
+                    type="text"
+                    name="apartment"
+                  >
                 </label>
               </div>
             </div>
@@ -294,19 +326,27 @@
     </main>
     <section class="footer">
       <div class="footer__more">
-        <router-link to="/" class="button button--border button--arrow"
-          >Хочу еще одну</router-link
+        <router-link
+          to="/"
+          class="button button--border button--arrow"
         >
+          Хочу еще одну
+        </router-link>
       </div>
       <p class="footer__text">
-        Перейти к конструктору<br />чтоб собрать ещё одну пиццу
+        Перейти к конструктору<br>чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
         <b>Итого: 2 228 ₽</b>
       </div>
 
       <div class="footer__submit">
-        <button type="submit" class="button">Оформить заказ</button>
+        <button
+          type="submit"
+          class="button"
+        >
+          Оформить заказ
+        </button>
       </div>
     </section>
   </form>

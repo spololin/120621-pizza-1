@@ -8,15 +8,19 @@
         placeholder="Введите название пиццы"
         :value="name"
         @input="$emit('changeNamePizza', $event)"
-      />
+      >
     </label>
 
     <BuilderPizzaView
-      :pizzaClass="pizzaClass"
+      :pizza-class="pizzaClass"
       :fillings="fillings"
       @dropFilling="dropFilling"
     />
-    <BuilderPriceCounter :price="price" :fillings="fillings" :name="name" />
+    <BuilderPriceCounter
+      :price="price"
+      :fillings="fillings"
+      :name="name"
+    />
   </div>
 </template>
 
@@ -48,11 +52,6 @@ export default {
       required: true,
     },
   },
-  methods: {
-    dropFilling(filling) {
-      this.$emit("dropFilling", filling);
-    },
-  },
   computed: {
     pizzaClass() {
       const basePartClass = "pizza--foundation--";
@@ -61,6 +60,11 @@ export default {
       const saucePartClass = this.selectedItems.sauce.value;
 
       return basePartClass + doughPartClass + "-" + saucePartClass;
+    },
+  },
+  methods: {
+    dropFilling(filling) {
+      this.$emit("dropFilling", filling);
     },
   },
 };

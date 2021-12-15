@@ -2,7 +2,9 @@
   <main class="layout">
     <div class="layout__content">
       <div class="layout__title">
-        <h1 class="title title--big">Мои данные</h1>
+        <h1 class="title title--big">
+          Мои данные
+        </h1>
       </div>
 
       <div class="user">
@@ -13,14 +15,14 @@
               @/assets/img/users/user5@2x.webp 1x,
               @/assets/img/users/user5@4x.webp 2x
             "
-          />
+          >
           <img
             src="@/assets/img/users/user5@2x.jpg"
             srcset="@/assets/img/users/user5@4x.jpg"
             alt="Василий Ложкин"
             width="72"
             height="72"
-          />
+          >
         </picture>
         <div class="user__name">
           <span>Василий Ложкин</span>
@@ -35,7 +37,10 @@
           <div class="address-form__header">
             <b>Адрес №1. Тест</b>
             <div class="address-form__edit">
-              <button type="button" class="icon">
+              <button
+                type="button"
+                class="icon"
+              >
                 <span class="visually-hidden">Изменить адрес</span>
               </button>
             </div>
@@ -64,7 +69,7 @@
                   name="addr-name"
                   placeholder="Введите название адреса"
                   required
-                />
+                >
               </label>
             </div>
             <div class="address-form__input address-form__input--size--normal">
@@ -75,7 +80,7 @@
                   name="addr-street"
                   placeholder="Введите название улицы"
                   required
-                />
+                >
               </label>
             </div>
             <div class="address-form__input address-form__input--size--small">
@@ -86,7 +91,7 @@
                   name="addr-house"
                   placeholder="Введите номер дома"
                   required
-                />
+                >
               </label>
             </div>
             <div class="address-form__input address-form__input--size--small">
@@ -96,7 +101,7 @@
                   type="text"
                   name="addr-apartment"
                   placeholder="Введите № квартиры"
-                />
+                >
               </label>
             </div>
             <div class="address-form__input">
@@ -106,22 +111,33 @@
                   type="text"
                   name="addr-comment"
                   placeholder="Введите комментарий"
-                />
+                >
               </label>
             </div>
           </div>
 
           <div class="address-form__buttons">
-            <button type="button" class="button button--transparent">
+            <button
+              type="button"
+              class="button button--transparent"
+            >
               Удалить
             </button>
-            <button type="submit" class="button">Сохранить</button>
+            <button
+              type="submit"
+              class="button"
+            >
+              Сохранить
+            </button>
           </div>
         </form>
       </div>
 
       <div class="layout__button">
-        <button type="button" class="button button--border">
+        <button
+          type="button"
+          class="button button--border"
+        >
           Добавить новый адрес
         </button>
       </div>

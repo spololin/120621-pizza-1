@@ -1,7 +1,9 @@
 <template>
   <div class="content__result">
     <p>Итого: {{ price }} ₽</p>
-    <Button :disabled="!(fillings.length && name.length)"> Готовьте! </Button>
+    <Button :disabled="!(fillings.length && name.length)">
+      Готовьте!
+    </Button>
   </div>
 </template>
 

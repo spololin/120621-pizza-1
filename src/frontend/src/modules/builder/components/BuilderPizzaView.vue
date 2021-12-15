@@ -1,14 +1,17 @@
 <template>
   <AppDrop @drop="dropFilling">
     <div class="content__constructor">
-      <div class="pizza" :class="pizzaClass">
+      <div
+        class="pizza"
+        :class="pizzaClass"
+      >
         <div class="pizza__wrapper">
           <div
-            class="pizza__filling"
             v-for="filling in fillings"
             :key="filling.id"
+            class="pizza__filling"
             :class="classFilling(filling)"
-          ></div>
+          />
         </div>
       </div>
     </div>

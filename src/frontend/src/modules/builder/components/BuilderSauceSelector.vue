@@ -1,11 +1,14 @@
 <template>
-  <div class="ingredients__sauce" v-if="sauces.length">
+  <div
+    v-if="sauces.length"
+    class="ingredients__sauce"
+  >
     <p>Основной соус:</p>
 
     <BuilderSelectorItem
-      class="radio ingredients__input"
       v-for="sauce in sauces"
       :key="sauce.id"
+      class="radio ingredients__input"
       :selector="sauce"
       @clickSelectorItem="$emit('selectSauce', $event)"
     />

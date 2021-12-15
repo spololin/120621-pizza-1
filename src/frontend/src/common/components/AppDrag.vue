@@ -18,11 +18,6 @@ import {
 
 export default {
   name: "AppDrag",
-  data() {
-    return {
-      MAX_COUNT_TYPE_INGREDIENT,
-    };
-  },
   props: {
     transferData: {
       type: Object,
@@ -33,13 +28,18 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      MAX_COUNT_TYPE_INGREDIENT,
+    };
+  },
   methods: {
     onDrag({ dataTransfer }) {
       dataTransfer.effectAllowed = EFFECT_MOVE;
       dataTransfer.dropEffect = EFFECT_MOVE;
       dataTransfer.setData(
         DATA_TRANSFER_PAYLOAD,
-        JSON.stringify(this.transferData)
+        JSON.stringify(this.transferData),
       );
     },
   },

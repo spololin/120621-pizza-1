@@ -1,6 +1,9 @@
 <template>
   <div>
-    <AppLayoutHeader :total-price="totalPrice" :user="user" />
+    <AppLayoutHeader
+      :total-price="totalPrice"
+      :user="user"
+    />
     <AppLayoutSidebar />
     <slot />
   </div>

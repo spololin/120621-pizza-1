@@ -1,5 +1,9 @@
 <template>
-  <component :is="layout" :total-price="totalPrice" :user="user">
+  <component
+    :is="layout"
+    :total-price="totalPrice"
+    :user="user"
+  >
     <slot />
   </component>
 </template>

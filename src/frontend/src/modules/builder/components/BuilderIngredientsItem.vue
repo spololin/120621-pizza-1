@@ -4,7 +4,10 @@
       :transfer-data="filling"
       :allow-drag="filling.count < MAX_COUNT_TYPE_INGREDIENT"
     >
-      <span class="filling" :class="`filling--${filling.value}`">{{
+      <span
+        class="filling"
+        :class="`filling--${filling.value}`"
+      >{{
         filling.name
       }}</span>
     </AppDrag>
@@ -22,6 +25,7 @@ import AppDrag from "@/common/components/AppDrag";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 export default {
   name: "BuilderIngredientsItem",
+  components: { AppDrag, ItemCounter },
   props: {
     filling: {
       type: Object,
@@ -33,7 +37,6 @@ export default {
       MAX_COUNT_TYPE_INGREDIENT,
     };
   },
-  components: { AppDrag, ItemCounter },
   methods: {
     clickButtonItemCounter: function (typeClick) {
       this.$emit("clickButtonItemCounter", { ...this.filling, typeClick });

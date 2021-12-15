@@ -6,7 +6,7 @@
     :checked="params.checked"
     v-bind="$attrs"
     @click="$emit('clickRadioButton', params)"
-  />
+  >
 </template>
 
 <script>

@@ -17,7 +17,7 @@ import RadioButton from "@/common/components/AppRadioButton";
 
 export default {
   name: "BuilderSelectorItem",
-  components: { RadioButton },
+  components: { RadioButton, },
   props: {
     selector: {
       type: Object,

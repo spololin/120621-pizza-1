@@ -4,6 +4,6 @@ export default {
   namespaced: true,
   state: {
     user,
-    authorization: false
-  }
-}
+    authorization: false,
+  },
+};

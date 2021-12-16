@@ -26,7 +26,7 @@
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
 export default {
   name: "BuilderDoughSelector",
-  components: { BuilderSelectorItem },
+  components: { BuilderSelectorItem, },
   props: {
     doughs: {
       type: Array,

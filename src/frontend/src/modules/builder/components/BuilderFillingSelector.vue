@@ -20,7 +20,7 @@
 import BuilderIngredientsItem from "@/modules/builder/components/BuilderIngredientsItem";
 export default {
   name: "BuilderIngredientsSelector",
-  components: { BuilderIngredientsItem },
+  components: { BuilderIngredientsItem, },
   props: {
     fillings: {
       type: Array,
@@ -28,8 +28,8 @@ export default {
     },
   },
   methods: {
-    clickButtonItemCounter: function (filling) {
-      this.$emit("clickButtonItemCounter", filling);
+    clickButtonItemCounter: function (filling,) {
+      this.$emit("clickButtonItemCounter", filling,);
     },
   },
 };

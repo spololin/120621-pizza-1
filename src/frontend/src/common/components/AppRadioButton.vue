@@ -16,8 +16,8 @@ export default {
     params: {
       type: Object,
       required: true,
-      validator: (v) =>
-        v.type.length && ["sauces", "doughs", "sizes"].includes(v.type),
+      validator: (v,) =>
+        v.type.length && ["sauces", "doughs", "sizes",].includes(v.type,),
     },
   },
 };

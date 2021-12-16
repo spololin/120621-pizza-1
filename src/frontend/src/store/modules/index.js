@@ -5,5 +5,5 @@ import Builder from "./builder.store";
 export default {
   User,
   Cart,
-  Builder
-}
+  Builder,
+};

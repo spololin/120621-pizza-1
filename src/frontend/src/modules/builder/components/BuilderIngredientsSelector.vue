@@ -40,8 +40,8 @@ export default {
     },
   },
   methods: {
-    clickButtonItemCounter: function (filling) {
-      this.$emit("clickButtonItemCounter", filling);
+    clickButtonItemCounter: function (filling,) {
+      this.$emit("clickButtonItemCounter", filling,);
     },
   },
 };

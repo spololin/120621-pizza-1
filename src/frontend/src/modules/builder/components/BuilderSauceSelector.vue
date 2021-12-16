@@ -20,7 +20,7 @@ import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorIte
 
 export default {
   name: "BuilderSauceSelector",
-  components: { BuilderSelectorItem },
+  components: { BuilderSelectorItem, },
   props: {
     sauces: {
       type: Array,

@@ -1,11 +1,11 @@
 const cart = {
   pizzas: [],
-  misc: []
+  misc: [],
 };
 
 export default {
   namespaced: true,
   state: {
-    cart
-  }
-}
+    cart,
+  },
+};

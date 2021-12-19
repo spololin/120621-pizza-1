@@ -17,9 +17,10 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "prettier/prettier": 0,
-    "semi": [2, "always",],
-    "comma-style": [2, "last",],
-    "comma-dangle": ["error", "always",],
+    "semi": [2, "always"],
+    "comma-style": [2, "last"],
+    "comma-dangle": ["error", "always-multiline"],
+    "object-curly-spacing": ["error", "always"],
   },
   overrides: [
     {

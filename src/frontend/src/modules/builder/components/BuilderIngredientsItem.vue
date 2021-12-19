@@ -22,10 +22,10 @@
 <script>
 import ItemCounter from "@/common/components/AppItemCounter";
 import AppDrag from "@/common/components/AppDrag";
-import { MAX_COUNT_TYPE_INGREDIENT, } from "@/common/constants";
+import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 export default {
   name: "BuilderIngredientsItem",
-  components: { AppDrag, ItemCounter, },
+  components: { AppDrag, ItemCounter },
   props: {
     filling: {
       type: Object,
@@ -38,8 +38,8 @@ export default {
     };
   },
   methods: {
-    clickButtonItemCounter: function (typeClick,) {
-      this.$emit("clickButtonItemCounter", { ...this.filling, typeClick, },);
+    clickButtonItemCounter: function (typeClick) {
+      this.$emit("clickButtonItemCounter", { ...this.filling, typeClick });
     },
   },
 };

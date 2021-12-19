@@ -21,8 +21,8 @@
 <script>
 import AppLayout from "@/layouts/AppLayout";
 import pizzaData from "@/static/pizza.json";
-import {getPizzaValues,} from "@/common/helpers";
-import {MAX_COUNT_TYPE_INGREDIENT,} from "@/common/constants";
+import { getPizzaValues } from "@/common/helpers";
+import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 
 export default {
   name: "App",
@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      pizza: getPizzaValues(pizzaData,),
+      pizza: getPizzaValues(pizzaData),
       user: {
         authorization: false,
         name: "Василий ложкин",
@@ -48,22 +48,22 @@ export default {
       };
     },
     selectedDough() {
-      return this.pizza.doughs.find(({checked,},) => checked,);
+      return this.pizza.doughs.find(({ checked }) => checked);
     },
     selectedSize() {
-      return this.pizza.sizes.find(({checked,},) => checked,);
+      return this.pizza.sizes.find(({ checked }) => checked);
     },
     selectedSauce() {
-      return this.pizza.sauces.find(({checked,},) => checked,);
+      return this.pizza.sauces.find(({ checked }) => checked);
     },
     selectedFillings() {
-      return this.pizza.fillings.filter(({count,},) => count,);
+      return this.pizza.fillings.filter(({ count }) => count);
     },
     totalPizzaPrice() {
-      const fillingsPrice = this.selectedItems.fillings.reduce((acc, elem,) => {
-        const {count, price,} = elem;
+      const fillingsPrice = this.selectedItems.fillings.reduce((acc, elem) => {
+        const { count, price } = elem;
         return acc + count * price;
-      }, 0,);
+      }, 0);
 
       return (
         (this.selectedItems.dough.price +
@@ -74,14 +74,14 @@ export default {
     },
   },
   methods: {
-    clickSelectorItem: function (selector,) {
-      this.pizza[selector.type] = this.pizza[selector.type].map((elem,) => ({
+    clickSelectorItem: function (selector) {
+      this.pizza[selector.type] = this.pizza[selector.type].map((elem) => ({
         ...elem,
         checked: selector.id === elem.id,
-      }),);
+      }));
     },
-    clickButtonItemCounter: function (filling,) {
-      this.pizza.fillings = this.pizza.fillings.map((elem,) => {
+    clickButtonItemCounter: function (filling) {
+      this.pizza.fillings = this.pizza.fillings.map((elem) => {
         if (elem.id !== filling.id) return elem;
 
         const count =
@@ -95,10 +95,10 @@ export default {
             increase: count < MAX_COUNT_TYPE_INGREDIENT,
           },
         };
-      },);
+      });
     },
-    dropFilling(filling,) {
-      this.clickButtonItemCounter({...filling, typeClick: "increase",},);
+    dropFilling(filling) {
+      this.clickButtonItemCounter({ ...filling, typeClick: "increase" });
     },
   },
 };

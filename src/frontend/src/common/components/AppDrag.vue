@@ -34,12 +34,12 @@ export default {
     };
   },
   methods: {
-    onDrag({ dataTransfer, },) {
+    onDrag({ dataTransfer }) {
       dataTransfer.effectAllowed = EFFECT_MOVE;
       dataTransfer.dropEffect = EFFECT_MOVE;
       dataTransfer.setData(
         DATA_TRANSFER_PAYLOAD,
-        JSON.stringify(this.transferData,),
+        JSON.stringify(this.transferData),
       );
     },
   },

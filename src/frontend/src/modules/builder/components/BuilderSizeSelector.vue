@@ -26,7 +26,7 @@
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
 export default {
   name: "BuilderSizeSelector",
-  components: { BuilderSelectorItem, },
+  components: { BuilderSelectorItem },
   props: {
     sizes: {
       type: Array,

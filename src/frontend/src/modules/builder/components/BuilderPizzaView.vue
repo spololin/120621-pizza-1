@@ -22,7 +22,7 @@
 import AppDrop from "@/common/components/AppDrop";
 export default {
   name: "BuilderPizzaView",
-  components: { AppDrop, },
+  components: { AppDrop },
   props: {
     pizzaClass: {
       type: String,
@@ -34,7 +34,7 @@ export default {
     },
   },
   methods: {
-    classFilling(filling,) {
+    classFilling(filling) {
       let customClass = {};
       customClass[`pizza__filling--${filling.value}`] = true;
       switch (filling.count) {
@@ -50,8 +50,8 @@ export default {
 
       return customClass;
     },
-    dropFilling(filling,) {
-      this.$emit("dropFilling", filling,);
+    dropFilling(filling) {
+      this.$emit("dropFilling", filling);
     },
   },
 };

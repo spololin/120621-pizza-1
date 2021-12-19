@@ -70,14 +70,14 @@ export default {
     },
   },
   methods: {
-    clickSelectorItem: function (selector,) {
-      this.$emit("clickSelectorItem", selector,);
+    clickSelectorItem: function (selector) {
+      this.$emit("clickSelectorItem", selector);
     },
-    clickButtonItemCounter: function (filling,) {
-      this.$emit("clickButtonItemCounter", filling,);
+    clickButtonItemCounter: function (filling) {
+      this.$emit("clickButtonItemCounter", filling);
     },
-    dropFilling(filling,) {
-      this.$emit("dropFilling", filling,);
+    dropFilling(filling) {
+      this.$emit("dropFilling", filling);
     },
   },
 };

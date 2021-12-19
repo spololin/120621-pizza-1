@@ -63,8 +63,8 @@ export default {
     },
   },
   methods: {
-    dropFilling(filling,) {
-      this.$emit("dropFilling", filling,);
+    dropFilling(filling) {
+      this.$emit("dropFilling", filling);
     },
   },
 };

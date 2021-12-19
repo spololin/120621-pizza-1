@@ -10,25 +10,19 @@
         </h1>
 
         <BuilderDoughSelector
-          :doughs="pizza.doughs"
           @selectDough="clickSelectorItem"
         />
+
         <BuilderSizeSelector
-          :sizes="pizza.sizes"
           @selectSize="clickSelectorItem"
         />
+
         <BuilderIngredientsSelector
-          :fillings="pizza.fillings"
-          :sauces="pizza.sauces"
           @selectSauce="clickSelectorItem"
           @clickButtonItemCounter="clickButtonItemCounter"
         />
 
         <BuilderPizzaContent
-          :price="totalPrice"
-          :selected-items="selectedItems"
-          :fillings="selectedFillings"
-          :name="pizza.name"
           @changeNamePizza="$emit('inputName', $event)"
           @dropFilling="dropFilling"
         />
@@ -50,24 +44,6 @@ export default {
     BuilderIngredientsSelector,
     BuilderSizeSelector,
     BuilderDoughSelector,
-  },
-  props: {
-    pizza: {
-      type: Object,
-      required: true,
-    },
-    selectedItems: {
-      type: Object,
-      required: true,
-    },
-    selectedFillings: {
-      type: Array,
-      required: true,
-    },
-    totalPrice: {
-      type: Number,
-      default: 0,
-    },
   },
   methods: {
     clickSelectorItem: function (selector) {

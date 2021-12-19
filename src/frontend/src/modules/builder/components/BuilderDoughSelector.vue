@@ -6,11 +6,11 @@
       </h2>
 
       <div
-        v-if="doughs.length"
+        v-if="buildingPizza.doughs.length"
         class="sheet__content dough"
       >
         <BuilderSelectorItem
-          v-for="dough in doughs"
+          v-for="dough in buildingPizza.doughs"
           :key="dough.id"
           class="dough__input"
           :selector="dough"
@@ -24,14 +24,12 @@
 
 <script>
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
+import { mapGetters } from "vuex";
 export default {
   name: "BuilderDoughSelector",
   components: { BuilderSelectorItem },
-  props: {
-    doughs: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapGetters("Builder", ["buildingPizza"]),
   },
 };
 </script>

@@ -1,14 +1,9 @@
 <template>
   <div id="app">
     <AppLayout
-      :total-price="totalPizzaPrice"
       :user="user"
     >
       <router-view
-        :pizza="pizza"
-        :selected-items="selectedItems"
-        :selected-fillings="selectedFillings"
-        :total-price="totalPizzaPrice"
         @inputName="pizza.name = $event.target.value"
         @dropFilling="dropFilling"
         @clickButtonItemCounter="clickButtonItemCounter"
@@ -38,40 +33,8 @@ export default {
       },
     };
   },
-  computed: {
-    selectedItems() {
-      return {
-        dough: this.selectedDough,
-        size: this.selectedSize,
-        sauce: this.selectedSauce,
-        fillings: this.selectedFillings,
-      };
-    },
-    selectedDough() {
-      return this.pizza.doughs.find(({ checked }) => checked);
-    },
-    selectedSize() {
-      return this.pizza.sizes.find(({ checked }) => checked);
-    },
-    selectedSauce() {
-      return this.pizza.sauces.find(({ checked }) => checked);
-    },
-    selectedFillings() {
-      return this.pizza.fillings.filter(({ count }) => count);
-    },
-    totalPizzaPrice() {
-      const fillingsPrice = this.selectedItems.fillings.reduce((acc, elem) => {
-        const { count, price } = elem;
-        return acc + count * price;
-      }, 0);
-
-      return (
-        (this.selectedItems.dough.price +
-          this.selectedItems.sauce.price +
-          fillingsPrice) *
-        this.selectedItems.size.multiplier
-      );
-    },
+  created() {
+    this.$store.dispatch('init');
   },
   methods: {
     clickSelectorItem: function (selector) {

@@ -1,7 +1,7 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ price }} ₽</p>
-    <Button :disabled="!(fillings.length && name.length)">
+    <p>Итого: {{ buildingPizzaPrice }} ₽</p>
+    <Button :disabled="disabledCreatePizza">
       Готовьте!
     </Button>
   </div>
@@ -9,22 +9,12 @@
 
 <script>
 import Button from "@/common/components/AppButton";
+import { mapGetters } from "vuex";
 export default {
   name: "BuilderPriceCounter",
   components: { Button },
-  props: {
-    price: {
-      type: Number,
-      required: true,
-    },
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
-    name: {
-      type: String,
-      required: true,
-    },
+  computed: {
+    ...mapGetters("Builder", ["disabledCreatePizza", "buildingPizzaPrice"]),
   },
 };
 </script>

@@ -6,27 +6,22 @@
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
-        :value="name"
+        :value="buildingPizzaName"
         @input="$emit('changeNamePizza', $event)"
       >
     </label>
 
     <BuilderPizzaView
-      :pizza-class="pizzaClass"
-      :fillings="fillings"
       @dropFilling="dropFilling"
     />
-    <BuilderPriceCounter
-      :price="price"
-      :fillings="fillings"
-      :name="name"
-    />
+    <BuilderPriceCounter />
   </div>
 </template>
 
 <script>
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderPizzaContent",
@@ -34,33 +29,8 @@ export default {
     BuilderPizzaView,
     BuilderPriceCounter,
   },
-  props: {
-    price: {
-      type: Number,
-      required: true,
-    },
-    selectedItems: {
-      type: Object,
-      required: true,
-    },
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-  },
   computed: {
-    pizzaClass() {
-      const basePartClass = "pizza--foundation--";
-      const doughPartClass =
-        this.selectedItems.dough.value === "light" ? "small" : "big";
-      const saucePartClass = this.selectedItems.sauce.value;
-
-      return basePartClass + doughPartClass + "-" + saucePartClass;
-    },
+    ...mapGetters("Builder", ["buildingPizzaName"]),
   },
   methods: {
     dropFilling(filling) {

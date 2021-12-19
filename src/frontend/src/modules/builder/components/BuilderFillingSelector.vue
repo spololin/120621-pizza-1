@@ -1,13 +1,13 @@
 <template>
   <div
-    v-if="fillings.length"
+    v-if="buildingPizza.fillings.length"
     class="ingredients__filling"
   >
     <p>Начинка:</p>
 
     <ul class="ingredients__list">
       <BuilderIngredientsItem
-        v-for="filling in fillings"
+        v-for="filling in buildingPizza.fillings"
         :key="filling.id"
         :filling="filling"
         @clickButtonItemCounter="clickButtonItemCounter"
@@ -18,14 +18,12 @@
 
 <script>
 import BuilderIngredientsItem from "@/modules/builder/components/BuilderIngredientsItem";
+import { mapGetters } from "vuex";
 export default {
   name: "BuilderIngredientsSelector",
   components: { BuilderIngredientsItem },
-  props: {
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapGetters("Builder", ["buildingPizza"]),
   },
   methods: {
     clickButtonItemCounter: function (filling) {

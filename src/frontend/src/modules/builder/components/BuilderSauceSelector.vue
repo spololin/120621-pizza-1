@@ -1,12 +1,12 @@
 <template>
   <div
-    v-if="sauces.length"
+    v-if="buildingPizza.sauces.length"
     class="ingredients__sauce"
   >
     <p>Основной соус:</p>
 
     <BuilderSelectorItem
-      v-for="sauce in sauces"
+      v-for="sauce in buildingPizza.sauces"
       :key="sauce.id"
       class="radio ingredients__input"
       :selector="sauce"
@@ -17,15 +17,13 @@
 
 <script>
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BuilderSauceSelector",
   components: { BuilderSelectorItem },
-  props: {
-    sauces: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapGetters("Builder", ["buildingPizza"]),
   },
 };
 </script>

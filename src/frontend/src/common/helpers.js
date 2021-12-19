@@ -1,10 +1,10 @@
 ﻿import { PIZZA_VALUES } from "./constants";
 
 export const getPizzaValues = (pizza) => ({
-  doughs: (pizza.dough || []).map((dough) => ({
+  doughs: (pizza.dough || []).map((dough, idx) => ({
     ...dough,
     value: PIZZA_VALUES.dough[dough.name],
-    checked: !--dough.id,
+    checked: idx === 0,
     type: "doughs",
   })),
   fillings: (pizza.ingredients || []).map((ingredient) => ({
@@ -17,16 +17,16 @@ export const getPizzaValues = (pizza) => ({
       increase: true,
     },
   })),
-  sauces: (pizza.sauces || []).map((sauce) => ({
+  sauces: (pizza.sauces || []).map((sauce, idx) => ({
     ...sauce,
     value: PIZZA_VALUES.sauces[sauce.name],
-    checked: !--sauce.id,
+    checked: idx === 0,
     type: "sauces",
   })),
-  sizes: (pizza.sizes || []).map((size) => ({
+  sizes: (pizza.sizes || []).map((size, idx) => ({
     ...size,
     value: PIZZA_VALUES.sizes[size.name],
-    checked: !--size.id,
+    checked: idx === 0,
     type: "sizes",
   })),
   name: "",

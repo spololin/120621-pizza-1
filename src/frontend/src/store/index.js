@@ -9,7 +9,9 @@ const state = () => ({
 });
 
 const actions = {
-  
+  async init({ dispatch }) {
+    dispatch("Builder/fetchBuilder");
+  },
 };
 
 const mutations = {

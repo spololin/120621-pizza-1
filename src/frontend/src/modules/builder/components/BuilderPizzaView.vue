@@ -7,7 +7,7 @@
       >
         <div class="pizza__wrapper">
           <div
-            v-for="filling in fillings"
+            v-for="filling in selectedFillings"
             :key="filling.id"
             class="pizza__filling"
             :class="classFilling(filling)"
@@ -20,18 +20,13 @@
 
 <script>
 import AppDrop from "@/common/components/AppDrop";
+import { mapGetters } from "vuex";
+
 export default {
   name: "BuilderPizzaView",
   components: { AppDrop },
-  props: {
-    pizzaClass: {
-      type: String,
-      required: true,
-    },
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapGetters("Builder", ["pizzaClass", "selectedFillings"]),
   },
   methods: {
     classFilling(filling) {

@@ -1,5 +1,6 @@
 import { getPizzaValues } from "@/common/helpers";
 import pizzaData from "@/static/pizza.json";
+import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 
 const pizzaBuild = {};
 
@@ -13,10 +14,48 @@ export default {
       const pizzaComponents = getPizzaValues(pizzaData);
       commit("setPizzaComponents", pizzaComponents);
     },
+    clickSelectorItem({ commit }, selector) {
+      commit("updateSelectorItem", selector);
+    },
+    changeItemCounter({ commit }, filling) {
+      commit("updateItemCounter", filling);
+    },
+    changeNamePizza({ commit }, name) {
+      commit("setNamePizza", name);
+    },
+    dropIngredient({ commit }, filling) {
+      commit("updateItemCounter", { ...filling, operation: "increase" });
+    },
   },
   mutations: {
     setPizzaComponents(state, pizzaComponents) {
       state.pizzaBuild = pizzaComponents;
+    },
+    updateSelectorItem(state, selector) {
+      state.pizzaBuild[selector.type] = state.pizzaBuild[selector.type].map((elem) => ({
+        ...elem,
+        checked: selector.id === elem.id,
+      }));
+    },
+    updateItemCounter(state, filling) {
+      state.pizzaBuild.fillings = state.pizzaBuild.fillings.map((elem) => {
+        if (elem.id !== filling.id) return elem;
+
+        const count =
+          filling.operation === "increase" ? ++filling.count : --filling.count;
+
+        return {
+          ...elem,
+          count,
+          permissions: {
+            decrease: count > 0,
+            increase: count < MAX_COUNT_TYPE_INGREDIENT,
+          },
+        };
+      });
+    },
+    setNamePizza(state, name) {
+      state.pizzaBuild.name = name;
     },
   },
   getters: {

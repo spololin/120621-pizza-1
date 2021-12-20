@@ -3,8 +3,8 @@
     <button
       type="button"
       class="counter__button counter__button--minus"
-      :disabled="!permissions.decrease"
-      @click="$emit('clickButtonItemCounter', 'decrease')"
+      :disabled="!counter.permissions.decrease"
+      @click="clickButtonItemCounter({...counter, operation: 'decrease'})"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -12,13 +12,13 @@
       type="text"
       name="counter"
       class="counter__input"
-      :value="count"
+      :value="counter.count"
     >
     <button
       type="button"
       class="counter__button counter__button--plus"
-      :disabled="!permissions.increase"
-      @click="$emit('clickButtonItemCounter', 'increase')"
+      :disabled="!counter.permissions.increase"
+      @click="clickButtonItemCounter({...counter, operation: 'increase'})"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -26,20 +26,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "ItemCounter",
   props: {
-    count: {
-      type: Number,
-      default: 0,
-    },
-    permissions: {
+    counter: {
       type: Object,
-      default: () => ({
-        decrease: false,
-        increase: true,
-      }),
+      required: true,
     },
+  },
+  methods: {
+    ...mapActions(["clickButtonItemCounter"]),
   },
 };
 </script>

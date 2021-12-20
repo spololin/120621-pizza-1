@@ -12,9 +12,7 @@
       }}</span>
     </AppDrag>
     <ItemCounter
-      :count="filling.count"
-      :permissions="filling.permissions"
-      @clickButtonItemCounter="clickButtonItemCounter"
+      :counter="filling"
     />
   </li>
 </template>
@@ -23,6 +21,7 @@
 import ItemCounter from "@/common/components/AppItemCounter";
 import AppDrag from "@/common/components/AppDrag";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
+
 export default {
   name: "BuilderIngredientsItem",
   components: { AppDrag, ItemCounter },
@@ -36,11 +35,6 @@ export default {
     return {
       MAX_COUNT_TYPE_INGREDIENT,
     };
-  },
-  methods: {
-    clickButtonItemCounter: function (typeClick) {
-      this.$emit("clickButtonItemCounter", { ...this.filling, typeClick });
-    },
   },
 };
 </script>

@@ -10,7 +10,6 @@
         v-for="filling in buildingPizza.fillings"
         :key="filling.id"
         :filling="filling"
-        @clickButtonItemCounter="clickButtonItemCounter"
       />
     </ul>
   </div>
@@ -24,11 +23,6 @@ export default {
   components: { BuilderIngredientsItem },
   computed: {
     ...mapGetters("Builder", ["buildingPizza"]),
-  },
-  methods: {
-    clickButtonItemCounter: function (filling) {
-      this.$emit("clickButtonItemCounter", filling);
-    },
   },
 };
 </script>

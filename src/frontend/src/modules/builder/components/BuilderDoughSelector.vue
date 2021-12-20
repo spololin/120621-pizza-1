@@ -15,7 +15,6 @@
           class="dough__input"
           :selector="dough"
           :class="`dough__input--${dough.value}`"
-          @clickSelectorItem="$emit('selectDough', $event)"
         />
       </div>
     </div>

@@ -6,12 +6,8 @@
       </h2>
 
       <div class="sheet__content ingredients">
-        <BuilderSauceSelector
-          @selectSauce="$emit('selectSauce', $event)"
-        />
-        <BuilderFillingSelector
-          @clickButtonItemCounter="clickButtonItemCounter"
-        />
+        <BuilderSauceSelector />
+        <BuilderFillingSelector />
       </div>
     </div>
   </div>
@@ -26,11 +22,6 @@ export default {
   components: {
     BuilderFillingSelector,
     BuilderSauceSelector,
-  },
-  methods: {
-    clickButtonItemCounter: function (filling) {
-      this.$emit("clickButtonItemCounter", filling);
-    },
   },
 };
 </script>

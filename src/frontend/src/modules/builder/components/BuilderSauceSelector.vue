@@ -10,7 +10,6 @@
       :key="sauce.id"
       class="radio ingredients__input"
       :selector="sauce"
-      @clickSelectorItem="$emit('selectSauce', $event)"
     />
   </div>
 </template>

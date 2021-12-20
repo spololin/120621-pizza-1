@@ -7,13 +7,11 @@
         name="pizza_name"
         placeholder="Введите название пиццы"
         :value="buildingPizzaName"
-        @input="$emit('changeNamePizza', $event)"
+        @input="changeNamePizza($event.target.value)"
       >
     </label>
 
-    <BuilderPizzaView
-      @dropFilling="dropFilling"
-    />
+    <BuilderPizzaView />
     <BuilderPriceCounter />
   </div>
 </template>
@@ -21,7 +19,7 @@
 <script>
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "BuilderPizzaContent",
@@ -33,9 +31,7 @@ export default {
     ...mapGetters("Builder", ["buildingPizzaName"]),
   },
   methods: {
-    dropFilling(filling) {
-      this.$emit("dropFilling", filling);
-    },
+    ...mapActions("Builder", ["changeNamePizza"]),
   },
 };
 </script>

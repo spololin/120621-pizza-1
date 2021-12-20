@@ -1,5 +1,5 @@
 <template>
-  <AppDrop @drop="dropFilling">
+  <AppDrop @drop="drop">
     <div class="content__constructor">
       <div
         class="pizza"
@@ -20,7 +20,7 @@
 
 <script>
 import AppDrop from "@/common/components/AppDrop";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "BuilderPizzaView",
@@ -29,6 +29,7 @@ export default {
     ...mapGetters("Builder", ["pizzaClass", "selectedFillings"]),
   },
   methods: {
+    ...mapActions(["drop"]),
     classFilling(filling) {
       let customClass = {};
       customClass[`pizza__filling--${filling.value}`] = true;
@@ -44,9 +45,6 @@ export default {
       }
 
       return customClass;
-    },
-    dropFilling(filling) {
-      this.$emit("dropFilling", filling);
     },
   },
 };

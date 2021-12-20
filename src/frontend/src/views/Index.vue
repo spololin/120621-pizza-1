@@ -9,23 +9,10 @@
           Конструктор пиццы
         </h1>
 
-        <BuilderDoughSelector
-          @selectDough="clickSelectorItem"
-        />
-
-        <BuilderSizeSelector
-          @selectSize="clickSelectorItem"
-        />
-
-        <BuilderIngredientsSelector
-          @selectSauce="clickSelectorItem"
-          @clickButtonItemCounter="clickButtonItemCounter"
-        />
-
-        <BuilderPizzaContent
-          @changeNamePizza="$emit('inputName', $event)"
-          @dropFilling="dropFilling"
-        />
+        <BuilderDoughSelector />
+        <BuilderSizeSelector />
+        <BuilderIngredientsSelector />
+        <BuilderPizzaContent />
       </div>
     </form>
   </main>
@@ -44,17 +31,6 @@ export default {
     BuilderIngredientsSelector,
     BuilderSizeSelector,
     BuilderDoughSelector,
-  },
-  methods: {
-    clickSelectorItem: function (selector) {
-      this.$emit("clickSelectorItem", selector);
-    },
-    clickButtonItemCounter: function (filling) {
-      this.$emit("clickButtonItemCounter", filling);
-    },
-    dropFilling(filling) {
-      this.$emit("dropFilling", filling);
-    },
   },
 };
 </script>

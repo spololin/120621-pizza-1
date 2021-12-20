@@ -3,7 +3,6 @@
     <RadioButton
       class="visually-hidden"
       :params="selector"
-      @clickRadioButton="$emit('clickSelectorItem', $event)"
     />
     <b v-if="selector.type === 'doughs'">{{ selector.name }}</b>
     <span>{{

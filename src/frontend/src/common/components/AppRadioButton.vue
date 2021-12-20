@@ -5,11 +5,13 @@
     :value="params.value"
     :checked="params.checked"
     v-bind="$attrs"
-    @click="$emit('clickRadioButton', params)"
+    @click="clickSelectorItem(params)"
   >
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "RadioButton",
   props: {
@@ -19,6 +21,9 @@ export default {
       validator: (v) =>
         v.type.length && ["sauces", "doughs", "sizes"].includes(v.type),
     },
+  },
+  methods: {
+    ...mapActions("Builder", ["clickSelectorItem"]),
   },
 };
 </script>

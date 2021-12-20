@@ -15,7 +15,6 @@
           class="diameter__input"
           :class="`diameter__input--${size.value}`"
           :selector="size"
-          @clickSelectorItem="$emit('selectSize', $event)"
         />
       </div>
     </div>

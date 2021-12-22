@@ -3,6 +3,7 @@
     type="button"
     class="button"
     v-bind="$attrs"
+    @click="$emit('onClick')"
   >
     <slot />
   </button>

@@ -12,11 +12,17 @@
           </h1>
         </div>
 
-        <!-- <div class="sheet cart__empty">
+        <div
+          v-if="!countPizzaInCart"
+          class="sheet cart__empty"
+        >
           <p>В корзине нет ни одного товара</p>
-        </div> -->
+        </div>
 
-        <ul class="cart-list sheet">
+        <ul
+          v-else
+          class="cart-list sheet"
+        >
           <li class="cart-list__item">
             <div class="product cart-list__product">
               <img
@@ -353,7 +359,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Cart",
+  computed: {
+    ...mapGetters("Cart", ["countPizzaInCart"]),
+  },
 };
 </script>

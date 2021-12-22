@@ -15,7 +15,7 @@
     </div>
     <div class="header__cart">
       <router-link to="/cart">
-        {{ buildingPizzaPrice }} ₽
+        {{ totalCost }} ₽
       </router-link>
     </div>
     <div class="header__user">
@@ -71,7 +71,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("Builder", ["buildingPizzaPrice"]),
+    ...mapGetters("Cart", ["totalCost"]),
   },
 };
 </script>

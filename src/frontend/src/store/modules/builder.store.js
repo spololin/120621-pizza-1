@@ -94,6 +94,14 @@ export default {
         selectedSize.multiplier
       );
     },
+    pizza: (state, { selectedItems,selectedDough, selectedSauce, selectedSize, buildingPizzaName, buildingPizzaPrice }) => ({
+      selectedItems,
+      selectedDough,
+      selectedSauce,
+      selectedSize,
+      name: buildingPizzaName,
+      price: buildingPizzaPrice,
+    }),
   },
 };
 

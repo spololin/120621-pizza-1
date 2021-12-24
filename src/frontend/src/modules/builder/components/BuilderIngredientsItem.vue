@@ -12,7 +12,11 @@
       }}</span>
     </AppDrag>
     <ItemCounter
-      :counter="filling"
+      class="ingredients__counter"
+      :value="filling.count"
+      :max="MAX_COUNT_TYPE_INGREDIENT"
+      @clickButton="clickButton"
+      @changeValue="changeValue"
     />
   </li>
 </template>
@@ -21,6 +25,7 @@
 import ItemCounter from "@/common/components/AppItemCounter";
 import AppDrag from "@/common/components/AppDrag";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
+import { mapActions } from "vuex";
 
 export default {
   name: "BuilderIngredientsItem",
@@ -35,6 +40,21 @@ export default {
     return {
       MAX_COUNT_TYPE_INGREDIENT,
     };
+  },
+  methods: {
+    ...mapActions(["clickButtonItemCounter"]),
+    clickButton(operation) {
+      this.clickButtonItemCounter({ ...this.filling, operation });
+    },
+    changeValue(value) {
+      if (!isNaN(value)) {
+        value = parseInt(value);
+        if (value > MAX_COUNT_TYPE_INGREDIENT) {
+          value = MAX_COUNT_TYPE_INGREDIENT;
+        }
+        //TODO
+      }
+    },
   },
 };
 </script>

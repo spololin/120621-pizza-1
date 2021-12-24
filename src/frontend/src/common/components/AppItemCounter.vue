@@ -1,24 +1,28 @@
 <template>
-  <div class="counter counter--orange ingredients__counter">
+  <div
+    class="counter"
+    v-bind="$attrs"
+  >
     <button
       type="button"
       class="counter__button counter__button--minus"
-      :disabled="!counter.permissions.decrease"
-      @click="clickButtonItemCounter({...counter, operation: 'decrease'})"
+      :disabled="value <= min"
+      @click="clickButton('decrease')"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
     <input
+      :value="value"
       type="text"
       name="counter"
       class="counter__input"
-      :value="counter.count"
+      @input="changeValue"
     >
     <button
       type="button"
       class="counter__button counter__button--plus"
-      :disabled="!counter.permissions.increase"
-      @click="clickButtonItemCounter({...counter, operation: 'increase'})"
+      :disabled="value >= max"
+      @click="clickButton('increase')"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -26,18 +30,29 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
 export default {
   name: "ItemCounter",
   props: {
-    counter: {
-      type: Object,
+    value: {
+      type: Number,
+      default: 0,
+    },
+    max: {
+      type: Number,
       required: true,
+    },
+    min: {
+      type: Number,
+      default: 0,
     },
   },
   methods: {
-    ...mapActions(["clickButtonItemCounter"]),
+    clickButton(operation) {
+      this.$emit("clickButton", operation);
+    },
+    changeValue(event) {
+      this.$emit("changeValue", event.target.value);
+    },
   },
 };
 </script>

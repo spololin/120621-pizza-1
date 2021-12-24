@@ -23,119 +23,11 @@
           v-else
           class="cart-list sheet"
         >
-          <li class="cart-list__item">
-            <div class="product cart-list__product">
-              <img
-                src="@/assets/img/product.svg"
-                class="product__img"
-                width="56"
-                height="56"
-                alt="Капричоза"
-              >
-              <div class="product__text">
-                <h2>Капричоза</h2>
-                <ul>
-                  <li>30 см, на тонком тесте</li>
-                  <li>Соус: томатный</li>
-                  <li>Начинка: грибы, лук, ветчина, пармезан, ананас</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="counter cart-list__counter">
-              <button
-                type="button"
-                class="counter__button counter__button--minus"
-              >
-                <span class="visually-hidden">Меньше</span>
-              </button>
-              <input
-                type="text"
-                name="counter"
-                class="counter__input"
-                value="1"
-              >
-              <button
-                type="button"
-                class="
-                  counter__button counter__button--plus counter__button--orange
-                "
-              >
-                <span class="visually-hidden">Больше</span>
-              </button>
-            </div>
-
-            <div class="cart-list__price">
-              <b>782 ₽</b>
-            </div>
-
-            <div class="cart-list__button">
-              <button
-                type="button"
-                class="cart-list__edit"
-              >
-                Изменить
-              </button>
-            </div>
-          </li>
-          <li class="cart-list__item">
-            <div class="product cart-list__product">
-              <img
-                src="@/assets/img/product.svg"
-                class="product__img"
-                width="56"
-                height="56"
-                alt="Любимая пицца"
-              >
-              <div class="product__text">
-                <h2>Любимая пицца</h2>
-                <ul>
-                  <li>30 см, на тонком тесте</li>
-                  <li>Соус: томатный</li>
-                  <li>
-                    Начинка: грибы, лук, ветчина, пармезан, ананас, бекон, блю
-                    чиз
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="counter cart-list__counter">
-              <button
-                type="button"
-                class="counter__button counter__button--minus"
-              >
-                <span class="visually-hidden">Меньше</span>
-              </button>
-              <input
-                type="text"
-                name="counter"
-                class="counter__input"
-                value="2"
-              >
-              <button
-                type="button"
-                class="
-                  counter__button counter__button--plus counter__button--orange
-                "
-              >
-                <span class="visually-hidden">Больше</span>
-              </button>
-            </div>
-
-            <div class="cart-list__price">
-              <b>782 ₽</b>
-            </div>
-
-            <div class="cart-list__button">
-              <button
-                type="button"
-                class="cart-list__edit"
-              >
-                Изменить
-              </button>
-            </div>
-          </li>
+          <CartPizzaItem
+            v-for="pizza in pizzas"
+            :key="pizza.id"
+            :pizza="pizza"
+          />
         </ul>
 
         <div class="cart__additional">
@@ -343,7 +235,7 @@
         Перейти к конструктору<br>чтоб собрать ещё одну пиццу
       </p>
       <div class="footer__price">
-        <b>Итого: 2 228 ₽</b>
+        <b>Итого: {{ totalCost }} ₽</b>
       </div>
 
       <div class="footer__submit">
@@ -360,11 +252,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import CartPizzaItem from "@/modules/cart/CartPizzaItem";
 
 export default {
   name: "Cart",
+  components: { CartPizzaItem },
   computed: {
-    ...mapGetters("Cart", ["countPizzaInCart"]),
+    ...mapGetters("Cart", ["countPizzaInCart", "totalCost", "pizzas"]),
   },
 };
 </script>

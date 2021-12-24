@@ -19,6 +19,7 @@ export default {
     },
   },
   getters: {
+    pizzas: state => state.pizzas,
     countPizzaInCart: state => state.pizzas.length,
     totalCost: state => state.pizzas.reduce((acc, elem) => {
       const { price, count } = elem;

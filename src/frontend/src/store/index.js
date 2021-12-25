@@ -9,6 +9,7 @@ const state = () => ({});
 const actions = {
   async init({ dispatch }) {
     dispatch("Builder/fetchBuilder");
+    dispatch("Cart/fetchMisc");
   },
   clickButtonItemCounter({ dispatch }, counter) {
     switch (counter.type) {

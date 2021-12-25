@@ -22,8 +22,11 @@ export default {
   },
   methods: {
     ...mapActions("Cart", ["addToCart"]),
+    ...mapActions("Builder", ["resetBuildState"]),
     onClick() {
       this.addToCart(this.pizza);
+      this.resetBuildState();
+      this.$router.push("/cart");
     },
   },
 };

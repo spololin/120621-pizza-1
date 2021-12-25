@@ -3,6 +3,7 @@ import pizzaData from "@/static/pizza.json";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 
 const pizzaBuild = {};
+let initialBuild = {};
 
 export default {
   namespaced: true,
@@ -11,8 +12,8 @@ export default {
   },
   actions: {
     fetchBuilder({ commit }) {
-      const pizzaComponents = getPizzaValues(pizzaData);
-      commit("setPizzaComponents", pizzaComponents);
+      initialBuild = getPizzaValues(pizzaData);
+      commit("setPizzaComponents", { ...initialBuild });
     },
     clickSelectorItem({ commit }, selector) {
       commit("updateSelectorItem", selector);
@@ -25,6 +26,9 @@ export default {
     },
     dropIngredient({ commit }, filling) {
       commit("updateItemCounter", { ...filling, operation: "increase" });
+    },
+    resetBuildState({ commit }) {
+      commit("resetBuildState");
     },
   },
   mutations: {
@@ -56,6 +60,9 @@ export default {
     },
     setNamePizza(state, name) {
       state.pizzaBuild.name = name;
+    },
+    resetBuildState(state) {
+      Object.assign(state.pizzaBuild, initialBuild);
     },
   },
   getters: {

@@ -18,29 +18,14 @@
       </div>
     </div>
 
-    <div class="counter cart-list__counter">
-      <button
-        type="button"
-        class="counter__button counter__button--minus"
-      >
-        <span class="visually-hidden">Меньше</span>
-      </button>
-      <input
-        type="text"
-        name="counter"
-        class="counter__input"
-        value="1"
-      >
-      <button
-        type="button"
-        class="counter__button counter__button--plus counter__button--orange"
-      >
-        <span class="visually-hidden">Больше</span>
-      </button>
-    </div>
+    <ItemCounter
+      class="cart-list__counter"
+      :value="pizza.count"
+      @clickButton="clickButton"
+    />
 
     <div class="cart-list__price">
-      <b>{{ pizza.price }} ₽</b>
+      <b>{{ pizza.price * pizza.count }} ₽</b>
     </div>
 
     <div class="cart-list__button">
@@ -55,6 +40,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "CartPizzaItem",
   props: {
@@ -64,6 +51,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("Cart", ["changeCountPizza"]),
     getSizeAndDough(pizza) {
       return `${pizza.selectedSize.name} на ${pizza.selectedDough.value === "light" ? "тонком" : "толстом"} тесте`;
     },
@@ -73,6 +61,9 @@ export default {
     getFillings(pizza) {
       const fillings = pizza.selectedFillings.map(filling => filling.name.toLowerCase());
       return `Начинка: ${fillings.join(", ")}`;
+    },
+    clickButton(operation) {
+      this.changeCountPizza({ ...this.pizza, operation });
     },
   },
 };

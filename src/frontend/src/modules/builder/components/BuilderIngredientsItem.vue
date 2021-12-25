@@ -22,14 +22,13 @@
 </template>
 
 <script>
-import ItemCounter from "@/common/components/AppItemCounter";
 import AppDrag from "@/common/components/AppDrag";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 import { mapActions } from "vuex";
 
 export default {
   name: "BuilderIngredientsItem",
-  components: { AppDrag, ItemCounter },
+  components: { AppDrag },
   props: {
     filling: {
       type: Object,

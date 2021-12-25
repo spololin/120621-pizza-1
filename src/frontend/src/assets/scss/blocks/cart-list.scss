@@ -33,6 +33,18 @@
   width: 54px;
   margin-right: auto;
   margin-left: 20px;
+
+  .counter__button--plus {
+    background-color: $orange-200;
+
+    &:hover:not(:active):not(:disabled) {
+      background-color: $orange-100;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $orange-300;
+    }
+  }
 }
 
 .cart-list__price {

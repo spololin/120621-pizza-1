@@ -21,7 +21,7 @@
     <button
       type="button"
       class="counter__button counter__button--plus"
-      :disabled="value >= max"
+      :disabled="max === null ? false : value >= max"
       @click="clickButton('increase')"
     >
       <span class="visually-hidden">Больше</span>
@@ -39,7 +39,7 @@ export default {
     },
     max: {
       type: Number,
-      required: true,
+      default: null,
     },
     min: {
       type: Number,

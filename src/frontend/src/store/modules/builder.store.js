@@ -1,6 +1,7 @@
 import { getPizzaValues } from "@/common/helpers";
 import pizzaData from "@/static/pizza.json";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
+import { cloneDeep } from 'lodash';
 
 const pizzaBuild = {};
 let initialBuild = {};
@@ -29,6 +30,32 @@ export default {
     },
     resetBuildState({ commit }) {
       commit("resetBuildState");
+    },
+    editPizza({ commit }, pizza) {
+      const pizzaForBuilder = cloneDeep(initialBuild);
+      pizzaForBuilder.doughs = pizzaForBuilder.doughs.map(dough => ({
+        ...dough,
+        checked: dough.id === pizza.selectedDough.id,
+      }));
+
+      pizzaForBuilder.sizes = pizzaForBuilder.sizes.map(size => ({
+        ...size,
+        checked: size.id === pizza.selectedSize.id,
+      }));
+
+      pizzaForBuilder.sauces = pizzaForBuilder.sauces.map(sauce => ({
+        ...sauce,
+        checked: sauce.id === pizza.selectedSauce.id,
+      }));
+
+      for (const selectFilling of pizza.selectedFillings) {
+        const idx = pizzaForBuilder.fillings.findIndex(elem => elem.id === selectFilling.id);
+        pizzaForBuilder.fillings[idx].count = selectFilling.count;
+      }
+
+      pizzaForBuilder.name = pizza.name;
+
+      commit("editPizza", pizzaForBuilder);
     },
   },
   mutations: {
@@ -63,6 +90,9 @@ export default {
     },
     resetBuildState(state) {
       Object.assign(state.pizzaBuild, initialBuild);
+    },
+    editPizza(state, pizza) {
+      state.pizzaBuild = { ...pizza };
     },
   },
   getters: {

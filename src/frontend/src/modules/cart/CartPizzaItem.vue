@@ -6,7 +6,7 @@
         class="product__img"
         width="56"
         height="56"
-        alt="Капричоза"
+        :alt="pizza.name"
       >
       <div class="product__text">
         <h2>{{ pizza.name }}</h2>
@@ -32,6 +32,7 @@
       <button
         type="button"
         class="cart-list__edit"
+        @click="changePizza"
       >
         Изменить
       </button>
@@ -51,6 +52,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("Builder", ["editPizza", "resetBuildState"]),
     ...mapActions("Cart", ["changeCountPizza"]),
     getSizeAndDough(pizza) {
       return `${pizza.selectedSize.name} на ${pizza.selectedDough.value === "light" ? "тонком" : "толстом"} тесте`;
@@ -64,6 +66,11 @@ export default {
     },
     clickButton(operation) {
       this.changeCountPizza({ ...this.pizza, operation });
+    },
+    changePizza() {
+      this.resetBuildState();
+      this.editPizza(this.pizza);
+      this.$router.push("/");
     },
   },
 };

@@ -103,12 +103,12 @@
     </main>
     <section class="footer">
       <div class="footer__more">
-        <router-link
-          to="/"
+        <a
           class="button button--border button--arrow"
+          @click.prevent="toHome"
         >
           Хочу еще одну
-        </router-link>
+        </a>
       </div>
       <p class="footer__text">
         Перейти к конструктору<br>чтоб собрать ещё одну пиццу
@@ -130,7 +130,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import CartPizzaItem from "@/modules/cart/CartPizzaItem";
 import CartAdditionalItem from "@/modules/cart/CartAdditionalItem";
 
@@ -139,6 +139,13 @@ export default {
   components: { CartAdditionalItem, CartPizzaItem },
   computed: {
     ...mapGetters("Cart", ["countPizzaInCart", "totalCost", "pizzas", "miscs"]),
+  },
+  methods: {
+    ...mapActions("Builder", ["resetBuildState"]),
+    toHome() {
+      this.resetBuildState();
+      this.$router.push("/");
+    },
   },
 };
 </script>

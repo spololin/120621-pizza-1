@@ -26,7 +26,7 @@ export default {
     onClick() {
       this.addToCart(this.pizza);
       this.resetBuildState();
-      this.$router.push("/cart");
+      // this.$router.push("/cart");
     },
   },
 };

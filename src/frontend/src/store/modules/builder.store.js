@@ -54,6 +54,9 @@ export default {
       }
 
       pizzaForBuilder.name = pizza.name;
+      pizzaForBuilder.id = pizza.id;
+      pizzaForBuilder.price = pizza.price;
+      pizzaForBuilder.count = pizza.count;
 
       commit("editPizza", pizzaForBuilder);
     },
@@ -138,6 +141,8 @@ export default {
       selectedSize,
       name: buildingPizzaName,
       price: buildingPizzaPrice,
+      id: state.pizzaBuild.id,
+      count: state.pizzaBuild.count,
     }),
   },
 };

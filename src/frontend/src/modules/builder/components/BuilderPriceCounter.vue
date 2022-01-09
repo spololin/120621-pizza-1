@@ -21,12 +21,11 @@ export default {
     ...mapGetters("Builder", ["disabledCreatePizza", "buildingPizzaPrice", "pizza"]),
   },
   methods: {
-    ...mapActions("Cart", ["addToCart"]),
+    ...mapActions("Cart", ["addToCart", "setEditPizza"]),
     ...mapActions("Builder", ["resetBuildState"]),
     onClick() {
-      this.addToCart(this.pizza);
+      !this.pizza.id ? this.addToCart(this.pizza) : this.setEditPizza(this.pizza);
       this.resetBuildState();
-      // this.$router.push("/cart");
     },
   },
 };

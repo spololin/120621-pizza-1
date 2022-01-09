@@ -1,5 +1,5 @@
-import { uniqueId } from "lodash";
 import miscData from "@/static/misc.json";
+import { createUUIDv4 } from "@/common/helpers";
 
 const state = {
   pizzas: [],
@@ -11,7 +11,7 @@ export default {
   state,
   actions: {
     addToCart({ commit }, pizza) {
-      commit("addPizzaToCart", { ...pizza, id: uniqueId(), count: 1 });
+      commit("addPizzaToCart", { ...pizza, id: createUUIDv4(), count: 1 });
     },
     fetchMisc({ commit }) {
       commit("setMisc", miscData.map(misc => ({ ...misc, count: 0 })));
@@ -24,6 +24,9 @@ export default {
         commit("deletePizza", pizza.id);
       }
       commit("changeCountPizza", pizza);
+    },
+    setEditPizza({ commit }, pizza) {
+      commit("setEditPizza", pizza);
     },
   },
   mutations: {
@@ -51,6 +54,9 @@ export default {
     },
     deletePizza(state, id) {
       state.pizzas = state.pizzas.filter(elem => elem.id !== id);
+    },
+    setEditPizza(state, pizza) {
+      state.pizzas = state.pizzas.map(elem => elem.id !== pizza.id ? elem : pizza);
     },
   },
   getters: {

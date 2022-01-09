@@ -143,13 +143,15 @@ export default {
   },
   methods: {
     ...mapActions("Builder", ["resetBuildState"]),
-    ...mapActions("Cart", ["sendOrder"]),
+    ...mapActions("Cart", ["sendOrder", "resetPizzaState"]),
     toHome() {
       this.resetBuildState();
       this.$router.push("/");
     },
     checkout() {
       this.sendOrder();
+      this.resetBuildState();
+      this.resetPizzaState();
       this.$router.push("/thanks");
     },
   },

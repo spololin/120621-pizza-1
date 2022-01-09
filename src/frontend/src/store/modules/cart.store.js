@@ -1,10 +1,12 @@
 import miscData from "@/static/misc.json";
 import { createUUIDv4 } from "@/common/helpers";
 
+const setupPizzasState = () => ([]);
 const state = {
-  pizzas: [],
+  pizzas: setupPizzasState(),
   misc: [],
 };
+
 
 export default {
   namespaced: true,
@@ -30,6 +32,9 @@ export default {
     },
     sendOrder() {
       //TODO send order on server
+    },
+    resetPizzaState({ commit }) {
+      commit("resetPizzaState");
     },
   },
   mutations: {
@@ -60,6 +65,9 @@ export default {
     },
     setEditPizza(state, pizza) {
       state.pizzas = state.pizzas.map(elem => elem.id !== pizza.id ? elem : pizza);
+    },
+    resetPizzaState(state) {
+      state.pizzas = setupPizzasState();
     },
   },
   getters: {

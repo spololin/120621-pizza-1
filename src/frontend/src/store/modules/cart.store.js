@@ -28,6 +28,9 @@ export default {
     setEditPizza({ commit }, pizza) {
       commit("setEditPizza", pizza);
     },
+    sendOrder() {
+      //TODO send order on server
+    },
   },
   mutations: {
     addPizzaToCart(state, pizza) {

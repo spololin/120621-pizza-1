@@ -121,6 +121,7 @@
         <button
           type="submit"
           class="button"
+          @click.prevent="checkout"
         >
           Оформить заказ
         </button>
@@ -142,9 +143,14 @@ export default {
   },
   methods: {
     ...mapActions("Builder", ["resetBuildState"]),
+    ...mapActions("Cart", ["sendOrder"]),
     toHome() {
       this.resetBuildState();
       this.$router.push("/");
+    },
+    checkout() {
+      this.sendOrder();
+      this.$router.push("/thanks");
     },
   },
 };

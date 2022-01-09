@@ -19,6 +19,7 @@
         <label class="input">
           <span>E-mail</span>
           <input
+            v-model="name"
             type="email"
             name="email"
             placeholder="example@mail.ru"
@@ -30,6 +31,7 @@
         <label class="input">
           <span>Пароль</span>
           <input
+            v-model="pass"
             type="password"
             name="pass"
             placeholder="***********"
@@ -39,6 +41,7 @@
       <button
         type="submit"
         class="button"
+        @click.prevent="goLogin"
       >
         Авторизоваться
       </button>
@@ -47,7 +50,25 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-  name: "SignIn",
+  name: "Login",
+  data: () => ({
+    name: "",
+    pass: "",
+  }),
+  methods: {
+    ...mapActions("User", ["login"]),
+    goLogin() {
+      if (this.name.trim() && this.pass.trim()) {
+        this.login({
+          name: this.name.trim(),
+          pass: this.pass.trim(),
+        });
+        this.$router.push("/");
+      }
+    },
+  },
 };
 </script>

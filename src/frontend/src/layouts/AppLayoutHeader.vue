@@ -20,7 +20,7 @@
     </div>
     <div class="header__user">
       <router-link
-        v-if="!user.authorization"
+        v-if="!user.id"
         to="/login"
         class="header__login"
       >
@@ -41,37 +41,38 @@
           <img
             src="@/assets/img/users/user5.jpg"
             srcset="@/assets/img/users/user5@2x.jpg"
-            alt="Василий Ложкин"
+            :alt="user.name"
             width="32"
             height="32"
           >
         </picture>
         <span>{{ user.name }}</span>
       </router-link>
-      <router-link
-        v-if="user.authorization"
-        to="/"
+      <a
+        v-if="user.id"
         class="header__logout"
+        @click.prevent="logout"
       >
         <span>Выйти</span>
-      </router-link>
+      </a>
     </div>
   </header>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 
 export default {
   name: "AppLayoutHeader",
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
   computed: {
     ...mapGetters("Cart", ["totalCost"]),
+    ...mapState("User", ["user"]),
+  },
+  methods: {
+    ...mapActions("User", ["resetUserState"]),
+    logout() {
+      this.resetUserState();
+    },
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="content__diameter">
     <div
-      v-if="buildingPizza.sizes.length"
+      v-if="sizes.length"
       class="sheet"
     >
       <h2 class="title title--small sheet__title">
@@ -10,7 +10,7 @@
 
       <div class="sheet__content diameter">
         <BuilderSelectorItem
-          v-for="size in buildingPizza.sizes"
+          v-for="size in sizes"
           :key="size.id"
           class="diameter__input"
           :class="`diameter__input--${size.value}`"
@@ -23,12 +23,12 @@
 
 <script>
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 export default {
   name: "BuilderSizeSelector",
   components: { BuilderSelectorItem },
   computed: {
-    ...mapGetters("Builder", ["buildingPizza"]),
+    ...mapState("Builder", ["sizes"]),
   },
 };
 </script>

@@ -24,7 +24,8 @@
 <script>
 import AppDrag from "@/common/components/AppDrag";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
-import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
+import { UPDATE_INGREDIENT_COUNTER } from "@/store/mutation-types";
 
 export default {
   name: "BuilderIngredientsItem",
@@ -41,9 +42,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["clickButtonItemCounter"]),
+    ...mapMutations("Builder", {
+      updateIngredientCounter: UPDATE_INGREDIENT_COUNTER,
+    }),
     clickButton(operation) {
-      this.clickButtonItemCounter({ ...this.filling, operation });
+      this.updateIngredientCounter({ ...this.filling, operation });
     },
     changeValue(value) {
       if (!isNaN(value)) {

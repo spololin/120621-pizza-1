@@ -2,7 +2,7 @@
   <div class="content__result">
     <p>Итого: {{ buildingPizzaPrice }} ₽</p>
     <Button
-      :disabled="disabledCreatePizza"
+      :disabled="validateBuilder"
       type="button"
       @onClick="onClick"
     >
@@ -13,19 +13,22 @@
 
 <script>
 import Button from "@/common/components/AppButton";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import { RESET_BUILDER } from "@/store/mutation-types";
 export default {
   name: "BuilderPriceCounter",
   components: { Button },
   computed: {
-    ...mapGetters("Builder", ["disabledCreatePizza", "buildingPizzaPrice", "pizza"]),
+    ...mapGetters("Builder", ["validateBuilder", "pizzaPrice", "pizza"]),
   },
   methods: {
     ...mapActions("Cart", ["addToCart", "setEditPizza"]),
-    ...mapActions("Builder", ["resetBuildState"]),
+    ...mapMutations("Builder", {
+      resetBuilder: RESET_BUILDER,
+    }),
     onClick() {
       !this.pizza.id ? this.addToCart(this.pizza) : this.setEditPizza(this.pizza);
-      this.resetBuildState();
+      this.resetBuilder();
     },
   },
 };

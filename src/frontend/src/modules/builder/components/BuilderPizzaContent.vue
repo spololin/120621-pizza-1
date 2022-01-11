@@ -3,11 +3,10 @@
     <label class="input">
       <span class="visually-hidden">Название пиццы</span>
       <input
+        v-model="valueName"
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
-        :value="buildingPizzaName"
-        @input="changeNamePizza($event.target.value)"
       >
     </label>
 
@@ -19,7 +18,8 @@
 <script>
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
-import { mapActions, mapGetters } from "vuex";
+import { mapState, mapMutations } from "vuex";
+import { SET_NAME_PIZZA } from "@/store/mutation-types";
 
 export default {
   name: "BuilderPizzaContent",
@@ -28,10 +28,22 @@ export default {
     BuilderPriceCounter,
   },
   computed: {
-    ...mapGetters("Builder", ["buildingPizzaName"]),
+    ...mapState("Builder", {
+      namePizza: (state) => state.name,
+    }),
+    valueName: {
+      get() {
+        return this.namePizza;
+      },
+      set(value) {
+        this.setNamePizza(value);
+      },
+    },
   },
   methods: {
-    ...mapActions("Builder", ["changeNamePizza"]),
+    ...mapMutations("Builder", {
+      setNamePizza: SET_NAME_PIZZA,
+    }),
   },
 };
 </script>

@@ -5,12 +5,13 @@
     :value="params.value"
     :checked="params.checked"
     v-bind="$attrs"
-    @click="clickSelectorItem(params)"
+    @click="updateSelectorItem(params)"
   >
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
+import { UPDATE_SELECTOR_ITEM } from "@/store/mutation-types";
 
 export default {
   name: "RadioButton",
@@ -23,7 +24,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions("Builder", ["clickSelectorItem"]),
+    ...mapMutations("Builder", {
+      updateSelectorItem: UPDATE_SELECTOR_ITEM,
+    }),
   },
 };
 </script>

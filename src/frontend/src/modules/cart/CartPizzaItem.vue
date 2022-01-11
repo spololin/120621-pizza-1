@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
+import { RESET_BUILDER } from "@/store/mutation-types";
 
 export default {
   name: "CartPizzaItem",
@@ -52,7 +53,10 @@ export default {
     },
   },
   methods: {
-    ...mapActions("Builder", ["editPizza", "resetBuildState"]),
+    ...mapMutations("Builder", {
+      resetBuilder: RESET_BUILDER,
+    }),
+    ...mapActions("Builder", ["editPizza"]),
     ...mapActions("Cart", ["changeCountPizza"]),
     getSizeAndDough(pizza) {
       return `${pizza.selectedSize.name} на ${pizza.selectedDough.value === "light" ? "тонком" : "толстом"} тесте`;
@@ -68,7 +72,7 @@ export default {
       this.changeCountPizza({ ...this.pizza, operation });
     },
     changePizza() {
-      this.resetBuildState();
+      this.resetBuilder();
       this.editPizza(this.pizza);
       this.$router.push("/");
     },

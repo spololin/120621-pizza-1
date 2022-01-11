@@ -2,37 +2,70 @@ import { getPizzaValues } from "@/common/helpers";
 import pizzaData from "@/static/pizza.json";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 import { cloneDeep } from 'lodash';
+import {
+  SET_NAME_PIZZA,
+  EDIT_PIZZA,
+  UPDATE_SELECTOR_ITEM,
+  UPDATE_INGREDIENT_COUNTER,
+  RESET_BUILDER,
+  SET_BUILDER_COMPONENTS,
+} from "@/store/mutation-types";
 
-const pizzaBuild = {};
-let initialBuild = {};
+let initialBuilder = {};
 
 export default {
   namespaced: true,
   state: {
-    pizzaBuild,
+    doughs: [],
+    fillings: [],
+    sauces: [],
+    sizes: [],
+    name: "",
   },
   actions: {
-    fetchBuilder({ commit }) {
-      initialBuild = getPizzaValues(pizzaData);
-      commit("setPizzaComponents", { ...initialBuild });
-    },
-    clickSelectorItem({ commit }, selector) {
-      commit("updateSelectorItem", selector);
-    },
-    changeItemCounter({ commit }, filling) {
-      commit("updateItemCounter", filling);
-    },
-    changeNamePizza({ commit }, name) {
-      commit("setNamePizza", name);
+    fetchBuilderComponents({ commit }) {
+      initialBuilder = getPizzaValues(pizzaData);
+      commit(SET_BUILDER_COMPONENTS, initialBuilder);
     },
     dropIngredient({ commit }, filling) {
-      commit("updateItemCounter", { ...filling, operation: "increase" });
+      commit(UPDATE_INGREDIENT_COUNTER, { ...filling, operation: "increase" });
     },
-    resetBuildState({ commit }) {
-      commit("resetBuildState");
+  },
+  mutations: {
+    [SET_BUILDER_COMPONENTS](state, builderComponents) {
+      Object.assign(state, builderComponents);
     },
-    editPizza({ commit }, pizza) {
-      const pizzaForBuilder = cloneDeep(initialBuild);
+    [UPDATE_SELECTOR_ITEM](state, selector) {
+      state[selector.type] = state[selector.type].map((elem) => ({
+        ...elem,
+        checked: selector.id === elem.id,
+      }));
+    },
+    [UPDATE_INGREDIENT_COUNTER](state, filling) {
+      state.fillings = state.fillings.map((elem) => {
+        if (elem.id !== filling.id) return elem;
+
+        const count =
+          filling.operation === "increase" ? ++filling.count : --filling.count;
+
+        return {
+          ...elem,
+          count,
+          permissions: {
+            decrease: count > 0,
+            increase: count < MAX_COUNT_TYPE_INGREDIENT,
+          },
+        };
+      });
+    },
+    [SET_NAME_PIZZA](state, name) {
+      state.name = name;
+    },
+    [RESET_BUILDER](state) {
+      Object.assign(state, initialBuilder);
+    },
+    [EDIT_PIZZA](state, pizza) {
+      const pizzaForBuilder = cloneDeep(initialBuilder);
       pizzaForBuilder.doughs = pizzaForBuilder.doughs.map(dough => ({
         ...dough,
         checked: dough.id === pizza.selectedDough.id,
@@ -58,71 +91,18 @@ export default {
       pizzaForBuilder.price = pizza.price;
       pizzaForBuilder.count = pizza.count;
 
-      commit("editPizza", pizzaForBuilder);
-    },
-  },
-  mutations: {
-    setPizzaComponents(state, pizzaComponents) {
-      state.pizzaBuild = pizzaComponents;
-    },
-    updateSelectorItem(state, selector) {
-      state.pizzaBuild[selector.type] = state.pizzaBuild[selector.type].map((elem) => ({
-        ...elem,
-        checked: selector.id === elem.id,
-      }));
-    },
-    updateItemCounter(state, filling) {
-      state.pizzaBuild.fillings = state.pizzaBuild.fillings.map((elem) => {
-        if (elem.id !== filling.id) return elem;
-
-        const count =
-          filling.operation === "increase" ? ++filling.count : --filling.count;
-
-        return {
-          ...elem,
-          count,
-          permissions: {
-            decrease: count > 0,
-            increase: count < MAX_COUNT_TYPE_INGREDIENT,
-          },
-        };
-      });
-    },
-    setNamePizza(state, name) {
-      state.pizzaBuild.name = name;
-    },
-    resetBuildState(state) {
-      Object.assign(state.pizzaBuild, initialBuild);
-    },
-    editPizza(state, pizza) {
-      state.pizzaBuild = { ...pizza };
+      state = pizzaForBuilder;
     },
   },
   getters: {
-    buildingPizza: state => state.pizzaBuild,
-    selectedDough: state => state.pizzaBuild.doughs.find(({ checked }) => checked),
-    selectedSize: state => state.pizzaBuild.sizes.find(({ checked }) => checked),
-    selectedSauce: state => state.pizzaBuild.sauces.find(({ checked }) => checked),
-    selectedFillings: state => state.pizzaBuild.fillings.filter(({ count }) => count),
-    buildingPizzaName: state => state.pizzaBuild.name,
-    pizzaClass: (state, { selectedDough, selectedSauce }) => {
-      const basePartClass = "pizza--foundation--";
-      const doughPartClass =
-        selectedDough.value === "light" ? "small" : "big";
-      const saucePartClass = selectedSauce.value;
-
-      return basePartClass + doughPartClass + "-" + saucePartClass;
-    },
-    disabledCreatePizza: (state, { selectedFillings, buildingPizzaName }) =>
-      !(selectedFillings.length && buildingPizzaName.length),
-    selectedItems: (state, getters) => ({
-      dough: getters.selectedDough,
-      size: getters.selectedSize,
-      sauce: getters.selectedSauce,
-      fillings: getters.selectedFillings,
-    }),
-    buildingPizzaPrice: (state, { selectedItems,selectedDough, selectedSauce, selectedSize }) => {
-      const fillingsPrice = selectedItems.fillings.reduce((acc, elem) => {
+    selectedDough: state => state.doughs.find(({ checked }) => checked),
+    selectedSize: state => state.sizes.find(({ checked }) => checked),
+    selectedSauce: state => state.sauces.find(({ checked }) => checked),
+    selectedFillings: state => state.fillings.filter(({ count }) => count),
+    validateBuilder: (state, { selectedFillings }) =>
+      !(selectedFillings.length && state.name.length),
+    pizzaPrice: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize }) => {
+      const fillingsPrice = selectedFillings.reduce((acc, elem) => {
         const { count, price } = elem;
         return acc + count * price;
       }, 0);
@@ -134,15 +114,13 @@ export default {
         selectedSize.multiplier
       );
     },
-    pizza: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize, buildingPizzaName, buildingPizzaPrice }) => ({
-      selectedFillings,
-      selectedDough,
-      selectedSauce,
-      selectedSize,
-      name: buildingPizzaName,
-      price: buildingPizzaPrice,
-      id: state.pizzaBuild.id,
-      count: state.pizzaBuild.count,
+    buildPizza: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize, pizzaPrice }) => ({
+      fillings: selectedFillings,
+      dough: selectedDough,
+      sauce: selectedSauce,
+      size: selectedSize,
+      name: state.name,
+      price: pizzaPrice,
     }),
   },
 };

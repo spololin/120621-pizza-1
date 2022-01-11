@@ -7,18 +7,9 @@ Vue.use(Vuex);
 const state = () => ({});
 
 const actions = {
-  async init({ dispatch }) {
-    dispatch("Builder/fetchBuilder");
+  init({ dispatch }) {
+    dispatch("Builder/fetchBuilderComponents");
     dispatch("Cart/fetchMisc");
-  },
-  clickButtonItemCounter({ dispatch }, counter) {
-    switch (counter.type) {
-      case "ingredient":
-        dispatch("Builder/changeItemCounter", counter);
-        break;
-      default:
-        break;
-    }
   },
   drop({ dispatch }, value) {
     switch (value.type) {

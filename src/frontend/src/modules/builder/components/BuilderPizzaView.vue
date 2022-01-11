@@ -3,7 +3,7 @@
     <div class="content__constructor">
       <div
         class="pizza"
-        :class="pizzaClass"
+        :class="classPizza"
       >
         <div class="pizza__wrapper">
           <div
@@ -26,7 +26,15 @@ export default {
   name: "BuilderPizzaView",
   components: { AppDrop },
   computed: {
-    ...mapGetters("Builder", ["pizzaClass", "selectedFillings"]),
+    ...mapGetters("Builder", ["selectedFillings", "selectedDough", "selectedSauce"]),
+    classPizza() {
+      const basePartClass = "pizza--foundation--";
+      const doughPartClass =
+        this.selectedDough.value === "light" ? "small" : "big";
+      const saucePartClass = this.selectedSauce.value;
+
+      return basePartClass + doughPartClass + "-" + saucePartClass;
+    },
   },
   methods: {
     ...mapActions(["drop"]),

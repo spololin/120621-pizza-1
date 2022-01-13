@@ -1,4 +1,5 @@
 import user from "@/static/user.json";
+import { RESET_USER } from "@/store/mutation-types";
 
 const setupState = () => ({
   user: {},
@@ -9,7 +10,6 @@ export default {
   state: setupState(),
   actions: {
     login({ commit }, credentials) {
-      //TODO request for user data
       console.log(credentials);
       commit("setUserData", user);
     },
@@ -21,7 +21,7 @@ export default {
     setUserData(state, userData) {
       state.user = userData;
     },
-    resetState(state) {
+    [RESET_USER](state) {
       Object.assign(state, setupState());
     },
   },

@@ -3,6 +3,12 @@ import { RESET_USER } from "@/store/mutation-types";
 
 const setupState = () => ({
   user: {},
+  addresses: [
+    {
+      id: "3",
+      name: "Адрес1",
+    },
+  ],
 });
 
 export default {

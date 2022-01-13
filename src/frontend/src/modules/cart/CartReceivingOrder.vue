@@ -8,12 +8,11 @@
           name="test"
           class="select"
         >
-          <option value="1">Заберу сам</option>
-          <option value="2">Новый адрес</option>
           <option
-            v-if="isAuth"
-            value="3"
-          >Дом</option>
+            v-for="typeAddress in listAddresses"
+            :key="typeAddress.id"
+            :value="typeAddress.id"
+          >{{ typeAddress.name }}</option>
         </select>
       </label>
 
@@ -64,12 +63,30 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 export default {
   name: "CartReceivingOrder",
+  data() {
+    return {
+      typeReceiving: [
+        {
+          id: "1",
+          name: "Заберу сам",
+        },
+        {
+          id: "2",
+          name: "Новый адрес",
+        },
+      ],
+    };
+  },
   computed: {
     ...mapGetters("User", ["isAuth"]),
+    ...mapState("User", ["addresses"]),
+    listAddresses() {
+      return this.typeReceiving.concat(this.isAuth ? this.addresses : []);
+    },
   },
 };
 </script>

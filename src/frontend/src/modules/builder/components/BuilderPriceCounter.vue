@@ -1,6 +1,6 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ buildingPizzaPrice }} ₽</p>
+    <p>Итого: {{ pizzaPrice }} ₽</p>
     <Button
       :disabled="validateBuilder"
       type="button"

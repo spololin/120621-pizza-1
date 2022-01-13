@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
+import { CHANGE_COUNT_MISC } from "@/store/mutation-types";
 
 export default {
   name: "CartAdditionalItem",
@@ -35,7 +36,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions("Cart", ["changeCountMisc"]),
+    ...mapMutations("Cart", {
+      changeCountMisc: CHANGE_COUNT_MISC,
+    }),
     clickButton(operation) {
       this.changeCountMisc({ ...this.misc, operation });
     },

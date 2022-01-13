@@ -41,8 +41,12 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
-import { RESET_BUILDER } from "@/store/mutation-types";
+import { mapMutations } from "vuex";
+import {
+  CHANGE_COUNT_PIZZA,
+  EDIT_PIZZA,
+  RESET_BUILDER,
+} from "@/store/mutation-types";
 
 export default {
   name: "CartPizzaItem",
@@ -55,18 +59,19 @@ export default {
   methods: {
     ...mapMutations("Builder", {
       resetBuilder: RESET_BUILDER,
+      editPizza: EDIT_PIZZA,
     }),
-    ...mapActions("Builder", ["editPizza"]),
-    ...mapActions("Cart", ["changeCountPizza"]),
+    ...mapMutations("Cart", {
+      changeCountPizza: CHANGE_COUNT_PIZZA,
+    }),
     getSizeAndDough(pizza) {
-      return `${pizza.selectedSize.name} на ${pizza.selectedDough.value === "light" ? "тонком" : "толстом"} тесте`;
+      return `${pizza.size.name} на ${pizza.dough.value === "light" ? "тонком" : "толстом"} тесте`;
     },
     getSauce(pizza) {
-      return `Соус: ${pizza.selectedSauce.name.toLowerCase()}`;
+      return `Соус: ${pizza.sauce.name.toLowerCase()}`;
     },
     getFillings(pizza) {
-      const fillings = pizza.selectedFillings.map(filling => filling.name.toLowerCase());
-      return `Начинка: ${fillings.join(", ")}`;
+      return `Начинка: ${pizza.fillings.map(filling => filling.name.toLowerCase()).join(", ")}`;
     },
     clickButton(operation) {
       this.changeCountPizza({ ...this.pizza, operation });

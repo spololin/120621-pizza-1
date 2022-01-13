@@ -1,50 +1,45 @@
 import miscData from "@/static/misc.json";
 import { createUUIDv4 } from "@/common/helpers";
+import {
+  ADD_PIZZA_TO_CART,
+  CHANGE_COUNT_MISC,
+  RESET_PIZZA_CART,
+  CHANGE_COUNT_PIZZA,
+} from "../mutation-types";
 
 const setupPizzasState = () => ([]);
-const state = {
-  pizzas: setupPizzasState(),
-  misc: [],
-};
-
 
 export default {
   namespaced: true,
-  state,
+  state: {
+    pizzas: setupPizzasState(),
+    misc: [],
+  },
   actions: {
-    addToCart({ commit }, pizza) {
-      commit("addPizzaToCart", { ...pizza, id: createUUIDv4(), count: 1 });
+    addToCart({ commit, rootGetters }) {
+      commit(ADD_PIZZA_TO_CART, rootGetters["Builder/buildPizza"]);
     },
     fetchMisc({ commit }) {
       commit("setMisc", miscData.map(misc => ({ ...misc, count: 0 })));
     },
-    changeCountMisc({ commit }, misc) {
-      commit("changeCountMisc", misc);
-    },
-    changeCountPizza({ commit }, pizza) {
-      if (pizza.count === 1 && pizza.operation === "decrease") {
-        commit("deletePizza", pizza.id);
-      }
-      commit("changeCountPizza", pizza);
-    },
-    setEditPizza({ commit }, pizza) {
-      commit("setEditPizza", pizza);
-    },
-    sendOrder() {
-      //TODO send order on server
-    },
-    resetPizzaState({ commit }) {
-      commit("resetPizzaState");
-    },
   },
   mutations: {
-    addPizzaToCart(state, pizza) {
-      state.pizzas.push(pizza);
+    [ADD_PIZZA_TO_CART](state, pizza) {
+      const idx = state.pizzas.findIndex(p => p.id === pizza.id);
+      if (~idx) {
+        state.pizzas = [
+          ...state.pizzas.slice(0, idx),
+          pizza,
+          ...state.pizzas.slice(idx + 1),
+        ];
+      } else {
+        state.pizzas.push({ ...pizza, id: createUUIDv4(), count: 1 });
+      }
     },
     setMisc(state, misc) {
       state.misc = misc;
     },
-    changeCountMisc(state, misc) {
+    [CHANGE_COUNT_MISC](state, misc) {
       state.misc = state.misc.map(elem => {
         return elem.id !== misc.id ? elem : {
           ...elem,
@@ -52,27 +47,25 @@ export default {
         };
       });
     },
-    changeCountPizza(state, pizza) {
-      state.pizzas = state.pizzas.map(elem => {
-        return elem.id !== pizza.id ? elem : {
-          ...elem,
-          count: pizza.operation === "increase" ? ++elem.count : --elem.count,
-        };
-      });
+    [CHANGE_COUNT_PIZZA](state, pizza) {
+      const resultValue = pizza.count + (pizza.operation === "increase" ? 1 : -1);
+
+      if (resultValue === 0) {
+        state.pizzas = state.pizzas.filter(p => p.id !== pizza.id);
+      } else {
+        state.pizzas = state.pizzas.map(elem => {
+          return elem.id !== pizza.id ? elem : {
+            ...elem,
+            count: pizza.operation === "increase" ? ++elem.count : --elem.count,
+          };
+        });
+      }
     },
-    deletePizza(state, id) {
-      state.pizzas = state.pizzas.filter(elem => elem.id !== id);
-    },
-    setEditPizza(state, pizza) {
-      state.pizzas = state.pizzas.map(elem => elem.id !== pizza.id ? elem : pizza);
-    },
-    resetPizzaState(state) {
+    [RESET_PIZZA_CART](state) {
       state.pizzas = setupPizzasState();
     },
   },
   getters: {
-    pizzas: state => state.pizzas,
-    countPizzaInCart: state => state.pizzas.length,
     totalCost: state => {
       const totalCostPizzas = state.pizzas.reduce((acc, elem) => {
         const { price, count } = elem;
@@ -85,6 +78,5 @@ export default {
 
       return totalCostPizzas + totalCostMisc;
     },
-    miscs: state => state.misc,
   },
 };

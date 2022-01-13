@@ -29,7 +29,6 @@ export const getPizzaValues = (pizza) => ({
     checked: idx === 0,
     type: "sizes",
   })),
-  name: "",
 });
 
 export const createUUIDv4 = () => {

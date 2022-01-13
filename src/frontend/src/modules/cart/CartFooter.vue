@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
-import { RESET_BUILDER } from "@/store/mutation-types";
+import { mapGetters, mapMutations } from "vuex";
+import { RESET_BUILDER, RESET_PIZZA_CART } from "@/store/mutation-types";
 
 export default {
   name: "CartFooter",
@@ -37,16 +37,17 @@ export default {
     ...mapGetters("Cart", ["totalCost"]),
   },
   methods: {
-    ...mapActions("Cart", ["sendOrder", "resetPizzaState"]),
     ...mapMutations("Builder", {
       resetBuilder: RESET_BUILDER,
+    }),
+    ...mapMutations("Cart", {
+      resetPizzaState: RESET_PIZZA_CART,
     }),
     toHome() {
       this.resetBuilder();
       this.$router.push("/");
     },
     checkout() {
-      this.sendOrder();
       this.resetBuilder();
       this.resetPizzaState();
       this.$router.push("/thanks");

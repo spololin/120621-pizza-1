@@ -19,15 +19,15 @@ export default {
   name: "BuilderPriceCounter",
   components: { Button },
   computed: {
-    ...mapGetters("Builder", ["validateBuilder", "pizzaPrice", "pizza"]),
+    ...mapGetters("Builder", ["validateBuilder", "pizzaPrice"]),
   },
   methods: {
-    ...mapActions("Cart", ["addToCart", "setEditPizza"]),
+    ...mapActions("Cart", ["addToCart"]),
     ...mapMutations("Builder", {
       resetBuilder: RESET_BUILDER,
     }),
     onClick() {
-      !this.pizza.id ? this.addToCart(this.pizza) : this.setEditPizza(this.pizza);
+      this.addToCart();
       this.resetBuilder();
     },
   },

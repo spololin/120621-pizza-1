@@ -1,7 +1,6 @@
 import { getPizzaValues } from "@/common/helpers";
 import pizzaData from "@/static/pizza.json";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
-import { cloneDeep } from 'lodash';
 import {
   SET_NAME_PIZZA,
   EDIT_PIZZA,
@@ -16,16 +15,19 @@ let initialBuilder = {};
 export default {
   namespaced: true,
   state: {
+    id: null,
+    name: "",
+    price: null,
+    count: null,
     doughs: [],
     fillings: [],
     sauces: [],
     sizes: [],
-    name: "",
   },
   actions: {
     fetchBuilderComponents({ commit }) {
       initialBuilder = getPizzaValues(pizzaData);
-      commit(SET_BUILDER_COMPONENTS, initialBuilder);
+      commit(SET_BUILDER_COMPONENTS, { ...initialBuilder });
     },
     dropIngredient({ commit }, filling) {
       commit(UPDATE_INGREDIENT_COUNTER, { ...filling, operation: "increase" });
@@ -62,36 +64,44 @@ export default {
       state.name = name;
     },
     [RESET_BUILDER](state) {
-      Object.assign(state, initialBuilder);
+      Object.assign(state, {
+        ...initialBuilder,
+        id: "",
+        name: "",
+        count: null,
+        price: null,
+      });
     },
     [EDIT_PIZZA](state, pizza) {
-      const pizzaForBuilder = cloneDeep(initialBuilder);
-      pizzaForBuilder.doughs = pizzaForBuilder.doughs.map(dough => ({
+      const pizzaForBuilder = { ...initialBuilder };
+      state.doughs = pizzaForBuilder.doughs.map(dough => ({
         ...dough,
-        checked: dough.id === pizza.selectedDough.id,
+        checked: dough.id === pizza.dough.id,
       }));
 
-      pizzaForBuilder.sizes = pizzaForBuilder.sizes.map(size => ({
+      state.sizes = pizzaForBuilder.sizes.map(size => ({
         ...size,
-        checked: size.id === pizza.selectedSize.id,
+        checked: size.id === pizza.size.id,
       }));
 
-      pizzaForBuilder.sauces = pizzaForBuilder.sauces.map(sauce => ({
+      state.sauces = pizzaForBuilder.sauces.map(sauce => ({
         ...sauce,
-        checked: sauce.id === pizza.selectedSauce.id,
+        checked: sauce.id === pizza.sauce.id,
       }));
 
-      for (const selectFilling of pizza.selectedFillings) {
-        const idx = pizzaForBuilder.fillings.findIndex(elem => elem.id === selectFilling.id);
-        pizzaForBuilder.fillings[idx].count = selectFilling.count;
-      }
+      state.fillings = state.fillings.map(filling => {
+        const findFilling = pizza.fillings.find(elem => elem.id === filling.id);
 
-      pizzaForBuilder.name = pizza.name;
-      pizzaForBuilder.id = pizza.id;
-      pizzaForBuilder.price = pizza.price;
-      pizzaForBuilder.count = pizza.count;
+        return {
+          ...filling,
+          count: findFilling ? findFilling.count : filling.count,
+        };
+      });
 
-      state = pizzaForBuilder;
+      state.name = pizza.name;
+      state.id = pizza.id;
+      state.price = pizza.price;
+      state.count = pizza.count;
     },
   },
   getters: {
@@ -115,12 +125,14 @@ export default {
       );
     },
     buildPizza: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize, pizzaPrice }) => ({
+      id: state.id,
+      name: state.name,
+      count: state.count,
+      price: pizzaPrice,
       fillings: selectedFillings,
       dough: selectedDough,
       sauce: selectedSauce,
       size: selectedSize,
-      name: state.name,
-      price: pizzaPrice,
     }),
   },
 };

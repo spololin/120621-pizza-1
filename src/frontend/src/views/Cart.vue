@@ -13,7 +13,7 @@
         </div>
 
         <div
-          v-if="!countPizzaInCart"
+          v-if="!pizzas.length"
           class="sheet cart__empty"
         >
           <p>В корзине нет ни одного товара</p>
@@ -33,9 +33,9 @@
         <div class="cart__additional">
           <ul class="additional-list">
             <CartAdditionalItem
-              v-for="misc in miscs"
-              :key="misc.id"
-              :misc="misc"
+              v-for="miscItem in misc"
+              :key="miscItem.id"
+              :misc="miscItem"
             />
           </ul>
         </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import CartPizzaItem from "@/modules/cart/CartPizzaItem";
 import CartAdditionalItem from "@/modules/cart/CartAdditionalItem";
 import CartReceivingOrder from "@/modules/cart/CartReceivingOrder";
@@ -58,7 +58,7 @@ export default {
   name: "Cart",
   components: { CartFooter, CartReceivingOrder, CartAdditionalItem, CartPizzaItem },
   computed: {
-    ...mapGetters("Cart", ["countPizzaInCart", "pizzas", "miscs"]),
+    ...mapState("Cart", ["pizzas", "misc"]),
   },
 };
 </script>

@@ -16,7 +16,6 @@
       :value="filling.count"
       :max="MAX_COUNT_TYPE_INGREDIENT"
       @clickButton="clickButton"
-      @changeValue="changeValue"
     />
   </li>
 </template>

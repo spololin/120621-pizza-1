@@ -48,15 +48,6 @@ export default {
     clickButton(operation) {
       this.updateIngredientCounter({ ...this.filling, operation });
     },
-    changeValue(value) {
-      if (!isNaN(value)) {
-        value = parseInt(value);
-        if (value > MAX_COUNT_TYPE_INGREDIENT) {
-          value = MAX_COUNT_TYPE_INGREDIENT;
-        }
-        //TODO
-      }
-    },
   },
 };
 </script>

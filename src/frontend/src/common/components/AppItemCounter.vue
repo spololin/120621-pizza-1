@@ -16,7 +16,7 @@
       type="text"
       name="counter"
       class="counter__input"
-      @input="changeValue"
+      disabled="disabled"
     >
     <button
       type="button"
@@ -49,9 +49,6 @@ export default {
   methods: {
     clickButton(operation) {
       this.$emit("clickButton", operation);
-    },
-    changeValue(event) {
-      this.$emit("changeValue", event.target.value);
     },
   },
 };

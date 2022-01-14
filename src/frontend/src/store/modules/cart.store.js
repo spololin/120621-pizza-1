@@ -56,7 +56,7 @@ export default {
         state.pizzas = state.pizzas.map(elem => {
           return elem.id !== pizza.id ? elem : {
             ...elem,
-            count: pizza.operation === "increase" ? ++elem.count : --elem.count,
+            count: pizza.operation === "increase" ? elem.count + 1 : elem.count - 1,
           };
         });
       }

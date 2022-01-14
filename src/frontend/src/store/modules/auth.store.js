@@ -1,34 +1,40 @@
 import user from "@/static/user.json";
-import { RESET_USER } from "@/store/mutation-types";
+import {
+  LOGOUT_USER,
+  SET_USER_DATA,
+} from "@/store/mutation-types";
 
-const setupState = () => ({
-  user: {},
-  addresses: [
-    {
-      id: "3",
-      name: "Адрес1",
-    },
-  ],
-});
+const initialUser = () => ({});
 
 export default {
   namespaced: true,
-  state: setupState(),
+  state: {
+    user: initialUser(),
+    addresses: [
+      {
+        id: "3",
+        name: "Адрес1",
+        street: "Улица1",
+        home: "Дом1",
+        room: "Комната1",
+      },
+    ],
+  },
   actions: {
     login({ commit }, credentials) {
       console.log(credentials);
-      commit("setUserData", user);
+      commit(SET_USER_DATA, user);
     },
-    resetUserState({ commit }) {
-      commit("resetState");
+    logoutUser({ commit }) {
+      commit(LOGOUT_USER);
     },
   },
   mutations: {
-    setUserData(state, userData) {
+    [SET_USER_DATA](state, userData) {
       state.user = userData;
     },
-    [RESET_USER](state) {
-      Object.assign(state, setupState());
+    [LOGOUT_USER](state) {
+      state.user = initialUser();
     },
   },
   getters: {

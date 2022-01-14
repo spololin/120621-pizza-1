@@ -1,7 +1,6 @@
 <template>
   <div class="content__diameter">
     <div
-      v-if="sizes.length"
       class="sheet"
     >
       <h2 class="title title--small sheet__title">
@@ -10,7 +9,7 @@
 
       <div class="sheet__content diameter">
         <BuilderSelectorItem
-          v-for="size in sizes"
+          v-for="size in builder.sizes"
           :key="size.id"
           class="diameter__input"
           :class="`diameter__input--${size.value}`"
@@ -28,7 +27,7 @@ export default {
   name: "BuilderSizeSelector",
   components: { BuilderSelectorItem },
   computed: {
-    ...mapState("Builder", ["sizes"]),
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

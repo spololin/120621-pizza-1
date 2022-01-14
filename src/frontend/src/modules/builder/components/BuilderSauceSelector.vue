@@ -1,12 +1,11 @@
 <template>
   <div
-    v-if="sauces.length"
     class="ingredients__sauce"
   >
     <p>Основной соус:</p>
 
     <BuilderSelectorItem
-      v-for="sauce in sauces"
+      v-for="sauce in builder.sauces"
       :key="sauce.id"
       class="radio ingredients__input"
       :selector="sauce"
@@ -22,7 +21,7 @@ export default {
   name: "BuilderSauceSelector",
   components: { BuilderSelectorItem },
   computed: {
-    ...mapState("Builder", ["sauces"]),
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

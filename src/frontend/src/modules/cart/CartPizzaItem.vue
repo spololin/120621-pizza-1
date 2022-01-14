@@ -11,9 +11,9 @@
       <div class="product__text">
         <h2>{{ pizza.name }}</h2>
         <ul>
-          <li>{{ getSizeAndDough(pizza) }}</li>
-          <li>{{ getSauce(pizza) }}</li>
-          <li>{{ getFillings(pizza) }}</li>
+          <li>{{ getSizeAndDough }}</li>
+          <li>{{ getSauce }}</li>
+          <li>{{ getFillings }}</li>
         </ul>
       </div>
     </div>
@@ -21,7 +21,7 @@
     <ItemCounter
       class="cart-list__counter"
       :value="pizza.count"
-      @clickButton="clickButton"
+      @change="change"
     />
 
     <div class="cart-list__price">
@@ -56,6 +56,17 @@ export default {
       required: true,
     },
   },
+  computed: {
+    getSizeAndDough() {
+      return `${this.pizza.size.name} на ${this.pizza.dough.value === "light" ? "тонком" : "толстом"} тесте`;
+    },
+    getSauce() {
+      return `Соус: ${this.pizza.sauce.name.toLowerCase()}`;
+    },
+    getFillings() {
+      return `Начинка: ${this.pizza.fillings.map(filling => filling.name.toLowerCase()).join(", ")}`;
+    },
+  },
   methods: {
     ...mapMutations("Builder", {
       resetBuilder: RESET_BUILDER,
@@ -64,16 +75,7 @@ export default {
     ...mapMutations("Cart", {
       changeCountPizza: CHANGE_COUNT_PIZZA,
     }),
-    getSizeAndDough(pizza) {
-      return `${pizza.size.name} на ${pizza.dough.value === "light" ? "тонком" : "толстом"} тесте`;
-    },
-    getSauce(pizza) {
-      return `Соус: ${pizza.sauce.name.toLowerCase()}`;
-    },
-    getFillings(pizza) {
-      return `Начинка: ${pizza.fillings.map(filling => filling.name.toLowerCase()).join(", ")}`;
-    },
-    clickButton(operation) {
+    change(operation) {
       this.changeCountPizza({ ...this.pizza, operation });
     },
     changePizza() {

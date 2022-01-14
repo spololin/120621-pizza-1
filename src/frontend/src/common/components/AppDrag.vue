@@ -13,7 +13,6 @@
 import {
   DATA_TRANSFER_PAYLOAD,
   EFFECT_MOVE,
-  MAX_COUNT_TYPE_INGREDIENT,
 } from "@/common/constants";
 
 export default {
@@ -27,11 +26,6 @@ export default {
       type: Boolean,
       required: true,
     },
-  },
-  data() {
-    return {
-      MAX_COUNT_TYPE_INGREDIENT,
-    };
   },
   methods: {
     onDrag({ dataTransfer }) {

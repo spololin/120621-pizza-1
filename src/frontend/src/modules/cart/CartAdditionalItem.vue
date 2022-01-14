@@ -14,7 +14,7 @@
       <ItemCounter
         :value="misc.count"
         class="additional-list__counter"
-        @clickButton="clickButton"
+        @change="change"
       />
       <div class="additional-list__price">
         <b>× {{ misc.price }} ₽</b>
@@ -39,7 +39,7 @@ export default {
     ...mapMutations("Cart", {
       changeCountMisc: CHANGE_COUNT_MISC,
     }),
-    clickButton(operation) {
+    change(operation) {
       this.changeCountMisc({ ...this.misc, operation });
     },
   },

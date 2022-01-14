@@ -5,6 +5,7 @@
         <span class="cart-form__label">Получение заказа:</span>
 
         <select
+          v-model="typeReceiving"
           name="test"
           class="select"
         >
@@ -25,7 +26,10 @@
         >
       </label>
 
-      <div class="cart-form__address">
+      <div
+        v-if="typeReceiving > 1"
+        class="cart-form__address"
+      >
         <span class="cart-form__label">Новый адрес:</span>
 
         <div class="cart-form__input">
@@ -34,6 +38,7 @@
             <input
               type="text"
               name="street"
+              :value="addressStreet"
             >
           </label>
         </div>
@@ -44,6 +49,7 @@
             <input
               type="text"
               name="house"
+              :value="addressHome"
             >
           </label>
         </div>
@@ -54,6 +60,7 @@
             <input
               type="text"
               name="apartment"
+              :value="addressRoom"
             >
           </label>
         </div>
@@ -69,7 +76,11 @@ export default {
   name: "CartReceivingOrder",
   data() {
     return {
-      typeReceiving: [
+      typeReceiving: 1,
+      addressStreet: "",
+      addressHome: "",
+      addressRoom: "",
+      listTypeReceiving: [
         {
           id: "1",
           name: "Заберу сам",
@@ -85,7 +96,24 @@ export default {
     ...mapGetters("User", ["isAuth"]),
     ...mapState("User", ["addresses"]),
     listAddresses() {
-      return this.typeReceiving.concat(this.isAuth ? this.addresses : []);
+      return this.listTypeReceiving.concat(this.isAuth ? this.addresses : []);
+    },
+  },
+  watch: {
+    typeReceiving(newValue, oldValue) {
+      if (newValue !== oldValue) {
+        if (+newValue === 2) {
+          this.addressStreet = "";
+          this.addressHome = "";
+          this.addressRoom = "";
+        }
+        if (+newValue > 2) {
+          const address = this.listAddresses.find(elem => elem.id === newValue);
+          this.addressStreet = address.street;
+          this.addressHome = address.home;
+          this.addressRoom = address.room;
+        }
+      }
     },
   },
 };

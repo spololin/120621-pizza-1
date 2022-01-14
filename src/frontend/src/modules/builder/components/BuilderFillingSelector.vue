@@ -1,13 +1,12 @@
 <template>
   <div
-    v-if="fillings.length"
     class="ingredients__filling"
   >
     <p>Начинка:</p>
 
     <ul class="ingredients__list">
       <BuilderIngredientsItem
-        v-for="filling in fillings"
+        v-for="filling in builder.fillings"
         :key="filling.id"
         :filling="filling"
       />
@@ -22,7 +21,7 @@ export default {
   name: "BuilderIngredientsSelector",
   components: { BuilderIngredientsItem },
   computed: {
-    ...mapState("Builder", ["fillings"]),
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

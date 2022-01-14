@@ -8,4 +8,5 @@ export const ADD_PIZZA_TO_CART = "ADD_PIZZA_TO_CART";
 export const CHANGE_COUNT_MISC = "CHANGE_COUNT_MISC";
 export const RESET_PIZZA_CART = "RESET_PIZZA_CART";
 export const CHANGE_COUNT_PIZZA = "CHANGE_COUNT_PIZZA";
-export const RESET_USER = "RESET_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const SET_USER_DATA = "SET_USER_DATA";

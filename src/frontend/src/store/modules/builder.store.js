@@ -10,24 +10,24 @@ import {
   SET_BUILDER_COMPONENTS,
 } from "@/store/mutation-types";
 
-let initialBuilder = {};
-
 export default {
   namespaced: true,
   state: {
-    id: null,
-    name: "",
-    price: null,
-    count: null,
-    doughs: [],
-    fillings: [],
-    sauces: [],
-    sizes: [],
+    builder: {
+      id: null,
+      name: "",
+      price: null,
+      count: null,
+      doughs: [],
+      fillings: [],
+      sauces: [],
+      sizes: [],
+    },
+    initialBuilder: {},
   },
   actions: {
     fetchBuilderComponents({ commit }) {
-      initialBuilder = getPizzaValues(pizzaData);
-      commit(SET_BUILDER_COMPONENTS, { ...initialBuilder });
+      commit(SET_BUILDER_COMPONENTS, getPizzaValues(pizzaData));
     },
     dropIngredient({ commit }, filling) {
       commit(UPDATE_INGREDIENT_COUNTER, { ...filling, operation: "increase" });
@@ -35,20 +35,21 @@ export default {
   },
   mutations: {
     [SET_BUILDER_COMPONENTS](state, builderComponents) {
-      Object.assign(state, builderComponents);
+      state.initialBuilder = builderComponents;
+      Object.assign(state.builder, builderComponents);
     },
     [UPDATE_SELECTOR_ITEM](state, selector) {
-      state[selector.type] = state[selector.type].map((elem) => ({
+      state.builder[selector.type] = state.builder[selector.type].map((elem) => ({
         ...elem,
         checked: selector.id === elem.id,
       }));
     },
     [UPDATE_INGREDIENT_COUNTER](state, filling) {
-      state.fillings = state.fillings.map((elem) => {
+      state.builder.fillings = state.builder.fillings.map((elem) => {
         if (elem.id !== filling.id) return elem;
 
         const count =
-          filling.operation === "increase" ? ++filling.count : --filling.count;
+          filling.operation === "increase" ? filling.count + 1 : filling.count - 1;
 
         return {
           ...elem,
@@ -61,11 +62,11 @@ export default {
       });
     },
     [SET_NAME_PIZZA](state, name) {
-      state.name = name;
+      state.builder.name = name;
     },
     [RESET_BUILDER](state) {
-      Object.assign(state, {
-        ...initialBuilder,
+      Object.assign(state.builder, {
+        ...state.initialBuilder,
         id: "",
         name: "",
         count: null,
@@ -73,23 +74,23 @@ export default {
       });
     },
     [EDIT_PIZZA](state, pizza) {
-      const pizzaForBuilder = { ...initialBuilder };
-      state.doughs = pizzaForBuilder.doughs.map(dough => ({
+      const pizzaForBuilder = { ...state.initialBuilder };
+      state.builder.doughs = pizzaForBuilder.doughs.map(dough => ({
         ...dough,
         checked: dough.id === pizza.dough.id,
       }));
 
-      state.sizes = pizzaForBuilder.sizes.map(size => ({
+      state.builder.sizes = pizzaForBuilder.sizes.map(size => ({
         ...size,
         checked: size.id === pizza.size.id,
       }));
 
-      state.sauces = pizzaForBuilder.sauces.map(sauce => ({
+      state.builder.sauces = pizzaForBuilder.sauces.map(sauce => ({
         ...sauce,
         checked: sauce.id === pizza.sauce.id,
       }));
 
-      state.fillings = state.fillings.map(filling => {
+      state.builder.fillings = state.builder.fillings.map(filling => {
         const findFilling = pizza.fillings.find(elem => elem.id === filling.id);
 
         return {
@@ -98,19 +99,19 @@ export default {
         };
       });
 
-      state.name = pizza.name;
-      state.id = pizza.id;
-      state.price = pizza.price;
-      state.count = pizza.count;
+      state.builder.name = pizza.name;
+      state.builder.id = pizza.id;
+      state.builder.price = pizza.price;
+      state.builder.count = pizza.count;
     },
   },
   getters: {
-    selectedDough: state => state.doughs.find(({ checked }) => checked),
-    selectedSize: state => state.sizes.find(({ checked }) => checked),
-    selectedSauce: state => state.sauces.find(({ checked }) => checked),
-    selectedFillings: state => state.fillings.filter(({ count }) => count),
+    selectedDough: state => state.builder.doughs.find(({ checked }) => checked),
+    selectedSize: state => state.builder.sizes.find(({ checked }) => checked),
+    selectedSauce: state => state.builder.sauces.find(({ checked }) => checked),
+    selectedFillings: state => state.builder.fillings.filter(({ count }) => count),
     validateBuilder: (state, { selectedFillings }) =>
-      !(selectedFillings.length && state.name.length),
+      !(selectedFillings.length && state.builder.name.length),
     pizzaPrice: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize }) => {
       const fillingsPrice = selectedFillings.reduce((acc, elem) => {
         const { count, price } = elem;
@@ -125,9 +126,9 @@ export default {
       );
     },
     buildPizza: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize, pizzaPrice }) => ({
-      id: state.id,
-      name: state.name,
-      count: state.count,
+      id: state.builder.id,
+      name: state.builder.name,
+      count: state.builder.count,
       price: pizzaPrice,
       fillings: selectedFillings,
       dough: selectedDough,

@@ -28,12 +28,10 @@ export default {
     BuilderPriceCounter,
   },
   computed: {
-    ...mapState("Builder", {
-      namePizza: (state) => state.name,
-    }),
+    ...mapState("Builder", ["builder"]),
     valueName: {
       get() {
-        return this.namePizza;
+        return this.builder.name;
       },
       set(value) {
         this.setNamePizza(value);

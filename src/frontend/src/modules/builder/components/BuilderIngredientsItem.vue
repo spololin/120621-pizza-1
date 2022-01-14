@@ -15,7 +15,7 @@
       class="ingredients__counter"
       :value="filling.count"
       :max="MAX_COUNT_TYPE_INGREDIENT"
-      @clickButton="clickButton"
+      @change="change"
     />
   </li>
 </template>
@@ -44,7 +44,7 @@ export default {
     ...mapMutations("Builder", {
       updateIngredientCounter: UPDATE_INGREDIENT_COUNTER,
     }),
-    clickButton(operation) {
+    change(operation) {
       this.updateIngredientCounter({ ...this.filling, operation });
     },
   },

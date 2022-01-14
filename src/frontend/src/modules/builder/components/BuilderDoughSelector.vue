@@ -9,7 +9,7 @@
         class="sheet__content dough"
       >
         <BuilderSelectorItem
-          v-for="dough in doughs"
+          v-for="dough in builder.doughs"
           :key="dough.id"
           class="dough__input"
           :selector="dough"
@@ -27,9 +27,7 @@ export default {
   name: "BuilderDoughSelector",
   components: { BuilderSelectorItem },
   computed: {
-    ...mapState({
-      doughs: (state) => state["Builder"].doughs,
-    }),
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

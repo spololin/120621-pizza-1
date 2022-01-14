@@ -7,7 +7,7 @@
       type="button"
       class="counter__button counter__button--minus"
       :disabled="value <= min"
-      @click="clickButton('decrease')"
+      @click="change('decrease')"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -22,7 +22,7 @@
       type="button"
       class="counter__button counter__button--plus"
       :disabled="max === null ? false : value >= max"
-      @click="clickButton('increase')"
+      @click="change('increase')"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -47,8 +47,8 @@ export default {
     },
   },
   methods: {
-    clickButton(operation) {
-      this.$emit("clickButton", operation);
+    change(operation) {
+      this.$emit("change", operation);
     },
   },
 };

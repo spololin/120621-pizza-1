@@ -61,7 +61,7 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
-import { RESET_USER } from "@/store/mutation-types";
+import { LOGOUT_USER } from "@/store/mutation-types";
 
 export default {
   name: "AppLayoutHeader",
@@ -71,10 +71,10 @@ export default {
   },
   methods: {
     ...mapMutations("User", {
-      resetUserState: RESET_USER,
+      logoutUser: LOGOUT_USER,
     }),
     logout() {
-      this.resetUserState();
+      this.logoutUser();
     },
   },
 };

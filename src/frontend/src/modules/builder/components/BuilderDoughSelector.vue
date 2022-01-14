@@ -1,16 +1,19 @@
 <template>
   <div class="content__dough">
     <div class="sheet">
-      <h2 class="title title--small sheet__title">Выберите тесто</h2>
+      <h2 class="title title--small sheet__title">
+        Выберите тесто
+      </h2>
 
-      <div class="sheet__content dough" v-if="doughs.length">
+      <div
+        class="sheet__content dough"
+      >
         <BuilderSelectorItem
-          class="dough__input"
-          v-for="dough in doughs"
+          v-for="dough in builder.doughs"
           :key="dough.id"
+          class="dough__input"
           :selector="dough"
           :class="`dough__input--${dough.value}`"
-          @clickSelectorItem="$emit('selectDough', $event)"
         />
       </div>
     </div>
@@ -19,14 +22,12 @@
 
 <script>
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
+import { mapState } from "vuex";
 export default {
   name: "BuilderDoughSelector",
   components: { BuilderSelectorItem },
-  props: {
-    doughs: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

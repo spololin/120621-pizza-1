@@ -1,28 +1,27 @@
 <template>
-  <div class="ingredients__sauce" v-if="sauces.length">
+  <div
+    class="ingredients__sauce"
+  >
     <p>Основной соус:</p>
 
     <BuilderSelectorItem
-      class="radio ingredients__input"
-      v-for="sauce in sauces"
+      v-for="sauce in builder.sauces"
       :key="sauce.id"
+      class="radio ingredients__input"
       :selector="sauce"
-      @clickSelectorItem="$emit('selectSauce', $event)"
     />
   </div>
 </template>
 
 <script>
 import BuilderSelectorItem from "@/modules/builder/components/BuilderSelectorItem";
+import { mapState } from "vuex";
 
 export default {
   name: "BuilderSauceSelector",
   components: { BuilderSelectorItem },
-  props: {
-    sauces: {
-      type: Array,
-      default: () => [],
-    },
+  computed: {
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

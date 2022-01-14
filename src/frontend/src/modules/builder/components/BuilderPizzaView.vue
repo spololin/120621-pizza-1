@@ -1,14 +1,16 @@
 <template>
-  <AppDrop @drop="dropFilling">
+  <AppDrop @drop="drop">
     <div class="content__constructor">
-      <div class="pizza" :class="pizzaClass">
+      <div
+        class="pizza"
+        :class="classPizza"
+      >
         <div class="pizza__wrapper">
-          <div
-            class="pizza__filling"
-            v-for="filling in fillings"
+          <BuilderPizzaViewIngredient
+            v-for="filling in selectedFillings"
             :key="filling.id"
-            :class="classFilling(filling)"
-          ></div>
+            :filling="filling"
+          />
         </div>
       </div>
     </div>
@@ -17,39 +19,25 @@
 
 <script>
 import AppDrop from "@/common/components/AppDrop";
+import { mapActions, mapGetters } from "vuex";
+import BuilderPizzaViewIngredient from "@/modules/builder/components/BuilderPizzaViewIngredient";
+
 export default {
   name: "BuilderPizzaView",
-  components: { AppDrop },
-  props: {
-    pizzaClass: {
-      type: String,
-      required: true,
-    },
-    fillings: {
-      type: Array,
-      default: () => [],
+  components: { BuilderPizzaViewIngredient, AppDrop },
+  computed: {
+    ...mapGetters("Builder", ["selectedFillings", "selectedDough", "selectedSauce"]),
+    classPizza() {
+      const basePartClass = "pizza--foundation--";
+      const doughPartClass =
+        this.selectedDough.value === "light" ? "small" : "big";
+      const saucePartClass = this.selectedSauce.value;
+
+      return basePartClass + doughPartClass + "-" + saucePartClass;
     },
   },
   methods: {
-    classFilling(filling) {
-      let customClass = {};
-      customClass[`pizza__filling--${filling.value}`] = true;
-      switch (filling.count) {
-        case 2:
-          customClass["pizza__filling--second"] = true;
-          break;
-        case 3:
-          customClass["pizza__filling--third"] = true;
-          break;
-        default:
-          break;
-      }
-
-      return customClass;
-    },
-    dropFilling(filling) {
-      this.$emit("dropFilling", filling);
-    },
+    ...mapActions(["drop"]),
   },
 };
 </script>

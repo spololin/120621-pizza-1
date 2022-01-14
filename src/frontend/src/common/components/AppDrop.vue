@@ -1,5 +1,9 @@
 <template>
-  <div @drop.stop="onDrop" @dragover.prevent @dragenter.prevent>
+  <div
+    @drop.stop="onDrop"
+    @dragover.prevent
+    @dragenter.prevent
+  >
     <slot />
   </div>
 </template>
@@ -17,7 +21,7 @@ export default {
       const payload = dataTransfer.getData(DATA_TRANSFER_PAYLOAD);
       if (payload) {
         const transferData = JSON.parse(
-          dataTransfer.getData(DATA_TRANSFER_PAYLOAD)
+          dataTransfer.getData(DATA_TRANSFER_PAYLOAD),
         );
         this.$emit("drop", transferData);
       }

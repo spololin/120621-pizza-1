@@ -1,13 +1,14 @@
 <template>
-  <div class="ingredients__filling" v-if="fillings.length">
+  <div
+    class="ingredients__filling"
+  >
     <p>Начинка:</p>
 
     <ul class="ingredients__list">
       <BuilderIngredientsItem
-        v-for="filling in fillings"
+        v-for="filling in builder.fillings"
         :key="filling.id"
         :filling="filling"
-        @clickButtonItemCounter="clickButtonItemCounter"
       />
     </ul>
   </div>
@@ -15,19 +16,12 @@
 
 <script>
 import BuilderIngredientsItem from "@/modules/builder/components/BuilderIngredientsItem";
+import { mapState } from "vuex";
 export default {
   name: "BuilderIngredientsSelector",
   components: { BuilderIngredientsItem },
-  props: {
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  methods: {
-    clickButtonItemCounter: function (filling) {
-      this.$emit("clickButtonItemCounter", filling);
-    },
+  computed: {
+    ...mapState("Builder", ["builder"]),
   },
 };
 </script>

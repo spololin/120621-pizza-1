@@ -1,27 +1,34 @@
 <template>
   <div class="content__result">
-    <p>Итого: {{ price }} ₽</p>
-    <Button :disabled="!(fillings.length && name.length)"> Готовьте! </Button>
+    <p>Итого: {{ pizzaPrice }} ₽</p>
+    <Button
+      :disabled="validateBuilder"
+      type="button"
+      @onClick="onClick"
+    >
+      Готовьте!
+    </Button>
   </div>
 </template>
 
 <script>
-import Button from "@/common/components/Button";
+import Button from "@/common/components/AppButton";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import { RESET_BUILDER } from "@/store/mutation-types";
 export default {
   name: "BuilderPriceCounter",
   components: { Button },
-  props: {
-    price: {
-      type: Number,
-      required: true,
-    },
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
-    name: {
-      type: String,
-      required: true,
+  computed: {
+    ...mapGetters("Builder", ["validateBuilder", "pizzaPrice"]),
+  },
+  methods: {
+    ...mapActions("Cart", ["addToCart"]),
+    ...mapMutations("Builder", {
+      resetBuilder: RESET_BUILDER,
+    }),
+    onClick() {
+      this.addToCart();
+      this.resetBuilder();
     },
   },
 };

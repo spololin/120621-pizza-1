@@ -29,4 +29,10 @@ export default [
     component: () => import("../views/Login.vue"),
     meta: { layout: "AppLayoutDefault" },
   },
+  {
+    path: '/thanks',
+    name: 'Thanks',
+    component: () => import("../views/OrderPopup.vue"),
+    meta: { layout: 'AppLayoutDefault' },
+  },
 ];

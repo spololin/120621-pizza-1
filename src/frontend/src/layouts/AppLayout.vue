@@ -1,5 +1,8 @@
 <template>
-  <component :is="layout" :total-price="totalPrice" :user="user">
+  <component
+    :is="layout"
+    :user="user"
+  >
     <slot />
   </component>
 </template>
@@ -10,10 +13,6 @@ const defaultLayout = "AppLayoutDefault";
 export default {
   name: "AppLayout",
   props: {
-    totalPrice: {
-      type: Number,
-      default: 0,
-    },
     user: {
       type: Object,
       required: true,

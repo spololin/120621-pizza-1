@@ -3,26 +3,23 @@
     <label class="input">
       <span class="visually-hidden">Название пиццы</span>
       <input
+        v-model="valueName"
         type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
-        :value="name"
-        @input="$emit('changeNamePizza', $event)"
-      />
+      >
     </label>
 
-    <BuilderPizzaView
-      :pizzaClass="pizzaClass"
-      :fillings="fillings"
-      @dropFilling="dropFilling"
-    />
-    <BuilderPriceCounter :price="price" :fillings="fillings" :name="name" />
+    <BuilderPizzaView />
+    <BuilderPriceCounter />
   </div>
 </template>
 
 <script>
 import BuilderPizzaView from "@/modules/builder/components/BuilderPizzaView";
 import BuilderPriceCounter from "@/modules/builder/components/BuilderPriceCounter";
+import { mapState, mapMutations } from "vuex";
+import { SET_NAME_PIZZA } from "@/store/mutation-types";
 
 export default {
   name: "BuilderPizzaContent",
@@ -30,38 +27,21 @@ export default {
     BuilderPizzaView,
     BuilderPriceCounter,
   },
-  props: {
-    price: {
-      type: Number,
-      required: true,
-    },
-    selectedItems: {
-      type: Object,
-      required: true,
-    },
-    fillings: {
-      type: Array,
-      default: () => [],
-    },
-    name: {
-      type: String,
-      required: true,
+  computed: {
+    ...mapState("Builder", ["builder"]),
+    valueName: {
+      get() {
+        return this.builder.name;
+      },
+      set(value) {
+        this.setNamePizza(value);
+      },
     },
   },
   methods: {
-    dropFilling(filling) {
-      this.$emit("dropFilling", filling);
-    },
-  },
-  computed: {
-    pizzaClass() {
-      const basePartClass = "pizza--foundation--";
-      const doughPartClass =
-        this.selectedItems.dough.value === "light" ? "small" : "big";
-      const saucePartClass = this.selectedItems.sauce.value;
-
-      return basePartClass + doughPartClass + "-" + saucePartClass;
-    },
+    ...mapMutations("Builder", {
+      setNamePizza: SET_NAME_PIZZA,
+    }),
   },
 };
 </script>

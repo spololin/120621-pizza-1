@@ -56,6 +56,18 @@
 .additional-list__counter {
   width: 54px;
   margin-right: auto;
+
+  .counter__button--plus {
+    background-color: $orange-200;
+
+    &:hover:not(:active):not(:disabled) {
+      background-color: $orange-100;
+    }
+
+    &:active:not(:disabled) {
+      background-color: $orange-300;
+    }
+  }
 }
 
 .additional-list__price {

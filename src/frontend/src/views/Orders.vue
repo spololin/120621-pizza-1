@@ -2,7 +2,9 @@
   <main class="layout">
     <div class="layout__content">
       <div class="layout__title">
-        <h1 class="title title--big">История заказов</h1>
+        <h1 class="title title--big">
+          История заказов
+        </h1>
       </div>
 
       <section class="sheet order">
@@ -16,10 +18,20 @@
           </div>
 
           <div class="order__button">
-            <button type="button" class="button button--border">Удалить</button>
+            <button
+              type="button"
+              class="button button--border"
+            >
+              Удалить
+            </button>
           </div>
           <div class="order__button">
-            <button type="button" class="button">Повторить</button>
+            <button
+              type="button"
+              class="button"
+            >
+              Повторить
+            </button>
           </div>
         </div>
 
@@ -32,7 +44,7 @@
                 width="56"
                 height="56"
                 alt="Капричоза"
-              />
+              >
               <div class="product__text">
                 <h2>Капричоза</h2>
                 <ul>
@@ -46,7 +58,9 @@
               </div>
             </div>
 
-            <p class="order__price">782 ₽</p>
+            <p class="order__price">
+              782 ₽
+            </p>
           </li>
           <li class="order__item">
             <div class="product">
@@ -56,7 +70,7 @@
                 width="56"
                 height="56"
                 alt="Капричоза"
-              />
+              >
               <div class="product__text">
                 <h2>Моя любимая</h2>
                 <ul>
@@ -67,7 +81,9 @@
               </div>
             </div>
 
-            <p class="order__price">2х782 ₽</p>
+            <p class="order__price">
+              2х782 ₽
+            </p>
           </li>
         </ul>
 
@@ -78,7 +94,7 @@
               width="20"
               height="30"
               alt="Coca-Cola 0,5 литра"
-            />
+            >
             <p>
               <span>Coca-Cola 0,5 литра</span>
               <b>56 ₽</b>
@@ -90,8 +106,8 @@
               width="20"
               height="30"
               alt="Острый соус"
-            />
-            <span>Острый соус <br />30 ₽</span>
+            >
+            <span>Острый соус <br>30 ₽</span>
           </li>
           <li>
             <img
@@ -99,7 +115,7 @@
               width="20"
               height="30"
               alt="Картошка из печи"
-            />
+            >
             <p>
               <span>Картошка из печи</span>
               <b>170 ₽</b>
@@ -123,10 +139,20 @@
           </div>
 
           <div class="order__button">
-            <button type="button" class="button button--border">Удалить</button>
+            <button
+              type="button"
+              class="button button--border"
+            >
+              Удалить
+            </button>
           </div>
           <div class="order__button">
-            <button type="button" class="button">Повторить</button>
+            <button
+              type="button"
+              class="button"
+            >
+              Повторить
+            </button>
           </div>
         </div>
 
@@ -139,18 +165,20 @@
                 width="56"
                 height="56"
                 alt="Капричоза"
-              />
+              >
               <div class="product__text">
                 <h2>Капричоза</h2>
                 <p>
-                  30 см, на тонком тесте<br />
-                  Соус: томатный<br />
+                  30 см, на тонком тесте<br>
+                  Соус: томатный<br>
                   Начинка: грибы, лук, ветчина, пармезан, ананас
                 </p>
               </div>
             </div>
 
-            <p class="order__price">782 ₽</p>
+            <p class="order__price">
+              782 ₽
+            </p>
           </li>
           <li class="order__item">
             <div class="product">
@@ -160,18 +188,20 @@
                 width="56"
                 height="56"
                 alt="Капричоза"
-              />
+              >
               <div class="product__text">
                 <h2>Моя любимая</h2>
                 <p>
-                  30 см, на тонком тесте<br />
-                  Соус: томатный<br />
+                  30 см, на тонком тесте<br>
+                  Соус: томатный<br>
                   Начинка: грибы, лук, ветчина, пармезан, ананас
                 </p>
               </div>
             </div>
 
-            <p class="order__price">2х782 ₽</p>
+            <p class="order__price">
+              2х782 ₽
+            </p>
           </li>
         </ul>
 
@@ -182,7 +212,7 @@
               width="20"
               height="30"
               alt="Coca-Cola 0,5 литра"
-            />
+            >
             <p>
               <span>Coca-Cola 0,5 литра</span>
               <b>56 ₽</b>
@@ -194,7 +224,7 @@
               width="20"
               height="30"
               alt="Острый соус"
-            />
+            >
             <p>
               <span>Острый соус</span>
               <b>30 ₽</b>
@@ -206,7 +236,7 @@
               width="20"
               height="30"
               alt="Картошка из печи"
-            />
+            >
             <p>
               <span>Картошка из печи</span>
               <b>170 ₽</b>

@@ -1,6 +1,8 @@
 ﻿<template>
   <div>
-    <AppLayoutHeader :total-price="totalPrice" :user="user" />
+    <AppLayoutHeader
+      :user="user"
+    />
     <slot />
   </div>
 </template>
@@ -14,10 +16,6 @@ export default {
     AppLayoutHeader,
   },
   props: {
-    totalPrice: {
-      type: Number,
-      required: true,
-    },
     user: {
       type: Object,
       required: true,

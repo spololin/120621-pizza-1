@@ -5,8 +5,8 @@
     :value="params.value"
     :checked="params.checked"
     v-bind="$attrs"
-    @click="$emit('clickRadioButton', params)"
-  />
+    @change="$emit('selected')"
+  >
 </template>
 
 <script>

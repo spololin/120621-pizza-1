@@ -11,9 +11,9 @@
       <div class="product__text">
         <h2>{{ pizza.name }}</h2>
         <ul>
-          <li>{{ getSizeAndDough }}</li>
-          <li>{{ getSauce }}</li>
-          <li>{{ getFillings }}</li>
+          <li>{{ sizeAndDoughDesc }}</li>
+          <li>{{ sauceDesc }}</li>
+          <li>{{ fillingsDesc }}</li>
         </ul>
       </div>
     </div>
@@ -57,13 +57,13 @@ export default {
     },
   },
   computed: {
-    getSizeAndDough() {
+    sizeAndDoughDesc() {
       return `${this.pizza.size.name} на ${this.pizza.dough.value === "light" ? "тонком" : "толстом"} тесте`;
     },
-    getSauce() {
+    sauceDesc() {
       return `Соус: ${this.pizza.sauce.name.toLowerCase()}`;
     },
-    getFillings() {
+    fillingsDesc() {
       return `Начинка: ${this.pizza.fillings.map(filling => filling.name.toLowerCase()).join(", ")}`;
     },
   },

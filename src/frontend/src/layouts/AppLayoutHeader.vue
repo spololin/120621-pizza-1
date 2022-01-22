@@ -6,7 +6,7 @@
         class="logo"
       >
         <img
-          src="@/assets/img/logo.svg"
+          src="public/img/logo.svg"
           alt="V!U!E! Pizza logo"
           width="90"
           height="40"
@@ -34,13 +34,13 @@
           <source
             type="image/webp"
             srcset="
-              @/assets/img/users/user5.webp    1x,
-              @/assets/img/users/user5@2x.webp 2x
+              public/img/users/user5.webp    1x,
+              public/img/users/user5@2x.webp 2x
             "
           >
           <img
-            src="@/assets/img/users/user5.jpg"
-            srcset="@/assets/img/users/user5@2x.jpg"
+            src="public/img/users/user5.jpg"
+            srcset="public/img/users/user5@2x.jpg"
             :alt="user.name"
             width="32"
             height="32"

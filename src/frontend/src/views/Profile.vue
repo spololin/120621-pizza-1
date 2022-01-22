@@ -12,13 +12,13 @@
           <source
             type="image/webp"
             srcset="
-              @/assets/img/users/user5@2x.webp 1x,
-              @/assets/img/users/user5@4x.webp 2x
+              public/img/users/user5@2x.webp 1x,
+              public/img/users/user5@4x.webp 2x
             "
           >
           <img
-            src="@/assets/img/users/user5@2x.jpg"
-            srcset="@/assets/img/users/user5@4x.jpg"
+            src="public/img/users/user5@2x.jpg"
+            srcset="public/img/users/user5@4x.jpg"
             alt="Василий Ложкин"
             width="72"
             height="72"

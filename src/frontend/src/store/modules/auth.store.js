@@ -21,12 +21,31 @@ export default {
     ],
   },
   actions: {
-    login({ commit }, credentials) {
-      console.log(credentials);
+    async login({ dispatch, commit }, credentials) {
+      const data = await this.$api.auth.login(credentials);
+      this.$jwt.saveToken(data.token);
+      this.$api.auth.setAuthHeader();
+
+      dispatch("getMe");
       commit(SET_USER_DATA, user);
     },
-    logoutUser({ commit }) {
+    async [LOGOUT_USER]({ commit }, sendRequest) {
+      if (sendRequest) {
+        await this.$api.auth.logout();
+      }
+
+      this.$jwt.destroyToken();
+      this.$api.auth.setAuthHeader();
+
       commit(LOGOUT_USER);
+    },
+    async getMe({ dispatch, commit }) {
+      try {
+        const data = await this.$api.auth.getMe();
+        commit(SET_USER_DATA, data);
+      } catch {
+        dispatch('logout', false);
+      }
     },
   },
   mutations: {

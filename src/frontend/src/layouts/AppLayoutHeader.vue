@@ -51,7 +51,7 @@
       <a
         v-if="user.id"
         class="header__logout"
-        @click.prevent="logout"
+        @click.prevent="logoutUser"
       >
         <span>Выйти</span>
       </a>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import { LOGOUT_USER } from "@/store/mutation-types";
 
 export default {
@@ -70,11 +70,11 @@ export default {
     ...mapState("User", ["user"]),
   },
   methods: {
-    ...mapMutations("User", {
-      logoutUser: LOGOUT_USER,
+    ...mapActions("User", {
+      logout: LOGOUT_USER,
     }),
-    logout() {
-      this.logoutUser();
+    logoutUser() {
+      this.logout(true);
     },
   },
 };

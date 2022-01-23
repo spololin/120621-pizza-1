@@ -19,7 +19,7 @@
         <label class="input">
           <span>E-mail</span>
           <input
-            v-model="name"
+            v-model="email"
             type="email"
             name="email"
             placeholder="example@mail.ru"
@@ -31,7 +31,7 @@
         <label class="input">
           <span>Пароль</span>
           <input
-            v-model="pass"
+            v-model="password"
             type="password"
             name="pass"
             placeholder="***********"
@@ -55,16 +55,16 @@ import { mapActions } from "vuex";
 export default {
   name: "Login",
   data: () => ({
-    name: "",
-    pass: "",
+    email: "",
+    password: "",
   }),
   methods: {
     ...mapActions("User", ["login"]),
     goLogin() {
-      if (this.name.trim() && this.pass.trim()) {
+      if (this.email.trim() && this.password.trim()) {
         this.login({
-          name: this.name.trim(),
-          pass: this.pass.trim(),
+          email: this.email.trim(),
+          password: this.password.trim(),
         });
         this.$router.push("/");
       }

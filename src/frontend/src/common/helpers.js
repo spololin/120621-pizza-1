@@ -41,6 +41,8 @@ export const createUUIDv4 = () => {
   });
 };
 
-export const createResources = () => ({
-  [resources.AUTH]: new AuthApiService(),
-});
+export const createResources = () => {
+  return {
+    [resources.AUTH]: new AuthApiService(),
+  };
+};

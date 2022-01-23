@@ -1,4 +1,7 @@
 ﻿import { PIZZA_VALUES } from "./constants";
+import resources from "@/common/enums/resources";
+import { AuthApiService } from "@/services/api.auth.service";
+
 
 export const getPizzaValues = (pizza) => ({
   doughs: (pizza.dough || []).map((dough, idx) => ({
@@ -37,3 +40,7 @@ export const createUUIDv4 = () => {
     return v.toString(16);
   });
 };
+
+export const createResources = () => ({
+  [resources.AUTH]: new AuthApiService(),
+});

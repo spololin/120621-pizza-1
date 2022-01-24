@@ -1,4 +1,3 @@
-import miscData from "@/static/misc.json";
 import { createUUIDv4 } from "@/common/helpers";
 import {
   ADD_PIZZA_TO_CART,
@@ -19,8 +18,9 @@ export default {
     addToCart({ commit, rootGetters }) {
       commit(ADD_PIZZA_TO_CART, rootGetters["Builder/buildPizza"]);
     },
-    fetchMisc({ commit }) {
-      commit("setMisc", miscData.map(misc => ({ ...misc, count: 0 })));
+    async fetchMisc({ commit }) {
+      const data = await this.$api.misc.query();
+      commit("setMisc", data.map(misc => ({ ...misc, count: 0 })));
     },
   },
   mutations: {

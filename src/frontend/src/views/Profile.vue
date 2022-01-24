@@ -17,7 +17,7 @@ import ProfileEditAddress from "@/modules/profile/ProfileEditAddress";
 import ProfileTitle from "@/modules/profile/ProfileTitle";
 import ProfileAddAddress from "@/modules/profile/ProfileAddAddress";
 export default {
-  name: "UserData",
+  name: "Profile",
   components: {
     ProfileAddAddress,
     ProfileTitle,

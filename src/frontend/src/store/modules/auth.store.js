@@ -1,4 +1,3 @@
-import user from "@/static/user.json";
 import {
   LOGOUT_USER,
   SET_USER_DATA,
@@ -21,13 +20,12 @@ export default {
     ],
   },
   actions: {
-    async login({ dispatch, commit }, credentials) {
+    async login({ dispatch }, credentials) {
       const data = await this.$api.auth.login(credentials);
       this.$jwt.saveToken(data.token);
       this.$api.auth.setAuthHeader();
 
       dispatch("getMe");
-      commit(SET_USER_DATA, user);
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {
@@ -44,7 +42,7 @@ export default {
         const data = await this.$api.auth.getMe();
         commit(SET_USER_DATA, data);
       } catch {
-        dispatch('logout', false);
+        dispatch(LOGOUT_USER, false);
       }
     },
   },

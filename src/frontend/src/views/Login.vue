@@ -14,14 +14,17 @@
     <form
       action=""
       method="post"
+      @submit.prevent="goLogin"
     >
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>
           <input
+            ref="email"
             v-model="email"
             type="email"
             name="email"
+            required
             placeholder="example@mail.ru"
           >
         </label>
@@ -34,6 +37,7 @@
             v-model="password"
             type="password"
             name="pass"
+            required
             placeholder="***********"
           >
         </label>
@@ -41,7 +45,6 @@
       <button
         type="submit"
         class="button"
-        @click.prevent="goLogin"
       >
         Авторизоваться
       </button>
@@ -51,6 +54,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { validateEmail } from "@/common/helpers";
 
 export default {
   name: "Login",
@@ -58,16 +62,20 @@ export default {
     email: "",
     password: "",
   }),
+  mounted() {
+    this.$refs.email.focus();
+  },
   methods: {
     ...mapActions("User", ["login"]),
     goLogin() {
-      if (this.email.trim() && this.password.trim()) {
+      if (validateEmail(this.email) && this.password.trim()) {
         this.login({
           email: this.email.trim(),
           password: this.password.trim(),
         });
         this.$router.push("/");
       }
+
     },
   },
 };

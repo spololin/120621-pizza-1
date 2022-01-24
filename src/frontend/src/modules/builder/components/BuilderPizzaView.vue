@@ -28,12 +28,16 @@ export default {
   computed: {
     ...mapGetters("Builder", ["selectedFillings", "selectedDough", "selectedSauce"]),
     classPizza() {
-      const basePartClass = "pizza--foundation--";
-      const doughPartClass =
-        this.selectedDough.value === "light" ? "small" : "big";
-      const saucePartClass = this.selectedSauce.value;
+      if (this.selectedDough && this.selectedSauce) {
+        const basePartClass = "pizza--foundation--";
+        const doughPartClass =
+          this.selectedDough.value === "light" ? "small" : "big";
+        const saucePartClass = this.selectedSauce.value;
 
-      return basePartClass + doughPartClass + "-" + saucePartClass;
+        return basePartClass + doughPartClass + "-" + saucePartClass;
+      }
+
+      return "";
     },
   },
   methods: {

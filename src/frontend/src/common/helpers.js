@@ -1,38 +1,6 @@
-﻿import { PIZZA_VALUES } from "./constants";
-import resources from "@/common/enums/resources";
+﻿import resources from "@/common/enums/resources";
 import { AuthApiService } from "@/services/api.auth.service";
-
-
-export const getPizzaValues = (pizza) => ({
-  doughs: (pizza.dough || []).map((dough, idx) => ({
-    ...dough,
-    value: PIZZA_VALUES.dough[dough.name],
-    checked: idx === 0,
-    type: "doughs",
-  })),
-  fillings: (pizza.ingredients || []).map((ingredient) => ({
-    ...ingredient,
-    value: PIZZA_VALUES.ingredients[ingredient.name],
-    type: "ingredient",
-    count: 0,
-    permissions: {
-      decrease: false,
-      increase: true,
-    },
-  })),
-  sauces: (pizza.sauces || []).map((sauce, idx) => ({
-    ...sauce,
-    value: PIZZA_VALUES.sauces[sauce.name],
-    checked: idx === 0,
-    type: "sauces",
-  })),
-  sizes: (pizza.sizes || []).map((size, idx) => ({
-    ...size,
-    value: PIZZA_VALUES.sizes[size.name],
-    checked: idx === 0,
-    type: "sizes",
-  })),
-});
+import { BuilderApiService } from "@/services/api.builder.service";
 
 export const createUUIDv4 = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
@@ -44,6 +12,12 @@ export const createUUIDv4 = () => {
 export const createResources = () => {
   return {
     [resources.AUTH]: new AuthApiService(),
+    [resources.BUILDER]: new BuilderApiService([
+      resources.INGREDIENTS,
+      resources.DOUGHS,
+      resources.SAUCES,
+      resources.SIZES,
+    ]),
   };
 };
 

@@ -1,5 +1,3 @@
-import { getPizzaValues } from "@/common/helpers";
-import pizzaData from "@/static/pizza.json";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 import {
   SET_NAME_PIZZA,
@@ -26,8 +24,9 @@ export default {
     initialBuilder: {},
   },
   actions: {
-    fetchBuilderComponents({ commit }) {
-      commit(SET_BUILDER_COMPONENTS, getPizzaValues(pizzaData));
+    async fetchBuilderComponents({ commit }) {
+      const data = await this.$api.builder.get();
+      commit(SET_BUILDER_COMPONENTS, data);
     },
     dropIngredient({ commit }, filling) {
       commit(UPDATE_INGREDIENT_COUNTER, { ...filling, operation: "increase" });
@@ -119,10 +118,10 @@ export default {
       }, 0);
 
       return (
-        (selectedDough.price +
-          selectedSauce.price +
+        (~~selectedDough?.price +
+          ~~selectedSauce?.price +
           fillingsPrice) *
-        selectedSize.multiplier
+        ~~selectedSize?.multiplier
       );
     },
     buildPizza: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize, pizzaPrice }) => ({

@@ -1,7 +1,7 @@
 ﻿import resources from "@/common/enums/resources";
 import { AuthApiService } from "@/services/api.auth.service";
 import { BuilderApiService } from "@/services/api.builder.service";
-import { ReadOnlyApiService } from "@/services/api.service";
+import { CrudApiService, ReadOnlyApiService } from "@/services/api.service";
 
 export const createUUIDv4 = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
@@ -20,6 +20,7 @@ export const createResources = () => {
       resources.SIZES,
     ]),
     [resources.MISC]: new ReadOnlyApiService("misc"),
+    [resources.ADDRESSES]: new CrudApiService("addresses"),
   };
 };
 

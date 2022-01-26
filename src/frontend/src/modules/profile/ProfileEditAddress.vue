@@ -4,10 +4,10 @@
       action=""
       method="post"
       class="address-form address-form--opened sheet"
-      @submit.prevent="submit"
+      @submit.prevent="postAddress()"
     >
       <div class="address-form__header">
-        <b>Адрес №1</b>
+        <b>{{ editAddressForm.name }}</b>
       </div>
 
       <div class="address-form__wrapper">
@@ -75,10 +75,11 @@
         <AppButton
           v-if="isEdit"
           class="button--transparent"
+          @onClick="deleteAddress()"
         >
           Удалить
         </AppButton>
-        <AppButton>
+        <AppButton type="submit">
           Сохранить
         </AppButton>
       </div>
@@ -88,7 +89,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import { POST_ADDRESS } from "@/store/mutation-types";
+import { DELETE_ADDRESS, POST_ADDRESS } from "@/store/mutation-types";
 
 export default {
   name: "ProfileEditAddress",
@@ -98,10 +99,8 @@ export default {
   methods: {
     ...mapActions("Addresses", {
       postAddress: POST_ADDRESS,
+      deleteAddress: DELETE_ADDRESS,
     }),
-    submit() {
-      this.postAddress();
-    },
   },
 };
 </script>

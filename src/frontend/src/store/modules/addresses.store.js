@@ -3,6 +3,8 @@ import {
   GET_ADDRESSES,
   POST_ADDRESS,
   EDIT_ADDRESS,
+  DELETE_ADDRESS,
+  CHANGE_ADDRESS,
 } from "@/store/mutation-types";
 
 const initialAddressForm = () => ({
@@ -27,18 +29,25 @@ export default {
       commit(GET_ADDRESSES, data);
     },
     async [POST_ADDRESS]({ state, commit, rootState } ) {
-      const data = await this.$api.addresses.post({
+      const method = state.editAddressForm.id ? "put" : "post";
+      const data = await this.$api.addresses[method]({
         ...state.editAddressForm,
         userId: rootState.User.user?.id ?? null,
       });
-      if (data.id) {
-        commit(POST_ADDRESS, data);
+
+      switch (method) {
+        case "post":
+          commit(POST_ADDRESS, data);
+          break;
+        case "put":
+          commit(CHANGE_ADDRESS);
+          break;
       }
     },
-    // async [UPDATE_ADDRESS]({ commit }, address) {
-    //   const data = await this.$api.addresses.put({ ...address });
-    //   commit(UPDATE_ADDRESS, data);
-    // },
+    async [DELETE_ADDRESS]({ state, commit }) {
+      await this.$api.addresses.delete(state.editAddressForm.id);
+      commit(DELETE_ADDRESS);
+    },
   },
   mutations: {
     [GET_ADDRESSES](state, addresses) {
@@ -54,9 +63,30 @@ export default {
       state.expandAddressForm = true;
     },
     [EDIT_ADDRESS](state, address) {
-      state.editAddressForm = address;
+      state.editAddressForm = { ...address };
       state.isEdit = true;
       state.expandAddressForm = true;
+    },
+    [CHANGE_ADDRESS](state) {
+      const idx = state.addresses.findIndex(a => a.id === state.editAddressForm.id);
+
+      state.addresses = [
+        ...state.addresses.slice(0, idx),
+        { ...state.editAddressForm },
+        ...state.addresses.slice(idx + 1),
+      ];
+      state.editAddressForm = initialAddressForm();
+      state.expandAddressForm = false;
+    },
+    [DELETE_ADDRESS](state) {
+      const idx = state.addresses.findIndex(a => a.id === state.editAddressForm.id);
+
+      state.addresses = [
+        ...state.addresses.slice(0, idx),
+        ...state.addresses.slice(idx + 1),
+      ];
+      state.editAddressForm = initialAddressForm();
+      state.expandAddressForm = false;
     },
   },
 };

@@ -20,14 +20,16 @@
       <label class="input input--big-label">
         <span>Контактный телефон:</span>
         <input
+          v-model="valuePhone"
           type="text"
           name="tel"
+          required
           placeholder="+7 999-999-99-99"
         >
       </label>
 
       <div
-        v-if="typeReceiving > 1"
+        v-if="typeReceiving === 'new' || +typeReceiving"
         class="cart-form__address"
       >
         <span class="cart-form__label">Новый адрес:</span>
@@ -39,6 +41,7 @@
               type="text"
               name="street"
               :value="addressStreet"
+              :disabled="disabledInput"
             >
           </label>
         </div>
@@ -50,6 +53,7 @@
               type="text"
               name="house"
               :value="addressHome"
+              :disabled="disabledInput"
             >
           </label>
         </div>
@@ -61,6 +65,7 @@
               type="text"
               name="apartment"
               :value="addressRoom"
+              :disabled="disabledInput"
             >
           </label>
         </div>
@@ -70,23 +75,24 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
+import { SET_PHONE_ORDER } from "@/store/mutation-types";
 
 export default {
   name: "CartReceivingOrder",
   data() {
     return {
-      typeReceiving: 1,
+      typeReceiving: "myself",
       addressStreet: "",
       addressHome: "",
       addressRoom: "",
       listTypeReceiving: [
         {
-          id: "1",
+          id: "myself",
           name: "Заберу сам",
         },
         {
-          id: "2",
+          id: "new",
           name: "Новый адрес",
         },
       ],
@@ -94,27 +100,45 @@ export default {
   },
   computed: {
     ...mapGetters("User", ["isAuth"]),
-    ...mapState("User", ["addresses"]),
+    ...mapState("Addresses", ["addresses"]),
+    ...mapState("Cart", ["phone"]),
     listAddresses() {
       return this.listTypeReceiving.concat(this.isAuth ? this.addresses : []);
+    },
+    disabledInput() {
+      return this.typeReceiving !== "new";
+    },
+    valuePhone: {
+      get() {
+        return this.phone;
+      },
+      set(value) {
+        this.setPhoneOrder(value);
+      },
     },
   },
   watch: {
     typeReceiving(newValue, oldValue) {
       if (newValue !== oldValue) {
-        if (+newValue === 2) {
+        if (newValue === "new") {
           this.addressStreet = "";
           this.addressHome = "";
           this.addressRoom = "";
         }
-        if (+newValue > 2) {
+        if (!isNaN(+newValue)) {
           const address = this.listAddresses.find(elem => elem.id === newValue);
+
           this.addressStreet = address.street;
-          this.addressHome = address.home;
-          this.addressRoom = address.room;
+          this.addressHome = address.building;
+          this.addressRoom = address.flat;
         }
       }
     },
+  },
+  methods: {
+    ...mapMutations("Cart", {
+      setPhoneOrder: SET_PHONE_ORDER,
+    }),
   },
 };
 </script>

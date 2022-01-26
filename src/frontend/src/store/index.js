@@ -11,8 +11,9 @@ const actions = {
   init({ dispatch }) {
     this.$api.auth.setAuthHeader();
     dispatch("User/getMe");
-    dispatch("Builder/fetchBuilderComponents");
-    dispatch("Cart/fetchMisc");
+    dispatch("Builder/getBuilderComponents");
+    dispatch("Addresses/getAddresses");
+    dispatch("Cart/getMisc");
   },
   drop({ dispatch }, value) {
     switch (value.type) {

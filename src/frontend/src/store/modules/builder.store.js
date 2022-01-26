@@ -24,7 +24,7 @@ export default {
     initialBuilder: {},
   },
   actions: {
-    async fetchBuilderComponents({ commit }) {
+    async getBuilderComponents({ commit }) {
       const data = await this.$api.builder.get();
       commit(SET_BUILDER_COMPONENTS, data);
     },

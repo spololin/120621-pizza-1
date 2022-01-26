@@ -24,7 +24,7 @@ export default {
     isEdit: false,
   },
   actions: {
-    async [GET_ADDRESSES]({ commit }) {
+    async getAddresses({ commit }) {
       const data = await this.$api.addresses.query();
       commit(GET_ADDRESSES, data);
     },

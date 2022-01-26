@@ -4,6 +4,7 @@ import {
   CHANGE_COUNT_MISC,
   RESET_PIZZA_CART,
   CHANGE_COUNT_PIZZA,
+  SET_PHONE_ORDER,
 } from "../mutation-types";
 
 const setupPizzasState = () => ([]);
@@ -13,12 +14,13 @@ export default {
   state: {
     pizzas: setupPizzasState(),
     misc: [],
+    phone: "",
   },
   actions: {
     addToCart({ commit, rootGetters }) {
       commit(ADD_PIZZA_TO_CART, rootGetters["Builder/buildPizza"]);
     },
-    async fetchMisc({ commit }) {
+    async getMisc({ commit }) {
       const data = await this.$api.misc.query();
       commit("setMisc", data.map(misc => ({ ...misc, count: 0 })));
     },
@@ -63,6 +65,9 @@ export default {
     },
     [RESET_PIZZA_CART](state) {
       state.pizzas = setupPizzasState();
+    },
+    [SET_PHONE_ORDER](state, value) {
+      state.phone = value;
     },
   },
   getters: {

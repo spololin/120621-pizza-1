@@ -20,8 +20,7 @@ import ProfileAddress from "@/modules/profile/ProfileAddress";
 import ProfileEditAddress from "@/modules/profile/ProfileEditAddress";
 import ProfileTitle from "@/modules/profile/ProfileTitle";
 import ProfileAddAddress from "@/modules/profile/ProfileAddAddress";
-import { mapActions, mapState } from "vuex";
-import { GET_ADDRESSES } from "@/store/mutation-types";
+import { mapState } from "vuex";
 export default {
   name: "Profile",
   components: {
@@ -33,14 +32,6 @@ export default {
   },
   computed: {
     ...mapState("Addresses", ["expandAddressForm", "addresses"]),
-  },
-  created() {
-    this.getAddresses();
-  },
-  methods: {
-    ...mapActions("Addresses", {
-      getAddresses: GET_ADDRESSES,
-    }),
   },
 };
 </script>

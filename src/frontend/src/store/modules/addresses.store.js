@@ -5,6 +5,9 @@ import {
   EDIT_ADDRESS,
   DELETE_ADDRESS,
   CHANGE_ADDRESS,
+  SET_PHONE_ORDER,
+  SET_TYPE_RECEIVING,
+  CHANGE_FORM_RECEIVING_VALUE,
 } from "@/store/mutation-types";
 
 const initialAddressForm = () => ({
@@ -22,6 +25,13 @@ export default {
     editAddressForm: initialAddressForm(),
     expandAddressForm: false,
     isEdit: false,
+    typeReceiving: "myself",
+    receivingForm: {
+      phone: "",
+      street: "",
+      building: "",
+      flat: "",
+    },
   },
   actions: {
     async getAddresses({ commit }) {
@@ -87,6 +97,58 @@ export default {
       ];
       state.editAddressForm = initialAddressForm();
       state.expandAddressForm = false;
+    },
+    [SET_PHONE_ORDER](state, value) {
+      state.receivingForm.phone = value;
+    },
+    [SET_TYPE_RECEIVING](state, value) {
+      state.typeReceiving = value;
+
+      if (value === "new") {
+        state.receivingForm.street = "";
+        state.receivingForm.building = "";
+        state.receivingForm.flat = "";
+      }
+
+      if (!isNaN(+value)) {
+        const address = state.addresses.find(elem => elem.id === value);
+
+        state.receivingForm.street = address.street;
+        state.receivingForm.building = address.building;
+        state.receivingForm.flat = address.flat;
+      }
+    },
+    [CHANGE_FORM_RECEIVING_VALUE](state, data) {
+      state.receivingForm[data.type] = data.value;
+    },
+  },
+  getters: {
+    addressForOrder: state => {
+      if (!isNaN(+state.typeReceiving)) {
+        const address = state.addresses.find(elem => elem.id === state.typeReceiving);
+
+        return {
+          street: address.street,
+          building: address.building,
+          flat: address.flat,
+        };
+      }
+
+      if (state.typeReceiving === "new") {
+        return {
+          street: state.receivingForm.street,
+          building: state.receivingForm.building,
+          flat: state.receivingForm.flat,
+        };
+      }
+
+      if (state.typeReceiving === "myself") {
+        return {
+          street: null,
+          building: null,
+          flat: null,
+        };
+      }
     },
   },
 };

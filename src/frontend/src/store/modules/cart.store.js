@@ -4,7 +4,6 @@ import {
   CHANGE_COUNT_MISC,
   RESET_PIZZA_CART,
   CHANGE_COUNT_PIZZA,
-  SET_PHONE_ORDER,
 } from "../mutation-types";
 
 const setupPizzasState = () => ([]);
@@ -14,7 +13,6 @@ export default {
   state: {
     pizzas: setupPizzasState(),
     misc: [],
-    phone: "",
   },
   actions: {
     addToCart({ commit, rootGetters }) {
@@ -66,9 +64,6 @@ export default {
     [RESET_PIZZA_CART](state) {
       state.pizzas = setupPizzasState();
     },
-    [SET_PHONE_ORDER](state, value) {
-      state.phone = value;
-    },
   },
   getters: {
     totalCost: state => {
@@ -82,6 +77,34 @@ export default {
       }, 0);
 
       return totalCostPizzas + totalCostMisc;
+    },
+    miscForOrder: state => {
+      return state.misc.filter(m => m.count).map(elem => {
+        return {
+          miscId: elem.id,
+          quantity: elem.count,
+        };
+      });
+    },
+    pizzasForOrder: state => {
+      const x = state.pizzas.map(p => {
+        return {
+          name: p.name,
+          sauceId: p.sauce.id,
+          doughId: p.dough.id,
+          sizeId: p.size.id,
+          quantity: p.count,
+          ingredients: p.fillings.map(f => {
+            return {
+              ingredientId: f.id,
+              quantity: f.count,
+            };
+          }),
+        };
+      });
+
+      console.log(111, x);
+      return x;
     },
   },
 };

@@ -21,9 +21,9 @@ export const createResources = () => {
     ]),
     [resources.MISC]: new ReadOnlyApiService("misc"),
     [resources.ADDRESSES]: new CrudApiService("addresses"),
+    [resources.ORDERS]: new CrudApiService("orders"),
   };
 };
-
 
 export const validateEmail = (email = "") => {
   return String(email)
@@ -33,3 +33,14 @@ export const validateEmail = (email = "") => {
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
 };
+
+export const receivingDefaultTypes = () => ([
+  {
+    id: "myself",
+    name: "Заберу сам",
+  },
+  {
+    id: "new",
+    name: "Новый адрес",
+  },
+]);

@@ -5,15 +5,15 @@
         <span class="cart-form__label">Получение заказа:</span>
 
         <select
-          v-model="typeReceiving"
+          v-model="valueTypeReceiving"
           name="test"
           class="select"
         >
           <option
-            v-for="typeAddress in listAddresses"
-            :key="typeAddress.id"
-            :value="typeAddress.id"
-          >{{ typeAddress.name }}</option>
+            v-for="typeReceiving in listReceivingTypes"
+            :key="typeReceiving.id"
+            :value="typeReceiving.id"
+          >{{ typeReceiving.name }}</option>
         </select>
       </label>
 
@@ -40,8 +40,9 @@
             <input
               type="text"
               name="street"
-              :value="addressStreet"
+              :value="receivingForm.street"
               :disabled="disabledInput"
+              @change="changeFormReceivingValue({ type: 'street', value: $event.target.value })"
             >
           </label>
         </div>
@@ -52,8 +53,9 @@
             <input
               type="text"
               name="house"
-              :value="addressHome"
+              :value="receivingForm.building"
               :disabled="disabledInput"
+              @change="changeFormReceivingValue({ type: 'building', value: $event.target.value })"
             >
           </label>
         </div>
@@ -64,8 +66,9 @@
             <input
               type="text"
               name="apartment"
-              :value="addressRoom"
+              :value="receivingForm.flat"
               :disabled="disabledInput"
+              @change="changeFormReceivingValue({ type: 'flat', value: $event.target.value })"
             >
           </label>
         </div>
@@ -76,68 +79,46 @@
 
 <script>
 import { mapGetters, mapMutations, mapState } from "vuex";
-import { SET_PHONE_ORDER } from "@/store/mutation-types";
+import {
+  CHANGE_FORM_RECEIVING_VALUE,
+  SET_PHONE_ORDER,
+  SET_TYPE_RECEIVING,
+} from "@/store/mutation-types";
+import { receivingDefaultTypes } from "@/common/helpers";
 
 export default {
   name: "CartReceivingOrder",
-  data() {
-    return {
-      typeReceiving: "myself",
-      addressStreet: "",
-      addressHome: "",
-      addressRoom: "",
-      listTypeReceiving: [
-        {
-          id: "myself",
-          name: "Заберу сам",
-        },
-        {
-          id: "new",
-          name: "Новый адрес",
-        },
-      ],
-    };
-  },
   computed: {
     ...mapGetters("User", ["isAuth"]),
-    ...mapState("Addresses", ["addresses"]),
-    ...mapState("Cart", ["phone"]),
-    listAddresses() {
-      return this.listTypeReceiving.concat(this.isAuth ? this.addresses : []);
+    ...mapState("Addresses", ["addresses", "typeReceiving", "receivingForm"]),
+    listReceivingTypes() {
+      return receivingDefaultTypes().concat(this.isAuth ? this.addresses : []);
     },
     disabledInput() {
       return this.typeReceiving !== "new";
     },
     valuePhone: {
       get() {
-        return this.phone;
+        return this.receivingForm.phone;
       },
       set(value) {
         this.setPhoneOrder(value);
       },
     },
-  },
-  watch: {
-    typeReceiving(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        if (newValue === "new") {
-          this.addressStreet = "";
-          this.addressHome = "";
-          this.addressRoom = "";
-        }
-        if (!isNaN(+newValue)) {
-          const address = this.listAddresses.find(elem => elem.id === newValue);
-
-          this.addressStreet = address.street;
-          this.addressHome = address.building;
-          this.addressRoom = address.flat;
-        }
-      }
+    valueTypeReceiving: {
+      get() {
+        return this.typeReceiving;
+      },
+      set(value) {
+        this.setTypeReceiving(value);
+      },
     },
   },
   methods: {
-    ...mapMutations("Cart", {
+    ...mapMutations("Addresses", {
       setPhoneOrder: SET_PHONE_ORDER,
+      setTypeReceiving: SET_TYPE_RECEIVING,
+      changeFormReceivingValue: CHANGE_FORM_RECEIVING_VALUE,
     }),
   },
 };

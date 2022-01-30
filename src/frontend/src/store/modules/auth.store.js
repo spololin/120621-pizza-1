@@ -9,15 +9,6 @@ export default {
   namespaced: true,
   state: {
     user: initialUser(),
-    addresses: [
-      {
-        id: "3",
-        name: "Адрес1",
-        street: "Улица1",
-        home: "Дом1",
-        room: "Комната1",
-      },
-    ],
   },
   actions: {
     async login({ dispatch }, credentials) {
@@ -26,6 +17,7 @@ export default {
       this.$api.auth.setAuthHeader();
 
       dispatch("getMe");
+      dispatch("Addresses/getAddresses", {}, { root: true });
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {

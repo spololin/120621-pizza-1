@@ -75,6 +75,7 @@ export default {
     }),
     logoutUser() {
       this.logout(true);
+      this.$router.push("/");
     },
   },
 };

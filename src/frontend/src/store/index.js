@@ -8,12 +8,16 @@ Vue.use(Vuex);
 const state = () => ({});
 
 const actions = {
-  init({ dispatch }) {
+  async init({ dispatch, getters }) {
     this.$api.auth.setAuthHeader();
-    dispatch("User/getMe");
+    await dispatch("User/getMe");
+
     dispatch("Builder/getBuilderComponents");
-    dispatch("Addresses/getAddresses");
     dispatch("Cart/getMisc");
+
+    if (getters["User/isAuth"]) {
+      dispatch("Addresses/getAddresses");
+    }
   },
   drop({ dispatch }, value) {
     switch (value.type) {

@@ -28,6 +28,8 @@ export default {
       this.$api.auth.setAuthHeader();
 
       commit(LOGOUT_USER);
+
+      return true;
     },
     async getMe({ dispatch, commit }) {
       try {

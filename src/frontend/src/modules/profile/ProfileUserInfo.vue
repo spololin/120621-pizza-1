@@ -30,7 +30,7 @@ export default {
   computed: {
     ...mapState("User", ["user"]),
     urlWithoutExtension() {
-      return this.user.avatar.replace(/\.jpg/, "");
+      return this.user?.avatar?.replace(/\.jpg/, "");
     },
   },
 };

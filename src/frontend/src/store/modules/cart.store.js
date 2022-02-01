@@ -2,17 +2,18 @@ import { createUUIDv4 } from "@/common/helpers";
 import {
   ADD_PIZZA_TO_CART,
   CHANGE_COUNT_MISC,
-  RESET_PIZZA_CART,
+  RESET_CART,
   CHANGE_COUNT_PIZZA,
 } from "../mutation-types";
 
 const setupPizzasState = () => ([]);
+const setupMiscState = () => ([]);
 
 export default {
   namespaced: true,
   state: {
     pizzas: setupPizzasState(),
-    misc: [],
+    misc: setupMiscState(),
   },
   actions: {
     addToCart({ commit, rootGetters }) {
@@ -61,8 +62,9 @@ export default {
         });
       }
     },
-    [RESET_PIZZA_CART](state) {
+    [RESET_CART](state) {
       state.pizzas = setupPizzasState();
+      state.misc = setupMiscState();
     },
   },
   getters: {
@@ -87,7 +89,7 @@ export default {
       });
     },
     pizzasForOrder: state => {
-      const x = state.pizzas.map(p => {
+      return state.pizzas.map(p => {
         return {
           name: p.name,
           sauceId: p.sauce.id,
@@ -102,9 +104,6 @@ export default {
           }),
         };
       });
-
-      console.log(111, x);
-      return x;
     },
   },
 };

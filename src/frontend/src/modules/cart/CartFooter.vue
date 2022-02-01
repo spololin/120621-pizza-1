@@ -29,7 +29,12 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { POST_ORDER, RESET_BUILDER, RESET_PIZZA_CART } from "@/store/mutation-types";
+import {
+  GET_ORDERS,
+  POST_ORDER,
+  RESET_BUILDER,
+  RESET_CART,
+} from "@/store/mutation-types";
 
 export default {
   name: "CartFooter",
@@ -41,20 +46,24 @@ export default {
       resetBuilder: RESET_BUILDER,
     }),
     ...mapMutations("Cart", {
-      resetPizzaState: RESET_PIZZA_CART,
+      resetCartState: RESET_CART,
     }),
     ...mapActions("Orders", {
       postOrder: POST_ORDER,
+      getOrders: GET_ORDERS,
     }),
     toHome() {
       this.resetBuilder();
       this.$router.push("/");
     },
-    checkout() {
-      this.postOrder();
-      this.resetBuilder();
-      this.resetPizzaState();
-      this.$router.push("/thanks");
+    async checkout() {
+      const data = await this.postOrder();
+      if (data.id) {
+        await this.$router.push("/thanks");
+        this.resetBuilder();
+        this.resetCartState();
+        this.getOrders();
+      }
     },
   },
 };

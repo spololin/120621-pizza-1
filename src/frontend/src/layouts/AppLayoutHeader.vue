@@ -73,9 +73,10 @@ export default {
     ...mapActions("User", {
       logout: LOGOUT_USER,
     }),
-    logoutUser() {
-      this.logout(true);
-      this.$router.push("/");
+    async logoutUser() {
+      if (await this.logout(true)) {
+        await this.$router.push("/").catch(()=>{});
+      }
     },
   },
 };

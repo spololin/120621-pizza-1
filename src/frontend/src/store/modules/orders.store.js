@@ -1,4 +1,5 @@
 import {
+  GET_ORDERS,
   POST_ORDER,
 } from "@/store/mutation-types";
 
@@ -8,7 +9,7 @@ export default {
     orders: [],
   },
   actions: {
-    async [POST_ORDER]({ dispatch, rootState, rootGetters }) {
+    async [POST_ORDER]({ rootState, rootGetters }) {
       const order = {
         userId: rootState.User.user?.id ?? null,
         phone: rootState.Addresses.receivingForm.phone,
@@ -17,24 +18,16 @@ export default {
         misc: rootGetters["Cart/miscForOrder"],
       };
 
-      console.log(order);
-
-      const data = await this.$api.orders.query(order);
-
-      console.log(data);
-
-      if (data.id) {
-        dispatch("getOrders");
-      }
+      return  await this.$api.orders.post(order);
     },
-    async getOrders({ commit }) {
-      const data = await this.$api.orders.get();
+    async [GET_ORDERS]({ commit }) {
+      const data = await this.$api.orders.query();
 
       commit("setOrders", data);
     },
   },
   mutations: {
-    setOrsers(state, data) {
+    setOrders(state, data) {
       debugger;
       state.orders = data;
     },

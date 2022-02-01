@@ -128,6 +128,7 @@ export default {
         const address = state.addresses.find(elem => elem.id === state.typeReceiving);
 
         return {
+          id: address.id,
           street: address.street,
           building: address.building,
           flat: address.flat,
@@ -143,11 +144,7 @@ export default {
       }
 
       if (state.typeReceiving === "myself") {
-        return {
-          street: null,
-          building: null,
-          flat: null,
-        };
+        return null;
       }
     },
   },

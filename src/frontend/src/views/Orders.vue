@@ -253,7 +253,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { GET_ORDERS } from "@/store/mutation-types";
+
 export default {
   name: "Orders",
+  created() {
+    this.getOrders();
+  },
+  methods: {
+    ...mapActions("Orders", {
+        getOrders: GET_ORDERS,
+    }),
+  },
 };
 </script>

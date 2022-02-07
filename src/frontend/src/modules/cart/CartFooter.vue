@@ -30,7 +30,6 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import {
-  GET_ORDERS,
   POST_ORDER,
   RESET_BUILDER,
   RESET_CART,
@@ -50,7 +49,6 @@ export default {
     }),
     ...mapActions("Orders", {
       postOrder: POST_ORDER,
-      getOrders: GET_ORDERS,
     }),
     toHome() {
       this.resetBuilder();
@@ -62,7 +60,6 @@ export default {
         await this.$router.push("/thanks");
         this.resetBuilder();
         this.resetCartState();
-        this.getOrders();
       }
     },
   },

@@ -7,13 +7,12 @@ import {
 } from "../mutation-types";
 
 const setupPizzasState = () => ([]);
-const setupMiscState = () => ([]);
 
 export default {
   namespaced: true,
   state: {
     pizzas: setupPizzasState(),
-    misc: setupMiscState(),
+    misc: [],
   },
   actions: {
     addToCart({ commit, rootGetters }) {
@@ -64,7 +63,7 @@ export default {
     },
     [RESET_CART](state) {
       state.pizzas = setupPizzasState();
-      state.misc = setupMiscState();
+      state.misc = state.misc.map(m => ({ ...m, count: 0 }));
     },
   },
   getters: {

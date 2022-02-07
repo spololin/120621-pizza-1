@@ -21,6 +21,7 @@ import ProfileEditAddress from "@/modules/profile/ProfileEditAddress";
 import ProfileTitle from "@/modules/profile/ProfileTitle";
 import ProfileAddAddress from "@/modules/profile/ProfileAddAddress";
 import { mapState } from "vuex";
+import { addressList } from "@/common/mixins";
 export default {
   name: "Profile",
   components: {
@@ -30,6 +31,7 @@ export default {
     ProfileAddress,
     ProfileUserInfo,
   },
+  mixins: [addressList],
   computed: {
     ...mapState("Addresses", ["expandAddressForm", "addresses"]),
   },

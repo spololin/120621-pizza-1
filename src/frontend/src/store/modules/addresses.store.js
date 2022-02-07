@@ -34,9 +34,12 @@ export default {
     },
   },
   actions: {
-    async getAddresses({ commit }) {
-      const data = await this.$api.addresses.query();
-      commit(GET_ADDRESSES, data);
+    async [GET_ADDRESSES]({ commit, rootGetters }) {
+      if (rootGetters["User/isAuth"]) {
+        const data = await this.$api.addresses.query();
+
+        commit(GET_ADDRESSES, data);
+      }
     },
     async [POST_ADDRESS]({ state, commit, rootState } ) {
       const method = state.editAddressForm.id ? "put" : "post";

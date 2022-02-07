@@ -17,7 +17,6 @@ export default {
       this.$api.auth.setAuthHeader();
 
       dispatch("getMe");
-      dispatch("Addresses/getAddresses", {}, { root: true });
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {

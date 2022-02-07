@@ -18,17 +18,18 @@ export default {
         misc: rootGetters["Cart/miscForOrder"],
       };
 
-      return  await this.$api.orders.post(order);
+      return await this.$api.orders.post(order);
     },
-    async [GET_ORDERS]({ commit }) {
-      const data = await this.$api.orders.query();
+    async [GET_ORDERS]({ commit, rootGetters }) {
+      if (rootGetters["User/isAuth"]) {
+        const data = await this.$api.orders.query();
 
-      commit("setOrders", data);
+        commit("setOrders", data);
+      }
     },
   },
   mutations: {
     setOrders(state, data) {
-      debugger;
       state.orders = data;
     },
   },

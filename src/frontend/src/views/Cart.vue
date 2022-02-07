@@ -53,10 +53,16 @@ import CartPizzaItem from "@/modules/cart/CartPizzaItem";
 import CartAdditionalItem from "@/modules/cart/CartAdditionalItem";
 import CartReceivingOrder from "@/modules/cart/CartReceivingOrder";
 import CartFooter from "@/modules/cart/CartFooter";
-
+import { addressList } from "@/common/mixins";
 export default {
   name: "Cart",
-  components: { CartFooter, CartReceivingOrder, CartAdditionalItem, CartPizzaItem },
+  components: {
+    CartFooter,
+    CartReceivingOrder,
+    CartAdditionalItem,
+    CartPizzaItem,
+  },
+  mixins: [addressList],
   computed: {
     ...mapState("Cart", ["pizzas", "misc"]),
   },

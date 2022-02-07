@@ -2,6 +2,7 @@ import {
   GET_ORDERS,
   POST_ORDER,
 } from "@/store/mutation-types";
+import { formatOrders } from "@/common/helpers/orders";
 
 export default {
   namespaced: true,
@@ -24,7 +25,7 @@ export default {
       if (rootGetters["User/isAuth"]) {
         const data = await this.$api.orders.query();
 
-        commit("setOrders", data);
+        commit("setOrders", formatOrders(data));
       }
     },
   },

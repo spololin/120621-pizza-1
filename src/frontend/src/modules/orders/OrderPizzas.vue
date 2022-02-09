@@ -3,53 +3,31 @@
     v-if="pizzas"
     class="order__list"
   >
-    <li class="order__item">
+    <li
+      v-for="pizza in pizzas"
+      :key="pizza.id"
+      class="order__item"
+    >
       <div class="product">
         <img
           src="public/img/product.svg"
           class="product__img"
           width="56"
           height="56"
-          alt="Капричоза"
+          :alt="pizza.name"
         >
         <div class="product__text">
-          <h2>Капричоза</h2>
+          <h2>{{ pizza.name }}</h2>
           <ul>
-            <li>30 см, на тонком тесте</li>
-            <li>Соус: томатный</li>
-            <li>
-              Начинка: грибы, лук, ветчина, пармезан, ананас, бекон, блю
-              чиз
-            </li>
+            <li>{{ pizza.size.name }}, на {{ getDough(pizza.dough) }} тесте</li>
+            <li>Соус: {{ pizza.sauce.name }}</li>
+            <li>Начинка: {{ getFillings(pizza.fillings) }}</li>
           </ul>
         </div>
       </div>
 
       <p class="order__price">
-        782 ₽
-      </p>
-    </li>
-    <li class="order__item">
-      <div class="product">
-        <img
-          src="public/img/product.svg"
-          class="product__img"
-          width="56"
-          height="56"
-          alt="Капричоза"
-        >
-        <div class="product__text">
-          <h2>Моя любимая</h2>
-          <ul>
-            <li>30 см, на тонком тесте</li>
-            <li>Соус: томатный</li>
-            <li>Начинка: грибы, лук, ветчина, пармезан, ананас</li>
-          </ul>
-        </div>
-      </div>
-
-      <p class="order__price">
-        2х782 ₽
+        {{ pizza.count > 1 ? pizza.count + "x" + pizza.price : pizza.price }} ₽
       </p>
     </li>
   </ul>
@@ -61,6 +39,14 @@ export default {
     pizzas: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    getFillings(fillings) {
+      return fillings.map(f => f.name.toLowerCase()).join(", ");
+    },
+    getDough(dough) {
+      return dough.name.toLowerCase() === "тонкое" ? "тонком" : "толстом";
     },
   },
 };

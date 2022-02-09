@@ -1,9 +1,9 @@
 <template>
   <section class="sheet order">
     <OrderHeader :order="order" />
-    <OrderPizzas :pizzas="order.orderPizzas" />
-    <OrderMisc :misc-list="order.orderMisc" />
-    <OrderAddress />
+    <OrderPizzas :pizzas="order.pizzas" />
+    <OrderMisc :misc-list="order.misc" />
+    <OrderAddress :address="order.address" />
   </section>
 </template>
 <script>

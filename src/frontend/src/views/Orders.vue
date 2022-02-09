@@ -3,7 +3,7 @@
     <div class="layout__content">
       <OrderTitle />
       <OrderItem
-        v-for="order in orders"
+        v-for="order in transformOrders"
         :key="order.id"
         :order="order"
       />
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from "vuex";
 import { GET_ORDERS } from "@/store/mutation-types";
 import OrderItem from "@/modules/orders/OrderItem";
 import OrderTitle from "@/modules/orders/OrderTitle";
@@ -25,6 +25,7 @@ export default {
   },
   computed: {
     ...mapState("Orders", ["orders"]),
+    ...mapGetters("Orders", ["transformOrders"]),
   },
   created() {
     this.getOrders();

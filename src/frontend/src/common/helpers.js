@@ -44,3 +44,8 @@ export const receivingDefaultTypes = () => ([
     name: "Новый адрес",
   },
 ]);
+
+export const setAuth = store => {
+  store.$api.auth.setAuthHeader();
+  store.dispatch('User/getMe');
+};

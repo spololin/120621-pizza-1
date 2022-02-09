@@ -2,6 +2,7 @@ import {
   LOGOUT_USER,
   SET_USER_DATA,
 } from "@/store/mutation-types";
+import { setAuth } from "@/common/helpers";
 
 const initialUser = () => ({});
 
@@ -11,12 +12,10 @@ export default {
     user: initialUser(),
   },
   actions: {
-    async login({ dispatch }, credentials) {
+    async login(_d, credentials) {
       const data = await this.$api.auth.login(credentials);
       this.$jwt.saveToken(data.token);
-      this.$api.auth.setAuthHeader();
-
-      dispatch("getMe");
+      setAuth(this);
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {

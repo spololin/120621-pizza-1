@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import modules from "@/store/modules";
 import VuexPlugins from "@/plugins/vuexPlugins";
+import { setAuth } from "@/common/helpers";
 
 Vue.use(Vuex);
 
@@ -9,8 +10,9 @@ const state = () => ({});
 
 const actions = {
   async init({ dispatch }) {
-    this.$api.auth.setAuthHeader();
-    await dispatch("User/getMe");
+    if (this.$jwt.getToken()) {
+      setAuth(this);
+    }
     dispatch("Builder/getBuilderComponents");
     dispatch("Cart/getMisc");
   },

@@ -19,15 +19,15 @@
         <div class="product__text">
           <h2>{{ pizza.name }}</h2>
           <ul>
-            <li>{{ pizza.size.name }}, на {{ getDough(pizza.dough) }} тесте</li>
+            <li>{{ pizza.size.name }}, на {{ getPizzaDough(pizza.dough) }} тесте</li>
             <li>Соус: {{ pizza.sauce.name }}</li>
-            <li>Начинка: {{ getFillings(pizza.fillings) }}</li>
+            <li>Начинка: {{ getPizzaFillings(pizza.fillings) }}</li>
           </ul>
         </div>
       </div>
 
       <p class="order__price">
-        {{ pizza.count > 1 ? pizza.count + "x" + pizza.price : pizza.price }} ₽
+        {{ getPizzaCost(pizza) }} ₽
       </p>
     </li>
   </ul>
@@ -42,11 +42,14 @@ export default {
     },
   },
   methods: {
-    getFillings(fillings) {
+    getPizzaFillings(fillings) {
       return fillings.map(f => f.name.toLowerCase()).join(", ");
     },
-    getDough(dough) {
+    getPizzaDough(dough) {
       return dough.name.toLowerCase() === "тонкое" ? "тонком" : "толстом";
+    },
+    getPizzaCost(pizza) {
+      return pizza.count > 1 ? pizza.count + "x" + pizza.price : pizza.price;
     },
   },
 };

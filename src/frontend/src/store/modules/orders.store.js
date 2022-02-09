@@ -1,6 +1,8 @@
 import {
   GET_ORDERS,
   POST_ORDER,
+  DELETE_ORDER,
+  REPEAT_ORDER,
 } from "@/store/mutation-types";
 
 export default {
@@ -27,10 +29,33 @@ export default {
         commit("setOrders", data);
       }
     },
+    async [DELETE_ORDER]({ commit }, id) {
+      await this.$api.orders.delete(id);
+
+      commit(DELETE_ORDER, id);
+    },
+    [REPEAT_ORDER]({ getters, rootState }, orderId) {
+      const order = getters.transformOrders.find(o => o.id === orderId);
+      rootState["Cart"].pizzas = order.pizzas;
+      rootState["Cart"].misc = order.misc;
+      rootState["Addresses"].typeReceiving =  order?.id ?? "myself";
+      rootState["Addresses"].receivingForm.phone = order.phone;
+      rootState["Addresses"].receivingForm.street = order.address.street;
+      rootState["Addresses"].receivingForm.building = order.address.building;
+      rootState["Addresses"].receivingForm.flat = order.address.flat;
+    },
   },
   mutations: {
     setOrders(state, data) {
       state.orders = data;
+    },
+    [DELETE_ORDER](state, orderId) {
+      const idx = state.orders.findIndex(o => o.id === orderId);
+
+      state.orders = [
+        ...state.orders.slice(0, idx),
+        ...state.orders.slice(idx + 1),
+      ];
     },
   },
   getters: {
@@ -49,6 +74,7 @@ export default {
           orderPizzas = [],
           orderAddress = {},
           id: orderId,
+          phone,
         } = orderItem;
         let orderPrice = 0;
 
@@ -91,7 +117,7 @@ export default {
             (doughData.price + sauceData.price + ingredientsPrice) *
             sizeData.multiplier;
 
-          orderPrice += pizzaPrice;
+          orderPrice += pizzaPrice * quantity;
 
           return {
             name,
@@ -111,6 +137,7 @@ export default {
           misc: newMisc,
           pizzas: newPizzas,
           address: orderAddress,
+          phone,
         };
       });
     },

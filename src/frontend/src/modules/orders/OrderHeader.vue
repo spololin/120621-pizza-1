@@ -12,6 +12,7 @@
       <button
         type="button"
         class="button button--border"
+        @click="deleteOrder(order.id)"
       >
         Удалить
       </button>
@@ -20,6 +21,7 @@
       <button
         type="button"
         class="button"
+        @click="repeat()"
       >
         Повторить
       </button>
@@ -27,12 +29,28 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
+import {
+  DELETE_ORDER,
+  REPEAT_ORDER,
+} from "@/store/mutation-types";
+
 export default {
   name: "OrderHeader",
   props: {
     order: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    ...mapActions("Orders", {
+      deleteOrder: DELETE_ORDER,
+      repeatOrder: REPEAT_ORDER,
+    }),
+    repeat() {
+      this.repeatOrder(this.order.id);
+      this.$router.push("/cart");
     },
   },
 };

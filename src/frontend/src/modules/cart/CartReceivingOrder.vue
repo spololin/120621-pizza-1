@@ -19,13 +19,13 @@
 
       <label class="input input--big-label">
         <span>Контактный телефон:</span>
-        <input
+        <AppInput
           v-model="valuePhone"
-          type="text"
+          type="tel"
           name="tel"
-          required
           placeholder="+7 999-999-99-99"
-        >
+          required
+        />
       </label>
 
       <div
@@ -37,39 +37,33 @@
         <div class="cart-form__input">
           <label class="input">
             <span>Улица*</span>
-            <input
-              type="text"
+            <AppInput
+              v-model="receivingFormStreet"
               name="street"
-              :value="receivingForm.street"
               :disabled="disabledInput"
-              @change="changeFormReceivingValue({ type: 'street', value: $event.target.value })"
-            >
+            />
           </label>
         </div>
 
         <div class="cart-form__input cart-form__input--small">
           <label class="input">
             <span>Дом*</span>
-            <input
-              type="text"
+            <AppInput
+              v-model="receivingFormBuilding"
               name="house"
-              :value="receivingForm.building"
               :disabled="disabledInput"
-              @change="changeFormReceivingValue({ type: 'building', value: $event.target.value })"
-            >
+            />
           </label>
         </div>
 
         <div class="cart-form__input cart-form__input--small">
           <label class="input">
             <span>Квартира</span>
-            <input
-              type="text"
+            <AppInput
+              v-model="receivingFormFlat"
               name="apartment"
-              :value="receivingForm.flat"
               :disabled="disabledInput"
-              @change="changeFormReceivingValue({ type: 'flat', value: $event.target.value })"
-            >
+            />
           </label>
         </div>
       </div>
@@ -111,6 +105,42 @@ export default {
       },
       set(value) {
         this.setTypeReceiving(value);
+      },
+    },
+    receivingFormStreet: {
+      get() {
+        return this.receivingForm.street;
+      },
+      set(value) {
+        this.changeFormReceivingValue({
+          form: "receivingForm",
+          field: "street",
+          value,
+        });
+      },
+    },
+    receivingFormBuilding: {
+      get() {
+        return this.receivingForm.building;
+      },
+      set(value) {
+        this.changeFormReceivingValue({
+          form: "receivingForm",
+          field: "building",
+          value,
+        });
+      },
+    },
+    receivingFormFlat: {
+      get() {
+        return this.receivingForm.flat;
+      },
+      set(value) {
+        this.changeFormReceivingValue({
+          form: "receivingForm",
+          field: "flat",
+          value,
+        });
       },
     },
   },

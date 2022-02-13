@@ -1,6 +1,5 @@
 import {
   LOGOUT_USER,
-  SET_USER_DATA,
 } from "@/store/mutation-types";
 import { setAuth } from "@/common/helpers";
 
@@ -16,6 +15,8 @@ export default {
       const data = await this.$api.auth.login(credentials);
       this.$jwt.saveToken(data.token);
       setAuth(this);
+
+      return Object.hasOwn(data, "token");
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {
@@ -32,14 +33,14 @@ export default {
     async getMe({ dispatch, commit }) {
       try {
         const data = await this.$api.auth.getMe();
-        commit(SET_USER_DATA, data);
+        commit("setUserData", data);
       } catch {
         dispatch(LOGOUT_USER, false);
       }
     },
   },
   mutations: {
-    [SET_USER_DATA](state, userData) {
+    setUserData(state, userData) {
       state.user = userData;
     },
     [LOGOUT_USER](state) {

@@ -2,12 +2,12 @@
   <div class="content__pizza">
     <label class="input">
       <span class="visually-hidden">Название пиццы</span>
-      <input
+      <AppInput
         v-model="valueName"
-        type="text"
         name="pizza_name"
         placeholder="Введите название пиццы"
-      >
+        required
+      />
     </label>
 
     <BuilderPizzaView />

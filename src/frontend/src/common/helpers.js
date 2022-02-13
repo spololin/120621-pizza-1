@@ -30,8 +30,27 @@ export const validateEmail = (email = "") => {
     .trim()
     .toLowerCase()
     .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
+};
+
+export const validatePhone = (phone = "") => {
+  return String(phone)
+    .trim()
+    .toLowerCase()
+    .match(
+    /^(\+7|7|8)?[\s|-]?\(?[9][0-9]{2}\)?[\s|-]?[0-9]{3}[\s|-]?[0-9]{2}[\s|-]?[0-9]{2}$/,
+    );
+};
+
+export const validateReceivingFormData = (data) => {
+  for (const elem in data) {
+    if (["street", "building"].includes(elem) && !data[elem]) {
+      return false;
+    }
+  }
+
+  return true;
 };
 
 export const receivingDefaultTypes = () => ([

@@ -36,9 +36,17 @@ export default {
     },
     [REPEAT_ORDER]({ getters, rootState }, orderId) {
       const order = getters.transformOrders.find(o => o.id === orderId);
+
       rootState["Cart"].pizzas = order.pizzas;
-      rootState["Cart"].misc = order.misc;
-      rootState["Addresses"].typeReceiving =  order?.id ?? "myself";
+      rootState["Cart"].misc = rootState["Cart"].misc.map(misc => {
+        const miscElem = order.misc.find(miscItem => miscItem.miscId === misc.id);
+
+        return {
+          ...misc,
+          count: miscElem?.count ?? misc.count,
+        };
+      });
+      rootState["Addresses"].typeReceiving =  order?.address?.id ?? "myself";
       rootState["Addresses"].receivingForm.phone = order.phone;
       rootState["Addresses"].receivingForm.street = order.address.street;
       rootState["Addresses"].receivingForm.building = order.address.building;
@@ -87,6 +95,7 @@ export default {
 
             return {
               id,
+              miscId,
               image,
               name,
               price,

@@ -1,6 +1,9 @@
-import { createUUIDv4 } from "@/common/helpers";
 import {
-  ADD_PIZZA_TO_CART,
+  createUUIDv4,
+  validatePhone,
+  validateReceivingFormData,
+} from "@/common/helpers";
+import {
   CHANGE_COUNT_MISC,
   RESET_CART,
   CHANGE_COUNT_PIZZA,
@@ -16,7 +19,7 @@ export default {
   },
   actions: {
     addToCart({ commit, rootGetters }) {
-      commit(ADD_PIZZA_TO_CART, rootGetters["Builder/buildPizza"]);
+      commit("addPizzaToCard", rootGetters["Builder/buildPizza"]);
     },
     async getMisc({ commit }) {
       const data = await this.$api.misc.query();
@@ -24,7 +27,7 @@ export default {
     },
   },
   mutations: {
-    [ADD_PIZZA_TO_CART](state, pizza) {
+    addPizzaToCard(state, pizza) {
       const idx = state.pizzas.findIndex(p => p.id === pizza.id);
       if (~idx) {
         state.pizzas = [
@@ -103,6 +106,23 @@ export default {
           }),
         };
       });
+    },
+    validateCart: ({ pizzas, misc }, _g, rootState) => {
+      const { receivingForm, typeReceiving } = rootState["Addresses"];
+      const phone = receivingForm.phone;
+      let validForm = false;
+
+      if (!isNaN(+typeReceiving)) {
+        validForm = true;
+      }
+      if (typeReceiving === "new") {
+        validForm = validateReceivingFormData(receivingForm);
+      }
+      if (typeReceiving === "myself") {
+        validForm = phone !== "";
+      }
+
+      return (validForm && Boolean(pizzas.length || misc.filter(m => m.count).length) && Boolean(phone && validatePhone(phone) !== null));
     },
   },
 };

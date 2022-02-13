@@ -16,13 +16,12 @@
     </div>
 
     <div class="footer__submit">
-      <button
-        type="submit"
-        class="button"
-        @click.prevent="checkout"
+      <AppButton
+        :disabled="!validateCart"
+        @onClick="checkout"
       >
         Оформить заказ
-      </button>
+      </AppButton>
     </div>
   </section>
 </template>
@@ -30,6 +29,7 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import {
+  EMPTY_RECEIVING_FORM,
   GET_ADDRESSES,
   POST_ORDER,
   RESET_BUILDER,
@@ -39,7 +39,7 @@ import {
 export default {
   name: "CartFooter",
   computed: {
-    ...mapGetters("Cart", ["totalCost"]),
+    ...mapGetters("Cart", ["totalCost", "validateCart"]),
   },
   methods: {
     ...mapMutations("Builder", {
@@ -54,6 +54,9 @@ export default {
     ...mapActions("Addresses", {
       getAddresses: GET_ADDRESSES,
     }),
+    ...mapMutations("Addresses", {
+      emptyReceivingForm: EMPTY_RECEIVING_FORM,
+    }),
     toHome() {
       this.resetBuilder();
       this.$router.push("/");
@@ -65,6 +68,7 @@ export default {
         this.getAddresses();
         this.resetBuilder();
         this.resetCartState();
+        this.emptyReceivingForm();
       }
     },
   },

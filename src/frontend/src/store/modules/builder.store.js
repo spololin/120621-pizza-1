@@ -5,7 +5,6 @@ import {
   UPDATE_SELECTOR_ITEM,
   UPDATE_INGREDIENT_COUNTER,
   RESET_BUILDER,
-  SET_BUILDER_COMPONENTS,
 } from "@/store/mutation-types";
 
 export default {
@@ -26,14 +25,14 @@ export default {
   actions: {
     async getBuilderComponents({ commit }) {
       const data = await this.$api.builder.get();
-      commit(SET_BUILDER_COMPONENTS, data);
+      commit("setBuilderComponents", data);
     },
     dropIngredient({ commit }, filling) {
       commit(UPDATE_INGREDIENT_COUNTER, { ...filling, operation: "increase" });
     },
   },
   mutations: {
-    [SET_BUILDER_COMPONENTS](state, builderComponents) {
+    setBuilderComponents(state, builderComponents) {
       state.initialBuilder = builderComponents;
       Object.assign(state.builder, builderComponents);
     },

@@ -4,10 +4,10 @@ import {
   POST_ADDRESS,
   EDIT_ADDRESS,
   DELETE_ADDRESS,
-  CHANGE_ADDRESS,
   SET_PHONE_ORDER,
   SET_TYPE_RECEIVING,
   CHANGE_FORM_RECEIVING_VALUE,
+  EMPTY_RECEIVING_FORM,
 } from "@/store/mutation-types";
 
 const initialAddressForm = () => ({
@@ -18,6 +18,15 @@ const initialAddressForm = () => ({
   comment: "",
 });
 
+const initialReceivingForm = () => ({
+  phone: "",
+  street: "",
+  building: "",
+  flat: "",
+});
+
+const initialTypeReceiving = () => "myself";
+
 export default {
   namespaced: true,
   state: {
@@ -25,13 +34,8 @@ export default {
     editAddressForm: initialAddressForm(),
     expandAddressForm: false,
     isEdit: false,
-    typeReceiving: "myself",
-    receivingForm: {
-      phone: "",
-      street: "",
-      building: "",
-      flat: "",
-    },
+    typeReceiving: initialTypeReceiving(),
+    receivingForm: initialReceivingForm(),
   },
   actions: {
     async [GET_ADDRESSES]({ commit, rootGetters }) {
@@ -53,7 +57,7 @@ export default {
           commit(POST_ADDRESS, data);
           break;
         case "put":
-          commit(CHANGE_ADDRESS);
+          commit("changeAddress");
           break;
       }
     },
@@ -80,7 +84,7 @@ export default {
       state.isEdit = true;
       state.expandAddressForm = true;
     },
-    [CHANGE_ADDRESS](state) {
+    changeAddress(state) {
       const idx = state.addresses.findIndex(a => a.id === state.editAddressForm.id);
 
       state.addresses = [
@@ -122,7 +126,11 @@ export default {
       }
     },
     [CHANGE_FORM_RECEIVING_VALUE](state, data) {
-      state.receivingForm[data.type] = data.value;
+      state[data.form][data.field] = data.value;
+    },
+    [EMPTY_RECEIVING_FORM](state) {
+      state.receivingForm = initialReceivingForm();
+      state.typeReceiving = initialTypeReceiving();
     },
   },
   getters: {

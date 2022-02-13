@@ -1,12 +1,11 @@
 <template>
   <div class="layout__button">
-    <button
-      type="button"
-      class="button button--border"
-      @click="expandAddressForm()"
+    <AppButton
+      class="button--border"
+      @onClick="expandAddressForm()"
     >
       Добавить новый адрес
-    </button>
+    </AppButton>
   </div>
 </template>
 

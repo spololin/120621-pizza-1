@@ -1,22 +1,9 @@
 <template>
   <li class="cart-list__item">
-    <div class="product cart-list__product">
-      <img
-        src="public/img/product.svg"
-        class="product__img"
-        width="56"
-        height="56"
-        :alt="pizza.name"
-      >
-      <div class="product__text">
-        <h2>{{ pizza.name }}</h2>
-        <ul>
-          <li>{{ sizeAndDoughDesc }}</li>
-          <li>{{ sauceDesc }}</li>
-          <li>{{ fillingsDesc }}</li>
-        </ul>
-      </div>
-    </div>
+    <AppProduct
+      class="cart-list__product"
+      :product="productData"
+    />
 
     <ItemCounter
       class="cart-list__counter"
@@ -57,14 +44,14 @@ export default {
     },
   },
   computed: {
-    sizeAndDoughDesc() {
-      return `${this.pizza.size.name} на ${this.pizza.dough.value === "light" ? "тонком" : "толстом"} тесте`;
-    },
-    sauceDesc() {
-      return `Соус: ${this.pizza.sauce.name.toLowerCase()}`;
-    },
-    fillingsDesc() {
-      return `Начинка: ${this.pizza.fillings.map(filling => filling.name.toLowerCase()).join(", ")}`;
+    productData() {
+      return {
+        name: this.pizza.name,
+        size: this.pizza.size.name,
+        dough: this.pizza.dough.value === "light" ? "тонком" : "толстом",
+        sauce: this.pizza.sauce.name.toLowerCase(),
+        fillings: this.pizza.fillings.map(filling => filling.name.toLowerCase()).join(", "),
+      };
     },
   },
   methods: {

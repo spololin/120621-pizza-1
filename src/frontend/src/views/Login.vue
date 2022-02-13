@@ -19,35 +19,33 @@
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>
-          <input
-            ref="email"
+          <AppInput
             v-model="email"
             type="email"
             name="email"
             required
             placeholder="example@mail.ru"
-          >
+          />
         </label>
       </div>
 
       <div class="sign-form__input">
         <label class="input">
           <span>Пароль</span>
-          <input
+          <appInput
             v-model="password"
             type="password"
             name="pass"
             required
             placeholder="***********"
-          >
+          />
         </label>
       </div>
-      <button
+      <AppButton
         type="submit"
-        class="button"
       >
         Авторизоваться
-      </button>
+      </AppButton>
     </form>
   </div>
 </template>
@@ -62,18 +60,15 @@ export default {
     email: "",
     password: "",
   }),
-  mounted() {
-    this.$refs.email.focus();
-  },
   methods: {
     ...mapActions("User", ["login"]),
-    goLogin() {
+    async goLogin() {
       if (validateEmail(this.email) && this.password.trim()) {
-        this.login({
+        await this.login({
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        this.$router.push("/");
+        await this.$router.push("/");
       }
 
     },

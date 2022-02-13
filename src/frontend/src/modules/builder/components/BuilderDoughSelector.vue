@@ -5,9 +5,7 @@
         Выберите тесто
       </h2>
 
-      <div
-        class="sheet__content dough"
-      >
+      <div class="sheet__content dough">
         <BuilderSelectorItem
           v-for="dough in builder.doughs"
           :key="dough.id"

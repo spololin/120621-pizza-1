@@ -75,7 +75,7 @@ export default {
     }),
     async logoutUser() {
       if (await this.logout(true)) {
-        await this.$router.push("/").catch(()=>{});
+        await this.$router.push("/").catch(() => {});
       }
     },
   },

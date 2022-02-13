@@ -17,9 +17,7 @@
       </AppButton>
     </div>
     <div class="order__button">
-      <AppButton
-        @onClick="repeat()"
-      >
+      <AppButton @onClick="repeat()">
         Повторить
       </AppButton>
     </div>
@@ -27,10 +25,7 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import {
-  DELETE_ORDER,
-  REPEAT_ORDER,
-} from "@/store/mutation-types";
+import { DELETE_ORDER, REPEAT_ORDER } from "@/store/mutation-types";
 
 export default {
   name: "OrderHeader",

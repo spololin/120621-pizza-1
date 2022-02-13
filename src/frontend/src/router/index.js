@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
     nextMiddleware: middlewarePipeline(
       context,
       middlewares,
-      nextMiddlewareIndex,
+      nextMiddlewareIndex
     ),
   });
 });

@@ -15,7 +15,7 @@ export default {
     AppLayout,
   },
   created() {
-    this.$store.dispatch('init');
+    this.$store.dispatch("init");
   },
 };
 </script>

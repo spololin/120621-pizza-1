@@ -13,7 +13,13 @@
           </button>
         </div>
       </div>
-      <p>{{ `${address.street}, д. ${address.building}${address.flat ? ', кв. ' + address.flat : ''}` }}</p>
+      <p>
+        {{
+          `${address.street}, д. ${address.building}${
+            address.flat ? ", кв. " + address.flat : ""
+          }`
+        }}
+      </p>
       <small>{{ address.comment }}</small>
     </div>
   </div>

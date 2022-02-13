@@ -84,10 +84,7 @@
 </template>
 
 <script>
-import {
-  mapActions, mapMutations,
-  mapState,
-} from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import {
   CHANGE_FORM_RECEIVING_VALUE,
   DELETE_ADDRESS,

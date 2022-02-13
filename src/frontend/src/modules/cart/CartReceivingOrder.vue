@@ -13,7 +13,9 @@
             v-for="typeReceiving in listReceivingTypes"
             :key="typeReceiving.id"
             :value="typeReceiving.id"
-          >{{ typeReceiving.name }}</option>
+          >
+            {{ typeReceiving.name }}
+          </option>
         </select>
       </label>
 

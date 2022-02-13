@@ -8,9 +8,7 @@
       :key="pizza.id"
       class="order__item"
     >
-      <AppProduct
-        :product="productData(pizza)"
-      />
+      <AppProduct :product="productData(pizza)" />
 
       <p class="order__price">
         {{ getPizzaCost(pizza) }} ₽
@@ -37,7 +35,9 @@ export default {
         size: pizza.size.name,
         dough: pizza.dough.value === "light" ? "тонком" : "толстом",
         sauce: pizza.sauce.name.toLowerCase(),
-        fillings: pizza.fillings.map(filling => filling.name.toLowerCase()).join(", "),
+        fillings: pizza.fillings
+          .map((filling) => filling.name.toLowerCase())
+          .join(", "),
       };
     },
   },

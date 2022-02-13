@@ -26,7 +26,11 @@ export default {
   name: "BuilderPizzaView",
   components: { BuilderPizzaViewIngredient, AppDrop },
   computed: {
-    ...mapGetters("Builder", ["selectedFillings", "selectedDough", "selectedSauce"]),
+    ...mapGetters("Builder", [
+      "selectedFillings",
+      "selectedDough",
+      "selectedSauce",
+    ]),
     classPizza() {
       if (this.selectedDough && this.selectedSauce) {
         const basePartClass = "pizza--foundation--";

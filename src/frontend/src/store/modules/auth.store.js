@@ -1,6 +1,4 @@
-import {
-  LOGOUT_USER,
-} from "@/store/mutation-types";
+import { LOGOUT_USER } from "@/store/mutation-types";
 import { setAuth } from "@/common/helpers";
 
 const initialUser = () => ({});
@@ -48,6 +46,6 @@ export default {
     },
   },
   getters: {
-    isAuth: state => state.user.id,
+    isAuth: (state) => state.user.id,
   },
 };

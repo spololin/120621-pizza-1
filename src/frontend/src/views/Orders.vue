@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     ...mapActions("Orders", {
-        getOrders: GET_ORDERS,
+      getOrders: GET_ORDERS,
     }),
   },
 };

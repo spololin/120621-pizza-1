@@ -1,4 +1,4 @@
-import { setAuth } from '@/common/helpers';
+import { setAuth } from "@/common/helpers";
 
 export default function isAuth({ next, store, nextMiddleware }) {
   if (!store.state.User.isAuth) {
@@ -6,7 +6,7 @@ export default function isAuth({ next, store, nextMiddleware }) {
     if (token) {
       setAuth(store);
     } else {
-      next('/');
+      next("/");
     }
   }
   return nextMiddleware();

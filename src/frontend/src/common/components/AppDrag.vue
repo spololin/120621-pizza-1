@@ -10,10 +10,7 @@
 </template>
 
 <script>
-import {
-  DATA_TRANSFER_PAYLOAD,
-  EFFECT_MOVE,
-} from "@/common/constants";
+import { DATA_TRANSFER_PAYLOAD, EFFECT_MOVE } from "@/common/constants";
 
 export default {
   name: "AppDrag",
@@ -33,7 +30,7 @@ export default {
       dataTransfer.dropEffect = EFFECT_MOVE;
       dataTransfer.setData(
         DATA_TRANSFER_PAYLOAD,
-        JSON.stringify(this.transferData),
+        JSON.stringify(this.transferData)
       );
     },
   },

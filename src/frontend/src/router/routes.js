@@ -41,9 +41,9 @@ export default [
     },
   },
   {
-    path: '/thanks',
-    name: 'Thanks',
+    path: "/thanks",
+    name: "Thanks",
     component: () => import("../views/OrderPopup.vue"),
-    meta: { layout: 'AppLayoutDefault' },
+    meta: { layout: "AppLayoutDefault" },
   },
 ];

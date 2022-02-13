@@ -45,7 +45,7 @@ export default {
         commit(GET_ADDRESSES, data);
       }
     },
-    async [POST_ADDRESS]({ state, commit, rootState } ) {
+    async [POST_ADDRESS]({ state, commit, rootState }) {
       const method = state.editAddressForm.id ? "put" : "post";
       const data = await this.$api.addresses[method]({
         ...state.editAddressForm,
@@ -85,7 +85,9 @@ export default {
       state.expandAddressForm = true;
     },
     changeAddress(state) {
-      const idx = state.addresses.findIndex(a => a.id === state.editAddressForm.id);
+      const idx = state.addresses.findIndex(
+        (a) => a.id === state.editAddressForm.id
+      );
 
       state.addresses = [
         ...state.addresses.slice(0, idx),
@@ -96,7 +98,9 @@ export default {
       state.expandAddressForm = false;
     },
     [DELETE_ADDRESS](state) {
-      const idx = state.addresses.findIndex(a => a.id === state.editAddressForm.id);
+      const idx = state.addresses.findIndex(
+        (a) => a.id === state.editAddressForm.id
+      );
 
       state.addresses = [
         ...state.addresses.slice(0, idx),
@@ -118,7 +122,7 @@ export default {
       }
 
       if (!isNaN(+value)) {
-        const address = state.addresses.find(elem => elem.id === value);
+        const address = state.addresses.find((elem) => elem.id === value);
 
         state.receivingForm.street = address.street;
         state.receivingForm.building = address.building;
@@ -134,9 +138,11 @@ export default {
     },
   },
   getters: {
-    addressForOrder: state => {
+    addressForOrder: (state) => {
       if (!isNaN(+state.typeReceiving)) {
-        const address = state.addresses.find(elem => elem.id === state.typeReceiving);
+        const address = state.addresses.find(
+          (elem) => elem.id === state.typeReceiving
+        );
 
         return {
           id: address.id,

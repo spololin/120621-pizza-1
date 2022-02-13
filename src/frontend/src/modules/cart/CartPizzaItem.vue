@@ -38,7 +38,7 @@ import {
 export default {
   name: "CartPizzaItem",
   props: {
-    "pizza": {
+    pizza: {
       type: Object,
       required: true,
     },
@@ -50,7 +50,9 @@ export default {
         size: this.pizza.size.name,
         dough: this.pizza.dough.value === "light" ? "тонком" : "толстом",
         sauce: this.pizza.sauce.name.toLowerCase(),
-        fillings: this.pizza.fillings.map(filling => filling.name.toLowerCase()).join(", "),
+        fillings: this.pizza.fillings
+          .map((filling) => filling.name.toLowerCase())
+          .join(", "),
       };
     },
   },

@@ -41,9 +41,7 @@
           />
         </label>
       </div>
-      <AppButton
-        type="submit"
-      >
+      <AppButton type="submit">
         Авторизоваться
       </AppButton>
     </form>
@@ -70,7 +68,6 @@ export default {
         });
         await this.$router.push("/");
       }
-
     },
   },
 };

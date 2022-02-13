@@ -1,4 +1,4 @@
-import axios from '@/plugins/axios';
+import axios from "@/plugins/axios";
 
 export class ReadOnlyApiService {
   #resource;
@@ -30,10 +30,7 @@ export class CrudApiService extends ReadOnlyApiService {
   }
 
   async put(entity) {
-    const { data } = await axios.put(
-      `${this.#resource}/${entity.id}`,
-      entity,
-    );
+    const { data } = await axios.put(`${this.#resource}/${entity.id}`, entity);
     return data;
   }
 

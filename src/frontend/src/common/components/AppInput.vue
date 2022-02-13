@@ -10,7 +10,7 @@
 export default {
   name: "AppInput",
   props: {
-    "value": {
+    value: {
       type: [String, Number],
       default: "",
     },

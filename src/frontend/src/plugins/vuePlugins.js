@@ -1,9 +1,9 @@
-import Vue from 'vue';
-import JWTService from '@/services/jwt.service';
-import { createResources } from '@/common/helpers';
+import Vue from "vue";
+import JWTService from "@/services/jwt.service";
+import { createResources } from "@/common/helpers";
 
 const plugins = {
-  install (Vue) {
+  install(Vue) {
     Vue.mixin({
       computed: {
         $jwt: () => JWTService,

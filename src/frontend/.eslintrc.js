@@ -4,9 +4,11 @@ module.exports = {
     node: true,
   },
   extends: [
-    "plugin:vue/base",
-    "eslint:recommended",
     "plugin:vue/essential",
+    "eslint:recommended",
+    // "@vue/prettier",
+    "prettier",
+    "plugin:vue/base",
     "plugin:vue/strongly-recommended",
     "plugin:vue/recommended",
   ],
@@ -16,11 +18,6 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "prettier/prettier": 0,
-    "semi": [2, "always"],
-    "comma-style": [2, "last"],
-    "comma-dangle": ["error", "always-multiline"],
-    "object-curly-spacing": ["error", "always"],
   },
   overrides: [
     {

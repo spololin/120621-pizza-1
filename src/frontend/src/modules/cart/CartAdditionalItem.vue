@@ -30,7 +30,7 @@ import { CHANGE_COUNT_MISC } from "@/store/mutation-types";
 export default {
   name: "CartAdditionalItem",
   props: {
-    "misc": {
+    misc: {
       type: Object,
       required: true,
     },

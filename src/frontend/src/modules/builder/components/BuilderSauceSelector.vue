@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="ingredients__sauce"
-  >
+  <div class="ingredients__sauce">
     <p>Основной соус:</p>
 
     <BuilderSelectorItem

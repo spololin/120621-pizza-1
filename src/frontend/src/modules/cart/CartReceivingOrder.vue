@@ -5,29 +5,33 @@
         <span class="cart-form__label">Получение заказа:</span>
 
         <select
-          v-model="typeReceiving"
+          v-model="valueTypeReceiving"
           name="test"
           class="select"
         >
           <option
-            v-for="typeAddress in listAddresses"
-            :key="typeAddress.id"
-            :value="typeAddress.id"
-          >{{ typeAddress.name }}</option>
+            v-for="typeReceiving in listReceivingTypes"
+            :key="typeReceiving.id"
+            :value="typeReceiving.id"
+          >
+            {{ typeReceiving.name }}
+          </option>
         </select>
       </label>
 
       <label class="input input--big-label">
         <span>Контактный телефон:</span>
-        <input
-          type="text"
+        <AppInput
+          v-model="valuePhone"
+          type="tel"
           name="tel"
           placeholder="+7 999-999-99-99"
-        >
+          required
+        />
       </label>
 
       <div
-        v-if="typeReceiving > 1"
+        v-if="typeReceiving === 'new' || +typeReceiving"
         class="cart-form__address"
       >
         <span class="cart-form__label">Новый адрес:</span>
@@ -35,33 +39,33 @@
         <div class="cart-form__input">
           <label class="input">
             <span>Улица*</span>
-            <input
-              type="text"
+            <AppInput
+              v-model="receivingFormStreet"
               name="street"
-              :value="addressStreet"
-            >
+              :disabled="disabledInput"
+            />
           </label>
         </div>
 
         <div class="cart-form__input cart-form__input--small">
           <label class="input">
             <span>Дом*</span>
-            <input
-              type="text"
+            <AppInput
+              v-model="receivingFormBuilding"
               name="house"
-              :value="addressHome"
-            >
+              :disabled="disabledInput"
+            />
           </label>
         </div>
 
         <div class="cart-form__input cart-form__input--small">
           <label class="input">
             <span>Квартира</span>
-            <input
-              type="text"
+            <AppInput
+              v-model="receivingFormFlat"
               name="apartment"
-              :value="addressRoom"
-            >
+              :disabled="disabledInput"
+            />
           </label>
         </div>
       </div>
@@ -70,51 +74,84 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapGetters, mapMutations, mapState } from "vuex";
+import {
+  CHANGE_FORM_RECEIVING_VALUE,
+  SET_PHONE_ORDER,
+  SET_TYPE_RECEIVING,
+} from "@/store/mutation-types";
+import { receivingDefaultTypes } from "@/common/helpers";
 
 export default {
   name: "CartReceivingOrder",
-  data() {
-    return {
-      typeReceiving: 1,
-      addressStreet: "",
-      addressHome: "",
-      addressRoom: "",
-      listTypeReceiving: [
-        {
-          id: "1",
-          name: "Заберу сам",
-        },
-        {
-          id: "2",
-          name: "Новый адрес",
-        },
-      ],
-    };
-  },
   computed: {
     ...mapGetters("User", ["isAuth"]),
-    ...mapState("User", ["addresses"]),
-    listAddresses() {
-      return this.listTypeReceiving.concat(this.isAuth ? this.addresses : []);
+    ...mapState("Addresses", ["addresses", "typeReceiving", "receivingForm"]),
+    listReceivingTypes() {
+      return receivingDefaultTypes().concat(this.isAuth ? this.addresses : []);
+    },
+    disabledInput() {
+      return this.typeReceiving !== "new";
+    },
+    valuePhone: {
+      get() {
+        return this.receivingForm.phone;
+      },
+      set(value) {
+        this.setPhoneOrder(value);
+      },
+    },
+    valueTypeReceiving: {
+      get() {
+        return this.typeReceiving;
+      },
+      set(value) {
+        this.setTypeReceiving(value);
+      },
+    },
+    receivingFormStreet: {
+      get() {
+        return this.receivingForm.street;
+      },
+      set(value) {
+        this.changeFormReceivingValue({
+          form: "receivingForm",
+          field: "street",
+          value,
+        });
+      },
+    },
+    receivingFormBuilding: {
+      get() {
+        return this.receivingForm.building;
+      },
+      set(value) {
+        this.changeFormReceivingValue({
+          form: "receivingForm",
+          field: "building",
+          value,
+        });
+      },
+    },
+    receivingFormFlat: {
+      get() {
+        return this.receivingForm.flat;
+      },
+      set(value) {
+        this.changeFormReceivingValue({
+          form: "receivingForm",
+          field: "flat",
+          value,
+        });
+      },
     },
   },
-  watch: {
-    typeReceiving(newValue, oldValue) {
-      if (newValue !== oldValue) {
-        if (+newValue === 2) {
-          this.addressStreet = "";
-          this.addressHome = "";
-          this.addressRoom = "";
-        }
-        if (+newValue > 2) {
-          const address = this.listAddresses.find(elem => elem.id === newValue);
-          this.addressStreet = address.street;
-          this.addressHome = address.home;
-          this.addressRoom = address.room;
-        }
-      }
-    },
+  methods: {
+    ...mapMutations("Addresses", {
+      setPhoneOrder: SET_PHONE_ORDER,
+      setTypeReceiving: SET_TYPE_RECEIVING,
+      changeFormReceivingValue: CHANGE_FORM_RECEIVING_VALUE,
+    }),
   },
 };
 </script>

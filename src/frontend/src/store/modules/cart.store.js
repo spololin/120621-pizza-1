@@ -1,13 +1,15 @@
-import miscData from "@/static/misc.json";
-import { createUUIDv4 } from "@/common/helpers";
 import {
-  ADD_PIZZA_TO_CART,
+  createUUIDv4,
+  validatePhone,
+  validateReceivingFormData,
+} from "@/common/helpers";
+import {
   CHANGE_COUNT_MISC,
-  RESET_PIZZA_CART,
+  RESET_CART,
   CHANGE_COUNT_PIZZA,
 } from "../mutation-types";
 
-const setupPizzasState = () => ([]);
+const setupPizzasState = () => [];
 
 export default {
   namespaced: true,
@@ -17,15 +19,19 @@ export default {
   },
   actions: {
     addToCart({ commit, rootGetters }) {
-      commit(ADD_PIZZA_TO_CART, rootGetters["Builder/buildPizza"]);
+      commit("addPizzaToCard", rootGetters["Builder/buildPizza"]);
     },
-    fetchMisc({ commit }) {
-      commit("setMisc", miscData.map(misc => ({ ...misc, count: 0 })));
+    async getMisc({ commit }) {
+      const data = await this.$api.misc.query();
+      commit(
+        "setMisc",
+        data.map((misc) => ({ ...misc, count: 0 }))
+      );
     },
   },
   mutations: {
-    [ADD_PIZZA_TO_CART](state, pizza) {
-      const idx = state.pizzas.findIndex(p => p.id === pizza.id);
+    addPizzaToCard(state, pizza) {
+      const idx = state.pizzas.findIndex((p) => p.id === pizza.id);
       if (~idx) {
         state.pizzas = [
           ...state.pizzas.slice(0, idx),
@@ -40,33 +46,43 @@ export default {
       state.misc = misc;
     },
     [CHANGE_COUNT_MISC](state, misc) {
-      state.misc = state.misc.map(elem => {
-        return elem.id !== misc.id ? elem : {
-          ...elem,
-          count: misc.operation === "increase" ? ++elem.count : --elem.count,
-        };
+      state.misc = state.misc.map((elem) => {
+        return elem.id !== misc.id
+          ? elem
+          : {
+              ...elem,
+              count:
+                misc.operation === "increase" ? ++elem.count : --elem.count,
+            };
       });
     },
     [CHANGE_COUNT_PIZZA](state, pizza) {
-      const resultValue = pizza.count + (pizza.operation === "increase" ? 1 : -1);
+      const resultValue =
+        pizza.count + (pizza.operation === "increase" ? 1 : -1);
 
       if (resultValue === 0) {
-        state.pizzas = state.pizzas.filter(p => p.id !== pizza.id);
+        state.pizzas = state.pizzas.filter((p) => p.id !== pizza.id);
       } else {
-        state.pizzas = state.pizzas.map(elem => {
-          return elem.id !== pizza.id ? elem : {
-            ...elem,
-            count: pizza.operation === "increase" ? elem.count + 1 : elem.count - 1,
-          };
+        state.pizzas = state.pizzas.map((elem) => {
+          return elem.id !== pizza.id
+            ? elem
+            : {
+                ...elem,
+                count:
+                  pizza.operation === "increase"
+                    ? elem.count + 1
+                    : elem.count - 1,
+              };
         });
       }
     },
-    [RESET_PIZZA_CART](state) {
+    [RESET_CART](state) {
       state.pizzas = setupPizzasState();
+      state.misc = state.misc.map((m) => ({ ...m, count: 0 }));
     },
   },
   getters: {
-    totalCost: state => {
+    totalCost: (state) => {
       const totalCostPizzas = state.pizzas.reduce((acc, elem) => {
         const { price, count } = elem;
         return acc + count * price;
@@ -77,6 +93,54 @@ export default {
       }, 0);
 
       return totalCostPizzas + totalCostMisc;
+    },
+    miscForOrder: (state) => {
+      return state.misc
+        .filter((m) => m.count)
+        .map((elem) => {
+          return {
+            miscId: elem.id,
+            quantity: elem.count,
+          };
+        });
+    },
+    pizzasForOrder: (state) => {
+      return state.pizzas.map((p) => {
+        return {
+          name: p.name,
+          sauceId: p.sauce.id,
+          doughId: p.dough.id,
+          sizeId: p.size.id,
+          quantity: p.count,
+          ingredients: p.fillings.map((f) => {
+            return {
+              ingredientId: f.id,
+              quantity: f.count,
+            };
+          }),
+        };
+      });
+    },
+    validateCart: ({ pizzas, misc }, _g, rootState) => {
+      const { receivingForm, typeReceiving } = rootState["Addresses"];
+      const phone = receivingForm.phone;
+      let validForm = false;
+
+      if (!isNaN(+typeReceiving)) {
+        validForm = true;
+      }
+      if (typeReceiving === "new") {
+        validForm = validateReceivingFormData(receivingForm);
+      }
+      if (typeReceiving === "myself") {
+        validForm = phone !== "";
+      }
+
+      return (
+        validForm &&
+        Boolean(pizzas.length || misc.filter((m) => m.count).length) &&
+        Boolean(phone && validatePhone(phone) !== null)
+      );
     },
   },
 };

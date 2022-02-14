@@ -16,41 +16,60 @@
     </div>
 
     <div class="footer__submit">
-      <button
-        type="submit"
-        class="button"
-        @click.prevent="checkout"
+      <AppButton
+        :disabled="!validateCart"
+        @onClick="checkout"
       >
         Оформить заказ
-      </button>
+      </AppButton>
     </div>
   </section>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import { RESET_BUILDER, RESET_PIZZA_CART } from "@/store/mutation-types";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import {
+  EMPTY_RECEIVING_FORM,
+  GET_ADDRESSES,
+  POST_ORDER,
+  RESET_BUILDER,
+  RESET_CART,
+} from "@/store/mutation-types";
 
 export default {
   name: "CartFooter",
   computed: {
-    ...mapGetters("Cart", ["totalCost"]),
+    ...mapGetters("Cart", ["totalCost", "validateCart"]),
   },
   methods: {
     ...mapMutations("Builder", {
       resetBuilder: RESET_BUILDER,
     }),
     ...mapMutations("Cart", {
-      resetPizzaState: RESET_PIZZA_CART,
+      resetCartState: RESET_CART,
+    }),
+    ...mapActions("Orders", {
+      postOrder: POST_ORDER,
+    }),
+    ...mapActions("Addresses", {
+      getAddresses: GET_ADDRESSES,
+    }),
+    ...mapMutations("Addresses", {
+      emptyReceivingForm: EMPTY_RECEIVING_FORM,
     }),
     toHome() {
       this.resetBuilder();
       this.$router.push("/");
     },
-    checkout() {
-      this.resetBuilder();
-      this.resetPizzaState();
-      this.$router.push("/thanks");
+    async checkout() {
+      const data = await this.postOrder();
+      if (data.id) {
+        await this.$router.push("/thanks");
+        this.getAddresses();
+        this.resetBuilder();
+        this.resetCartState();
+        this.emptyReceivingForm();
+      }
     },
   },
 };

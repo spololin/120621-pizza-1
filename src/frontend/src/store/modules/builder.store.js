@@ -1,5 +1,3 @@
-import { getPizzaValues } from "@/common/helpers";
-import pizzaData from "@/static/pizza.json";
 import { MAX_COUNT_TYPE_INGREDIENT } from "@/common/constants";
 import {
   SET_NAME_PIZZA,
@@ -7,7 +5,6 @@ import {
   UPDATE_SELECTOR_ITEM,
   UPDATE_INGREDIENT_COUNTER,
   RESET_BUILDER,
-  SET_BUILDER_COMPONENTS,
 } from "@/store/mutation-types";
 
 export default {
@@ -26,30 +23,35 @@ export default {
     initialBuilder: {},
   },
   actions: {
-    fetchBuilderComponents({ commit }) {
-      commit(SET_BUILDER_COMPONENTS, getPizzaValues(pizzaData));
+    async getBuilderComponents({ commit }) {
+      const data = await this.$api.builder.get();
+      commit("setBuilderComponents", data);
     },
     dropIngredient({ commit }, filling) {
       commit(UPDATE_INGREDIENT_COUNTER, { ...filling, operation: "increase" });
     },
   },
   mutations: {
-    [SET_BUILDER_COMPONENTS](state, builderComponents) {
+    setBuilderComponents(state, builderComponents) {
       state.initialBuilder = builderComponents;
       Object.assign(state.builder, builderComponents);
     },
     [UPDATE_SELECTOR_ITEM](state, selector) {
-      state.builder[selector.type] = state.builder[selector.type].map((elem) => ({
-        ...elem,
-        checked: selector.id === elem.id,
-      }));
+      state.builder[selector.type] = state.builder[selector.type].map(
+        (elem) => ({
+          ...elem,
+          checked: selector.id === elem.id,
+        })
+      );
     },
     [UPDATE_INGREDIENT_COUNTER](state, filling) {
       state.builder.fillings = state.builder.fillings.map((elem) => {
         if (elem.id !== filling.id) return elem;
 
         const count =
-          filling.operation === "increase" ? filling.count + 1 : filling.count - 1;
+          filling.operation === "increase"
+            ? filling.count + 1
+            : filling.count - 1;
 
         return {
           ...elem,
@@ -75,23 +77,25 @@ export default {
     },
     [EDIT_PIZZA](state, pizza) {
       const pizzaForBuilder = { ...state.initialBuilder };
-      state.builder.doughs = pizzaForBuilder.doughs.map(dough => ({
+      state.builder.doughs = pizzaForBuilder.doughs.map((dough) => ({
         ...dough,
         checked: dough.id === pizza.dough.id,
       }));
 
-      state.builder.sizes = pizzaForBuilder.sizes.map(size => ({
+      state.builder.sizes = pizzaForBuilder.sizes.map((size) => ({
         ...size,
         checked: size.id === pizza.size.id,
       }));
 
-      state.builder.sauces = pizzaForBuilder.sauces.map(sauce => ({
+      state.builder.sauces = pizzaForBuilder.sauces.map((sauce) => ({
         ...sauce,
         checked: sauce.id === pizza.sauce.id,
       }));
 
-      state.builder.fillings = state.builder.fillings.map(filling => {
-        const findFilling = pizza.fillings.find(elem => elem.id === filling.id);
+      state.builder.fillings = state.builder.fillings.map((filling) => {
+        const findFilling = pizza.fillings.find(
+          (elem) => elem.id === filling.id
+        );
 
         return {
           ...filling,
@@ -106,26 +110,39 @@ export default {
     },
   },
   getters: {
-    selectedDough: state => state.builder.doughs.find(({ checked }) => checked),
-    selectedSize: state => state.builder.sizes.find(({ checked }) => checked),
-    selectedSauce: state => state.builder.sauces.find(({ checked }) => checked),
-    selectedFillings: state => state.builder.fillings.filter(({ count }) => count),
+    selectedDough: (state) =>
+      state.builder.doughs.find(({ checked }) => checked),
+    selectedSize: (state) => state.builder.sizes.find(({ checked }) => checked),
+    selectedSauce: (state) =>
+      state.builder.sauces.find(({ checked }) => checked),
+    selectedFillings: (state) =>
+      state.builder.fillings.filter(({ count }) => count),
     validateBuilder: (state, { selectedFillings }) =>
       !(selectedFillings.length && state.builder.name.length),
-    pizzaPrice: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize }) => {
+    pizzaPrice: (
+      state,
+      { selectedFillings, selectedDough, selectedSauce, selectedSize }
+    ) => {
       const fillingsPrice = selectedFillings.reduce((acc, elem) => {
         const { count, price } = elem;
         return acc + count * price;
       }, 0);
 
       return (
-        (selectedDough.price +
-          selectedSauce.price +
-          fillingsPrice) *
-        selectedSize.multiplier
+        (~~selectedDough?.price + ~~selectedSauce?.price + fillingsPrice) *
+        ~~selectedSize?.multiplier
       );
     },
-    buildPizza: (state, { selectedFillings, selectedDough, selectedSauce, selectedSize, pizzaPrice }) => ({
+    buildPizza: (
+      state,
+      {
+        selectedFillings,
+        selectedDough,
+        selectedSauce,
+        selectedSize,
+        pizzaPrice,
+      }
+    ) => ({
       id: state.builder.id,
       name: state.builder.name,
       count: state.builder.count,
@@ -137,4 +154,3 @@ export default {
     }),
   },
 };
-

@@ -1,8 +1,5 @@
-import user from "@/static/user.json";
-import {
-  LOGOUT_USER,
-  SET_USER_DATA,
-} from "@/store/mutation-types";
+import { LOGOUT_USER } from "@/store/mutation-types";
+import { setAuth } from "@/common/helpers";
 
 const initialUser = () => ({});
 
@@ -10,27 +7,36 @@ export default {
   namespaced: true,
   state: {
     user: initialUser(),
-    addresses: [
-      {
-        id: "3",
-        name: "Адрес1",
-        street: "Улица1",
-        home: "Дом1",
-        room: "Комната1",
-      },
-    ],
   },
   actions: {
-    login({ commit }, credentials) {
-      console.log(credentials);
-      commit(SET_USER_DATA, user);
+    async login(_d, credentials) {
+      const data = await this.$api.auth.login(credentials);
+      this.$jwt.saveToken(data.token);
+      setAuth(this);
     },
-    logoutUser({ commit }) {
+    async [LOGOUT_USER]({ commit }, sendRequest) {
+      if (sendRequest) {
+        await this.$api.auth.logout();
+      }
+
+      this.$jwt.destroyToken();
+      this.$api.auth.setAuthHeader();
+
       commit(LOGOUT_USER);
+
+      return true;
+    },
+    async getMe({ dispatch, commit }) {
+      try {
+        const data = await this.$api.auth.getMe();
+        commit("setUserData", data);
+      } catch {
+        dispatch(LOGOUT_USER, false);
+      }
     },
   },
   mutations: {
-    [SET_USER_DATA](state, userData) {
+    setUserData(state, userData) {
       state.user = userData;
     },
     [LOGOUT_USER](state) {
@@ -38,6 +44,6 @@ export default {
     },
   },
   getters: {
-    isAuth: state => state.user.id,
+    isAuth: (state) => state.user.id,
   },
 };

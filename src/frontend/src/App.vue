@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <AppLayout
-      :user="user"
-    >
+    <AppLayout>
       <router-view />
     </AppLayout>
   </div>
@@ -16,16 +14,8 @@ export default {
   components: {
     AppLayout,
   },
-  data() {
-    return {
-      user: {
-        authorization: false,
-        name: "Василий ложкин",
-      },
-    };
-  },
   created() {
-    this.$store.dispatch('init');
+    this.$store.dispatch("init");
   },
 };
 </script>

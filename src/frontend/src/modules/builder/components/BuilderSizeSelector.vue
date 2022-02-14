@@ -1,8 +1,6 @@
 <template>
   <div class="content__diameter">
-    <div
-      class="sheet"
-    >
+    <div class="sheet">
       <h2 class="title title--small sheet__title">
         Выберите размер
       </h2>

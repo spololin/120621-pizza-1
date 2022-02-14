@@ -1,23 +1,20 @@
 <template>
   <div class="content__result">
     <p>Итого: {{ pizzaPrice }} ₽</p>
-    <Button
+    <AppButton
       :disabled="validateBuilder"
-      type="button"
       @onClick="onClick"
     >
       Готовьте!
-    </Button>
+    </AppButton>
   </div>
 </template>
 
 <script>
-import Button from "@/common/components/AppButton";
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { RESET_BUILDER } from "@/store/mutation-types";
 export default {
   name: "BuilderPriceCounter",
-  components: { Button },
   computed: {
     ...mapGetters("Builder", ["validateBuilder", "pizzaPrice"]),
   },

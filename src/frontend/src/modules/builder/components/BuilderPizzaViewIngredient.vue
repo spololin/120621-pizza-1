@@ -13,7 +13,7 @@
 export default {
   name: "BuilderPizzaViewIngredient",
   props: {
-    "filling": {
+    filling: {
       type: Object,
       required: true,
     },

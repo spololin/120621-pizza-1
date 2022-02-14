@@ -14,59 +14,66 @@
     <form
       action=""
       method="post"
+      @submit.prevent="goLogin"
     >
       <div class="sign-form__input">
         <label class="input">
           <span>E-mail</span>
-          <input
-            v-model="name"
+          <AppInput
+            v-model="email"
             type="email"
             name="email"
+            required
             placeholder="example@mail.ru"
-          >
+          />
         </label>
       </div>
 
       <div class="sign-form__input">
         <label class="input">
           <span>Пароль</span>
-          <input
-            v-model="pass"
+          <appInput
+            v-model="password"
             type="password"
             name="pass"
+            required
             placeholder="***********"
-          >
+          />
         </label>
       </div>
-      <button
-        type="submit"
-        class="button"
-        @click.prevent="goLogin"
-      >
+      <AppButton type="submit">
         Авторизоваться
-      </button>
+      </AppButton>
     </form>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import { validateEmail } from "@/common/helpers";
 
 export default {
   name: "Login",
   data: () => ({
-    name: "",
-    pass: "",
+    email: "",
+    password: "",
   }),
   methods: {
     ...mapActions("User", ["login"]),
-    goLogin() {
-      if (this.name.trim() && this.pass.trim()) {
-        this.login({
-          name: this.name.trim(),
-          pass: this.pass.trim(),
-        });
-        this.$router.push("/");
+    async goLogin() {
+      if (validateEmail(this.email) && this.password.trim()) {
+        try {
+          await this.login({
+            email: this.email.trim(),
+            password: this.password.trim(),
+          });
+          await this.$router.push("/");
+        } catch (e) {
+          alert(
+            e.response.data?.error?.message ??
+              "Возникла ошибка при выполнении запроса к серверу"
+          );
+        }
       }
     },
   },

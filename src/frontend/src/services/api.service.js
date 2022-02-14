@@ -6,6 +6,10 @@ export class ReadOnlyApiService {
     this.#resource = resource;
   }
 
+  getResource() {
+    return this.#resource;
+  }
+
   async query(config = {}) {
     const { data } = await axios.get(this.#resource, config);
     return data;
@@ -21,7 +25,7 @@ export class CrudApiService extends ReadOnlyApiService {
   #resource;
   constructor(resource) {
     super(resource);
-    this.#resource = resource;
+    this.#resource = super.getResource();
   }
 
   async post(entity) {

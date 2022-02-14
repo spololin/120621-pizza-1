@@ -6,12 +6,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (res) => res,
-  (e) => {
-    // const defaultMessage = 'Возникла ошибка при выполнении запроса к серверу';
-    // alert(e?.response?.data?.error?.message || defaultMessage);
-
-    return Promise.reject(e);
-  }
+  (e) => e.response
 );
 
 export default axiosInstance;

@@ -62,11 +62,13 @@ export default {
     ...mapActions("User", ["login"]),
     async goLogin() {
       if (validateEmail(this.email) && this.password.trim()) {
-        await this.login({
+        const loginSuccess = await this.login({
           email: this.email.trim(),
           password: this.password.trim(),
         });
-        await this.$router.push("/");
+        if (loginSuccess) {
+          await this.$router.push("/");
+        }
       }
     },
   },

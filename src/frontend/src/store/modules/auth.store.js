@@ -11,10 +11,18 @@ export default {
   actions: {
     async login(_d, credentials) {
       const data = await this.$api.auth.login(credentials);
-      this.$jwt.saveToken(data.token);
-      setAuth(this);
 
-      return Object.hasOwn(data, "token");
+      if (Object.hasOwn(data, "token")) {
+        this.$jwt.saveToken(data.token);
+        setAuth(this);
+        return true;
+      }
+
+      alert(
+        data?.error?.message ??
+          "Возникла ошибка при выполнении запроса к серверу"
+      );
+      return false;
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {

@@ -22,24 +22,22 @@ export class ReadOnlyApiService {
 }
 
 export class CrudApiService extends ReadOnlyApiService {
-  #resource;
   constructor(resource) {
     super(resource);
-    this.#resource = super.getResource();
   }
 
   async post(entity) {
-    const { data } = await axios.post(this.#resource, entity);
+    const { data } = await axios.post(super.getResource(), entity);
     return data;
   }
 
   async put(entity) {
-    const { data } = await axios.put(`${this.#resource}/${entity.id}`, entity);
+    const { data } = await axios.put(`${super.getResource()}/${entity.id}`, entity);
     return data;
   }
 
   async delete(id) {
-    const { data } = await axios.delete(`${this.#resource}/${id}`);
+    const { data } = await axios.delete(`${super.getResource()}/${id}`);
     return data;
   }
 }

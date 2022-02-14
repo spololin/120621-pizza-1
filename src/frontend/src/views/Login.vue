@@ -62,12 +62,17 @@ export default {
     ...mapActions("User", ["login"]),
     async goLogin() {
       if (validateEmail(this.email) && this.password.trim()) {
-        const loginSuccess = await this.login({
-          email: this.email.trim(),
-          password: this.password.trim(),
-        });
-        if (loginSuccess) {
+        try {
+          await this.login({
+            email: this.email.trim(),
+            password: this.password.trim(),
+          });
           await this.$router.push("/");
+        } catch (e) {
+          alert(
+            e.response.data?.error?.message ??
+              "Возникла ошибка при выполнении запроса к серверу"
+          );
         }
       }
     },

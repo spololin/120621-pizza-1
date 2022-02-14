@@ -6,7 +6,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (res) => res,
-  (e) => e.response
+  (e) => Promise.reject(e)
 );
 
 export default axiosInstance;

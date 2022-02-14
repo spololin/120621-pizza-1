@@ -11,18 +11,8 @@ export default {
   actions: {
     async login(_d, credentials) {
       const data = await this.$api.auth.login(credentials);
-
-      if (Object.hasOwn(data, "token")) {
-        this.$jwt.saveToken(data.token);
-        setAuth(this);
-        return true;
-      }
-
-      alert(
-        data?.error?.message ??
-          "Возникла ошибка при выполнении запроса к серверу"
-      );
-      return false;
+      this.$jwt.saveToken(data.token);
+      setAuth(this);
     },
     async [LOGOUT_USER]({ commit }, sendRequest) {
       if (sendRequest) {

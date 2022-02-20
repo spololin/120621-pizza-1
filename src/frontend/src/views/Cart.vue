@@ -43,28 +43,69 @@
         <CartReceivingOrder />
       </div>
     </main>
-    <CartFooter />
+    <CartFooter @openPopup="openPopup" />
+    <transition
+      name="fade"
+    >
+      <OrderPopup
+        v-if="showPopup"
+        @closePopup="closePopup"
+      />
+    </transition>
   </form>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapGetters, mapState} from "vuex";
 import CartPizzaItem from "@/modules/cart/CartPizzaItem";
 import CartAdditionalItem from "@/modules/cart/CartAdditionalItem";
 import CartReceivingOrder from "@/modules/cart/CartReceivingOrder";
 import CartFooter from "@/modules/cart/CartFooter";
 import { addressList } from "@/common/mixins";
+import OrderPopup from "@/views/OrderPopup";
 export default {
   name: "Cart",
   components: {
+    OrderPopup,
     CartFooter,
     CartReceivingOrder,
     CartAdditionalItem,
     CartPizzaItem,
   },
   mixins: [addressList],
+  data: () => ({
+    showPopup: false,
+  }),
   computed: {
     ...mapState("Cart", ["pizzas", "misc"]),
+    ...mapGetters("User", ["isAuth"]),
+  },
+  methods: {
+    openPopup() {
+      this.showPopup = true;
+    },
+    closePopup() {
+      this.showPopup = false;
+      setTimeout(() => {
+        this.$router.push(this.isAuth ? "/orders" : "/").catch(() => {});
+      }, 500);
+    },
   },
 };
 </script>
+<style lang="scss">
+.fade-enter-active {
+  animation: fade-in 500ms;
+}
+.fade-leave-active {
+  animation: fade-in 500ms reverse;
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style>

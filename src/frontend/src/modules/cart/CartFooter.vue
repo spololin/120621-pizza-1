@@ -64,7 +64,7 @@ export default {
     async checkout() {
       const data = await this.postOrder();
       if (data.id) {
-        await this.$router.push("/thanks");
+        this.$emit("openPopup");
         this.getAddresses();
         this.resetBuilder();
         this.resetCartState();

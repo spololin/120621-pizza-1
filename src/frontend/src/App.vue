@@ -5,7 +5,6 @@
         name="view"
         appear
         mode="out-in"
-        enter-active-class="animate-view"
       >
         <router-view />
       </transition>
@@ -30,18 +29,15 @@ export default {
 <style lang="scss">
 @import "~@/assets/scss/app";
 
-.animate-view {
-  animation: transformRotateY;
-  animation-duration: .7s;
+.view-leave-active,
+.view-enter-active {
+  transition: 1s;
+}
+.view-enter {
+  transform: translate(-100%, 0);
+}
+.view-leave-to {
+  transform: translate(100%, 0);
 }
 
-@keyframes transformRotateY {
-  0% {
-    transform: rotateY(180deg);
-  }
-
-  to {
-    transform: rotateY(0);
-  }
-}
 </style>

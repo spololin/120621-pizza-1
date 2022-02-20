@@ -1,7 +1,13 @@
 <template>
   <div id="app">
     <AppLayout>
-      <router-view />
+      <transition
+        name="view"
+        appear
+        mode="out-in"
+      >
+        <router-view />
+      </transition>
     </AppLayout>
   </div>
 </template>
@@ -22,4 +28,16 @@ export default {
 
 <style lang="scss">
 @import "~@/assets/scss/app";
+
+.view-leave-active,
+.view-enter-active {
+  transition: 1s;
+}
+.view-enter {
+  transform: translate(-100%, 0);
+}
+.view-leave-to {
+  transform: translate(100%, 0);
+}
+
 </style>

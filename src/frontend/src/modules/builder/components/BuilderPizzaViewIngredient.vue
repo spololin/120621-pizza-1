@@ -1,11 +1,16 @@
 <template>
   <div>
-    <div
-      v-for="iter in filling.count"
-      :key="iter"
-      class="pizza__filling"
-      :class="classFilling(iter)"
-    />
+    <transition-group
+      name="filling"
+      appear
+    >
+      <div
+        v-for="iter in filling.count"
+        :key="iter"
+        class="pizza__filling"
+        :class="classFilling(iter)"
+      />
+    </transition-group>
   </div>
 </template>
 
@@ -38,3 +43,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.filling-enter-active,
+.filling-leave-active {
+  transition: all .5s ease;
+}
+.filling-enter,
+.filling-leave-to {
+  transform: scale(1.1);
+  opacity: 0;
+}
+</style>

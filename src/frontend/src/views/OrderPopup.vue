@@ -24,16 +24,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "OrderPopup",
-  computed: {
-    ...mapGetters("User", ["isAuth"]),
-  },
   methods: {
     closePopup() {
-      this.$router.push(this.isAuth ? "/orders" : "/");
+      this.$emit("closePopup");
     },
   },
 };

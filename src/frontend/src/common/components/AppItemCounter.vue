@@ -7,7 +7,8 @@
       type="button"
       class="counter__button counter__button--minus"
       :disabled="value <= min"
-      @click="change('decrease')"
+      data-test="decrease-button"
+      @click="$emit('change', 'decrease')"
     >
       <span class="visually-hidden">Меньше</span>
     </button>
@@ -22,7 +23,8 @@
       type="button"
       class="counter__button counter__button--plus"
       :disabled="max === null ? false : value >= max"
-      @click="change('increase')"
+      data-test="increase-button"
+      @click="$emit('change', 'increase')"
     >
       <span class="visually-hidden">Больше</span>
     </button>
@@ -44,11 +46,6 @@ export default {
     min: {
       type: Number,
       default: 0,
-    },
-  },
-  methods: {
-    change(operation) {
-      this.$emit("change", operation);
     },
   },
 };

@@ -32,7 +32,7 @@ export default {
           size: "",
           dough: "",
           sauce: "",
-          ingredients: "",
+          fillings: "",
         };
       },
     },

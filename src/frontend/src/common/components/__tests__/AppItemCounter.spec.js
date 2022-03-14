@@ -29,19 +29,23 @@ describe("AppItemCounter", () => {
   it("emit click event on minus button", async () => {
     createComponent({ propsData });
 
-    const minusButton = wrapper.find("[data-test='decrease-button']");
-    await minusButton.trigger("click");
+    if (propsData.value > propsData.min) {
+      const minusButton = wrapper.find("[data-test='decrease-button']");
+      await minusButton.trigger("click");
 
-    expect(wrapper.emitted().change[0]).toEqual(["decrease"]);
+      expect(wrapper.emitted().change[0]).toEqual(["decrease"]);
+    }
   });
 
   it("emit click event on plus button", async () => {
     createComponent({ propsData });
 
-    const plusButton = wrapper.find("[data-test='increase-button']");
-    await plusButton.trigger("click");
+    if (propsData.value < propsData.max) {
+      const plusButton = wrapper.find("[data-test='increase-button']");
+      await plusButton.trigger("click");
 
-    expect(wrapper.emitted().change[0]).toEqual(["increase"]);
+      expect(wrapper.emitted().change[0]).toEqual(["increase"]);
+    }
   });
 
   it("sets class to input from $attrs", () => {
